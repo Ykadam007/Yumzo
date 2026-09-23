@@ -1,0 +1,90 @@
+<nav class="navbar navbar-expand-lg bg-white shadow-sm">
+
+    <div class="container">
+
+        <!-- Brand -->
+
+        <a
+            class="navbar-brand fw-bold fs-4"
+            href="{% url 'customer_dashboard' %}"
+        >
+            🛒 LocalKart
+        </a>
+
+
+        <!-- Navigation -->
+
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+
+            <a
+                href="{% url 'customer_dashboard' %}"
+                class="btn btn-outline-primary"
+            >
+                🏠 Home
+            </a>
+
+            <a
+                href="{% url 'shop_list' %}"
+                class="btn btn-outline-primary"
+            >
+                🏪 Shops
+            </a>
+
+            <a
+                href="{% url 'marketplace' %}"
+                class="btn btn-outline-primary"
+            >
+                🛍️ Marketplace
+            </a>
+
+            <a
+                href="{% url 'cart_detail' %}"
+                class="btn btn-outline-success"
+            >
+                🛒 Cart
+
+                {% if cart_count > 0 %}
+
+                    <span class="badge bg-danger">
+                        {{ cart_count }}
+                    </span>
+
+                {% endif %}
+
+            </a>
+
+            <a
+                href="{% url 'my_orders' %}"
+                class="btn btn-outline-primary"
+            >
+                📦 Orders
+            </a>
+
+            <a href="{% url 'notifications' %}" class="nav-link">
+                🔔 Notifications
+
+                {% if unread_notifications > 0 %}
+                    <span class="badge bg-danger">
+                        {{ unread_notifications }}
+                    </span>
+                {% endif %}
+            </a>
+
+            <a href="{% url 'profile' %}"
+                class="btn btn-outline-primary"
+            >
+                👤 Account
+            </a>
+
+            <a
+                href="{% url 'logout' %}"
+                class="btn btn-outline-danger"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>

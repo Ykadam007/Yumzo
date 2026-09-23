@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Manage Products - LocalKart</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        body {
+            background: #f5f7fb;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 14px;
+        }
+
+        .table th {
+            white-space: nowrap;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+
+        .product-image {
+            width: 65px;
+            height: 65px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .product-name {
+            font-weight: 600;
+        }
+
+        .action-btn {
+            min-width: 95px;
+        }
+
+        .empty-state {
+            padding: 60px 20px;
+        }
+
+        .empty-icon {
+            font-size: 55px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container py-5">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="d-flex justify-content-between align-items-center page-header">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                📦 Manage Products
+            </h2>
+
+            <p class="text-muted mb-0">
+                Manage products across all LocalKart shops
+            </p>
+
+        </div>
+
+
+        <a
+            href="{% url 'admin_dashboard' %}"
+            class="btn btn-secondary"
+        >
+            ← Admin Dashboard
+        </a>
+
+    </div>
+
+
+
+    <!-- ================= SEARCH & FILTER ================= -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body p-4">
+
+            <form method="GET">
+
+                <div class="row g-3 align-items-end">
+
+
+                    <!-- Search -->
+
+                    <div class="col-md-5">
+
+                        <label class="form-label fw-bold">
+                            Search Products
+                        </label>
+
+                        <input
+                            type="text"
+                            name="search"
+                            value="{{ search }}"
+                            class="form-control"
+                            placeholder="🔍 Search product or shop..."
+                        >
+
+                    </div>
+
+
+                    <!-- Category -->
+
+                    <div class="col-md-3">
+
+                        <label class="form-label fw-bold">
+                            Filter by Category
+                        </label>
+
+                        <select
+                            name="category"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                All Categories
+                            </option>
+
+
+                            {% for category in categories %}
+
+                                <option
+                                    value="{{ category.id }}"
+                                    {% if selected_category == category.id|stringformat:"s" %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ category.name }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Search -->
+
+                    <div class="col-md-2">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100"
+                        >
+                            🔍 Search
+                        </button>
+
+                    </div>
+
+
+                    <!-- Reset -->
+
+                    <div class="col-md-2">
+
+                        <a
+                            href="{% url 'manage_products' %}"
+                            class="btn btn-outline-secondary w-100"
+                        >
+                            Reset
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= PRODUCTS CARD ================= -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-white py-3">
+
+            <h5 class="mb-0 fw-bold">
+                🛍️ Product List
+            </h5>
+
+        </div>
+
+
+        <div class="card-body p-0">
+
+
+            <!-- ================= PRODUCT TABLE ================= -->
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th class="px-3">
+                                Product
+                            </th>
+
+                            <th>
+                                Shop
+                            </th>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Price
+                            </th>
+
+                            <th>
+                                Stock
+                            </th>
+
+                            <th>
+                                Availability
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                    {% for product in products %}
+
+                        <tr>
+
+
+                            <!-- ================= PRODUCT ================= -->
+
+                            <td class="px-3">
+
+                                {% if product.image %}
+
+                                    <img
+                                        src="{{ product.image.url }}"
+                                        alt="{{ product.name }}"
+                                        class="product-image mb-2"
+                                    >
+
+                                    <br>
+
+                                {% endif %}
+
+
+                                <span class="product-name">
+                                    {{ product.name }}
+                                </span>
+
+                            </td>
+
+
+
+                            <!-- ================= SHOP ================= -->
+
+                            <td>
+
+                                <strong>
+                                    {{ product.shop.name }}
+                                </strong>
+
+                            </td>
+
+
+
+                            <!-- ================= CATEGORY ================= -->
+
+                            <td>
+
+                                {% if product.category %}
+
+                                    <span class="badge bg-secondary">
+                                        {{ product.category.name }}
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="text-muted">
+                                        No Category
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+
+                            <!-- ================= PRICE ================= -->
+
+                            <td>
+
+                                {% if product.discount_price %}
+
+                                    <strong class="text-success">
+                                        ₹{{ product.discount_price }}
+                                    </strong>
+
+                                    <br>
+
+                                    <small class="text-muted">
+
+                                        <del>
+                                            ₹{{ product.price }}
+                                        </del>
+
+                                    </small>
+
+                                {% else %}
+
+                                    <strong>
+                                        ₹{{ product.price }}
+                                    </strong>
+
+                                {% endif %}
+
+                            </td>
+
+
+
+                            <!-- ================= STOCK ================= -->
+
+                            <td>
+
+                                {% if product.stock > 0 %}
+
+                                    {% if product.stock <= 5 %}
+
+                                        <span class="badge bg-warning text-dark">
+                                            ⚠️ {{ product.stock }} Low
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="badge bg-success">
+                                            {{ product.stock }}
+                                        </span>
+
+                                    {% endif %}
+
+                                {% else %}
+
+                                    <span class="badge bg-danger">
+                                        Out of Stock
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+
+                            <!-- ================= AVAILABILITY ================= -->
+
+                            <td>
+
+                                {% if product.is_available and product.stock > 0 %}
+
+                                    <span class="badge bg-success">
+                                        🟢 Available
+                                    </span>
+
+                                {% elif product.stock <= 0 %}
+
+                                    <span class="badge bg-danger">
+                                        🔴 Out of Stock
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-danger">
+                                        🔴 Unavailable
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+
+                            <!-- ================= ACTIONS ================= -->
+
+                            <td>
+
+
+                                <!-- Edit -->
+
+                                <a
+                                    href="{% url 'edit_product_admin' product.id %}"
+                                    class="btn btn-warning btn-sm action-btn mb-1"
+                                >
+                                    ✏️ Edit
+                                </a>
+
+
+                                <br>
+
+
+                                <!-- Activate / Deactivate -->
+
+                                <form
+                                    method="post"
+                                    action="{% url 'toggle_product' product.id %}"
+                                    class="d-inline"
+                                    onsubmit="return confirm(
+                                        '{% if product.is_available %}Are you sure you want to deactivate this product?{% else %}Are you sure you want to activate this product?{% endif %}'
+                                    );"
+                                >
+
+                                    {% csrf_token %}
+
+
+                                    {% if product.is_available %}
+
+                                        <button
+                                            type="submit"
+                                            class="btn btn-danger btn-sm action-btn mb-1"
+                                        >
+                                            🔴 Deactivate
+                                        </button>
+
+                                    {% else %}
+
+                                        <button
+                                            type="submit"
+                                            class="btn btn-success btn-sm action-btn mb-1"
+                                        >
+                                            🟢 Activate
+                                        </button>
+
+                                    {% endif %}
+
+                                </form>
+
+
+                                <br>
+
+
+                                <!-- Delete -->
+
+                                <form
+                                    method="post"
+                                    action="{% url 'delete_product_admin' product.id %}"
+                                    class="d-inline"
+                                    onsubmit="return confirm(
+                                        'Are you sure you want to permanently delete this product?'
+                                    );"
+                                >
+
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-outline-danger btn-sm action-btn"
+                                    >
+                                        🗑️ Delete
+                                    </button>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+
+
+                    {% empty %}
+
+
+                        <!-- ================= EMPTY STATE ================= -->
+
+                        <tr>
+
+                            <td
+                                colspan="7"
+                                class="text-center"
+                            >
+
+                                <div class="empty-state">
+
+                                    <div class="empty-icon">
+                                        📦
+                                    </div>
+
+                                    <h5 class="mt-3">
+                                        No Products Found
+                                    </h5>
+
+                                    <p class="text-muted mb-0">
+                                        No products match your search or category filter.
+                                    </p>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                    {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+
+            <!-- ================= PAGINATION ================= -->
+
+            {% if products.has_other_pages %}
+
+                <div class="p-3">
+
+                    <nav aria-label="Product pagination">
+
+                        <ul class="pagination justify-content-center mb-0">
+
+
+                            <!-- Previous -->
+
+                            {% if products.has_previous %}
+
+                                <li class="page-item">
+
+                                    <a
+                                        class="page-link"
+                                        href="?page={{ products.previous_page_number }}{% if search %}&search={{ search|urlencode }}{% endif %}{% if selected_category %}&category={{ selected_category|urlencode }}{% endif %}"
+                                    >
+                                        ← Previous
+                                    </a>
+
+                                </li>
+
+                            {% endif %}
+
+
+
+                            <!-- Page Numbers -->
+
+                            {% for num in products.paginator.page_range %}
+
+                                {% if products.number == num %}
+
+                                    <li class="page-item active">
+
+                                        <span class="page-link">
+                                            {{ num }}
+                                        </span>
+
+                                    </li>
+
+                                {% else %}
+
+                                    <li class="page-item">
+
+                                        <a
+                                            class="page-link"
+                                            href="?page={{ num }}{% if search %}&search={{ search|urlencode }}{% endif %}{% if selected_category %}&category={{ selected_category|urlencode }}{% endif %}"
+                                        >
+                                            {{ num }}
+                                        </a>
+
+                                    </li>
+
+                                {% endif %}
+
+                            {% endfor %}
+
+
+
+                            <!-- Next -->
+
+                            {% if products.has_next %}
+
+                                <li class="page-item">
+
+                                    <a
+                                        class="page-link"
+                                        href="?page={{ products.next_page_number }}{% if search %}&search={{ search|urlencode }}{% endif %}{% if selected_category %}&category={{ selected_category|urlencode }}{% endif %}"
+                                    >
+                                        Next →
+                                    </a>
+
+                                </li>
+
+                            {% endif %}
+
+
+                        </ul>
+
+                    </nav>
+
+                </div>
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= BOOTSTRAP JS ================= -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
+</body>
+
+</html>

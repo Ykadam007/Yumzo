@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>{{ product.name }} - LocalKart</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <!-- Back Buttons -->
+
+    <div class="mb-4">
+
+        <a
+            href="{% url 'marketplace' %}"
+            class="btn btn-secondary"
+        >
+            ← Marketplace
+        </a>
+
+    </div>
+
+
+    <!-- Product -->
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Product Image -->
+
+                <div class="col-md-6">
+
+                    {% if product.image %}
+
+                    <img
+                        src="{{ product.image.url }}"
+                        class="img-fluid rounded"
+                        style="width:100%; height:400px; object-fit:cover;"
+                        alt="{{ product.name }}"
+                    >
+
+                    {% else %}
+
+                    <div
+                        class="bg-secondary text-white rounded d-flex align-items-center justify-content-center"
+                        style="height:400px;"
+                    >
+                        <h3>No Image Available</h3>
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Product Information -->
+
+                <div class="col-md-6">
+
+                    <h1 class="mb-3">
+                        {{ product.name }}
+                    </h1>
+
+
+                    {% if product.category %}
+
+                    <span class="badge bg-primary mb-3">
+                        {{ product.category.name }}
+                    </span>
+
+                    {% endif %}
+
+
+                    <p class="text-muted">
+                        {{ product.description }}
+                    </p>
+
+                    <!-- Rating Summary -->
+
+                    <div class="mt-3">
+
+                        {% if review_count > 0 %}
+
+                            <span class="fs-5">
+
+                                ⭐ {{ average_rating|floatformat:1 }}
+
+                            </span>
+
+                            <span class="text-muted">
+                                / 5
+                            </span>
+
+                            <span class="text-muted ms-2">
+                                ({{ review_count }} reviews)
+                            </span>
+
+                        {% else %}
+
+                            <span class="text-muted">
+                                ⭐ No reviews yet
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Price -->
+
+                    {% if product.discount_price %}
+
+                    <h2 class="text-success">
+                        ₹{{ product.discount_price }}
+                    </h2>
+
+                    <p>
+                        <del class="text-muted">
+                            ₹{{ product.price }}
+                        </del>
+
+                        <span class="badge bg-danger">
+                            Discount
+                        </span>
+                    </p>
+
+                    {% else %}
+
+                    <h2 class="text-success">
+                        ₹{{ product.price }}
+                    </h2>
+
+                    {% endif %}
+
+
+                    <!-- Stock -->
+
+                    <p class="mt-4">
+
+                        <strong>Stock:</strong>
+
+                        <span class="text-success">
+                            {{ product.stock }} available
+                        </span>
+
+                    </p>
+
+
+                    <!-- Shop -->
+
+                    <div class="card bg-light mb-4">
+
+                        <div class="card-body">
+
+                            <h5>
+                                🏪 {{ product.shop.name }}
+                            </h5>
+
+                            <p class="mb-1">
+                                📍 {{ product.shop.city }}
+                            </p>
+
+                            <p class="mb-0">
+                                ⭐ {{ product.shop.rating }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Add To Cart -->
+
+                    {% if user.is_authenticated and user.role == 'customer' %}
+
+                    <form
+                        method="POST"
+                        action="{% url 'add_to_cart' product.id %}"
+                    >
+
+                        {% csrf_token %}
+
+                        <label class="form-label">
+                            <strong>Quantity</strong>
+                        </label>
+
+                       <div class="input-group mb-3" style="max-width: 220px;">
+
+    <button
+        type="button"
+        class="btn btn-outline-secondary"
+        onclick="decreaseQuantity()"
+    >
+        −
+    </button>
+
+    <input
+        type="number"
+        name="quantity"
+        id="quantity"
+        value="1"
+        min="1"
+        max="{{ product.stock }}"
+        class="form-control text-center"
+    >
+
+    <button
+        type="button"
+        class="btn btn-outline-secondary"
+        onclick="increaseQuantity()"
+    >
+        +
+    </button>
+
+</div>
+
+                        <button
+                            type="submit"
+                            class="btn btn-success btn-lg w-100"
+                        >
+                            🛒 Add to Cart
+                        </button>
+
+                    </form>
+
+                    {% elif not user.is_authenticated %}
+
+                    <a
+                        href="{% url 'login' %}"
+                        class="btn btn-primary btn-lg w-100"
+                    >
+                        Login to Add to Cart
+                    </a>
+
+                    {% else %}
+
+                    <div class="alert alert-info">
+                        Customers can add products to cart.
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Customer Reviews -->
+
+<div class="card shadow-sm mt-5">
+
+    <div class="card-body">
+
+        <h4 class="fw-bold mb-4">
+            ⭐ Customer Reviews
+        </h4>
+
+
+        {% if reviews %}
+
+            {% for review in reviews %}
+
+                <div class="border-bottom pb-4 mb-4">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+
+                            <strong>
+                                👤 {{ review.customer.username }}
+                            </strong>
+
+                            <div class="mt-1">
+
+                                {% if review.rating == 5 %}
+                                    ⭐⭐⭐⭐⭐
+                                {% elif review.rating == 4 %}
+                                    ⭐⭐⭐⭐
+                                {% elif review.rating == 3 %}
+                                    ⭐⭐⭐
+                                {% elif review.rating == 2 %}
+                                    ⭐⭐
+                                {% else %}
+                                    ⭐
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <small class="text-muted">
+
+                            {{ review.created_at|date:"d M Y" }}
+
+                        </small>
+
+                    </div>
+
+
+                    {% if review.comment %}
+
+                        <p class="mt-3 mb-0">
+
+                            {{ review.comment }}
+
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="text-center py-4">
+
+                <div style="font-size: 45px;">
+                    ⭐
+                </div>
+
+                <h5 class="mt-2">
+                    No Reviews Yet
+                </h5>
+
+                <p class="text-muted">
+                    Be the first customer to review this product.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</div>
+<script>
+
+function increaseQuantity() {
+
+    const quantity = document.getElementById("quantity");
+
+    const current = parseInt(quantity.value);
+    const max = parseInt(quantity.max);
+
+    if (current < max) {
+        quantity.value = current + 1;
+    }
+}
+
+
+function decreaseQuantity() {
+
+    const quantity = document.getElementById("quantity");
+
+    const current = parseInt(quantity.value);
+
+    if (current > 1) {
+        quantity.value = current - 1;
+    }
+}
+
+</script>
+
+</body>
+</html>

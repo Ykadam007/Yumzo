@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Manage Categories | LocalKart Admin</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        body {
+            background: #f5f7fb;
+        }
+
+        .navbar-brand {
+            letter-spacing: 0.5px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 14px;
+        }
+
+        .table th {
+            white-space: nowrap;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+
+        .category-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f3f5;
+            border-radius: 10px;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .action-btn {
+            min-width: 95px;
+        }
+
+        .empty-state {
+            padding: 60px 20px;
+        }
+
+        .empty-icon {
+            font-size: 55px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-dark bg-dark shadow-sm">
+
+    <div class="container">
+
+        <a
+            href="{% url 'admin_dashboard' %}"
+            class="navbar-brand fw-bold"
+        >
+            🛒 LocalKart Admin
+        </a>
+
+
+        <a
+            href="{% url 'logout' %}"
+            class="btn btn-outline-light btn-sm"
+        >
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="container py-5">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="d-flex justify-content-between align-items-center page-header">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                📂 Manage Categories
+            </h2>
+
+            <p class="text-muted mb-0">
+                Add, edit and manage product categories.
+            </p>
+
+        </div>
+
+
+        <div class="d-flex gap-2">
+
+            <a
+                href="{% url 'admin_dashboard' %}"
+                class="btn btn-secondary"
+            >
+                ← Dashboard
+            </a>
+
+
+            <a
+                href="{% url 'add_category' %}"
+                class="btn btn-primary"
+            >
+                + Add Category
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= SEARCH ================= -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body p-4">
+
+            <form method="get">
+
+                <div class="row g-3 align-items-end">
+
+
+                    <!-- Search -->
+
+                    <div class="col-md-8">
+
+                        <label class="form-label fw-bold">
+                            Search Categories
+                        </label>
+
+                        <input
+                            type="text"
+                            name="search"
+                            value="{{ search }}"
+                            class="form-control"
+                            placeholder="🔍 Search category name..."
+                        >
+
+                    </div>
+
+
+                    <!-- Search -->
+
+                    <div class="col-md-2">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100"
+                        >
+                            🔍 Search
+                        </button>
+
+                    </div>
+
+
+                    <!-- Reset -->
+
+                    <div class="col-md-2">
+
+                        <a
+                            href="{% url 'manage_categories' %}"
+                            class="btn btn-outline-secondary w-100"
+                        >
+                            Reset
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= CATEGORIES ================= -->
+
+    <div class="card shadow-sm">
+
+
+        <!-- Card Header -->
+
+        <div class="card-header bg-white py-3">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h5 class="mb-0 fw-bold">
+                    📂 All Categories
+                </h5>
+
+                {% if categories %}
+
+                    <span class="badge bg-primary">
+                        {{ categories|length }} Categories
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Card Body -->
+
+        <div class="card-body p-0">
+
+
+            {% if categories %}
+
+
+                <!-- ================= TABLE ================= -->
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle mb-0">
+
+
+                        <thead class="table-dark">
+
+                            <tr>
+
+                                <th class="px-3">
+                                    #
+                                </th>
+
+                                <th>
+                                    Category
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Actions
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+
+                        <tbody>
+
+
+                        {% for category in categories %}
+
+                            <tr>
+
+
+                                <!-- Number -->
+
+                                <td class="px-3 fw-bold">
+
+                                    {{ forloop.counter }}
+
+                                </td>
+
+
+
+                                <!-- Category -->
+
+                                <td>
+
+                                    <div class="d-flex align-items-center">
+
+                                        <div class="category-icon">
+                                            📂
+                                        </div>
+
+                                        <strong>
+                                            {{ category.name }}
+                                        </strong>
+
+                                    </div>
+
+                                </td>
+
+
+
+                                <!-- Status -->
+
+                                <td>
+
+                                    {% if category.is_active %}
+
+                                        <span class="badge bg-success">
+                                            🟢 Active
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="badge bg-danger">
+                                            🔴 Inactive
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+
+                                <!-- Actions -->
+
+                                <td>
+
+
+                                    <!-- Edit -->
+
+                                    <a
+                                        href="{% url 'edit_category' category.id %}"
+                                        class="btn btn-warning btn-sm action-btn mb-1"
+                                    >
+                                        ✏️ Edit
+                                    </a>
+
+
+
+                                    <!-- Toggle -->
+
+                                    <form
+                                        method="post"
+                                        action="{% url 'toggle_category' category.id %}"
+                                        class="d-inline"
+                                        onsubmit="return confirm(
+                                            '{% if category.is_active %}Are you sure you want to deactivate this category?{% else %}Are you sure you want to activate this category?{% endif %}'
+                                        );"
+                                    >
+
+                                        {% csrf_token %}
+
+
+                                        {% if category.is_active %}
+
+                                            <button
+                                                type="submit"
+                                                class="btn btn-danger btn-sm action-btn mb-1"
+                                            >
+                                                🔴 Deactivate
+                                            </button>
+
+                                        {% else %}
+
+                                            <button
+                                                type="submit"
+                                                class="btn btn-success btn-sm action-btn mb-1"
+                                            >
+                                                🟢 Activate
+                                            </button>
+
+                                        {% endif %}
+
+                                    </form>
+
+
+                                </td>
+
+
+                            </tr>
+
+                        {% endfor %}
+
+
+                        </tbody>
+
+
+                    </table>
+
+                </div>
+
+
+            {% else %}
+
+
+                <!-- ================= EMPTY STATE ================= -->
+
+                <div class="empty-state text-center">
+
+                    <div class="empty-icon">
+                        📂
+                    </div>
+
+                    <h5 class="mt-3 fw-bold">
+                        No Categories Found
+                    </h5>
+
+                    <p class="text-muted">
+                        Try another search or create a new category.
+                    </p>
+
+                    <a
+                        href="{% url 'add_category' %}"
+                        class="btn btn-primary"
+                    >
+                        + Add Category
+                    </a>
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= BOOTSTRAP JS ================= -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+</body>
+
+</html>

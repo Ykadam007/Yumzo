@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,247 +11,607 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Add Product - LocalKart</title>
+    <title>Add Product - Yumzo</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
 
+    <style>
+
+        body {
+            background: #f8f9fa;
+            font-family: Arial, sans-serif;
+            color: #212529;
+        }
+
+        .navbar {
+            background: #ffffff;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: 800;
+            color: #e23744;
+            text-decoration: none;
+        }
+
+        .brand span {
+            color: #ff7a00;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #fff1f2, #fff8f0);
+            border-radius: 22px;
+            padding: 30px;
+            margin-bottom: 25px;
+        }
+
+        .page-title {
+            font-size: 30px;
+            font-weight: 800;
+        }
+
+        .page-subtitle {
+            color: #6c757d;
+        }
+
+        .product-card {
+            background: #ffffff;
+            border: none;
+            border-radius: 22px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 750;
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: 700;
+            color: #343a40;
+            margin-bottom: 8px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 12px 14px;
+            background: #fff;
+            transition: 0.2s ease;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #e23744;
+            box-shadow: 0 0 0 3px rgba(226, 55, 68, 0.10);
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+            padding: 0;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+        }
+
+        .image-box {
+            border: 2px dashed #dee2e6;
+            border-radius: 16px;
+            padding: 20px;
+            background: #fafafa;
+        }
+
+        .image-icon {
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+
+        .btn-yumzo {
+            background: #e23744;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 700;
+            transition: 0.2s ease;
+        }
+
+        .btn-yumzo:hover {
+            background: #c92f3b;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .btn-back {
+            border: 1px solid #dee2e6;
+            background: white;
+            color: #343a40;
+            border-radius: 12px;
+            padding: 11px 18px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            background: #f8f9fa;
+            color: #e23744;
+        }
+
+        .info-card {
+            background: #fff8f0;
+            border-radius: 16px;
+            padding: 18px;
+            border: 1px solid #ffe6d5;
+        }
+
+        .info-card h6 {
+            font-weight: 750;
+            margin-bottom: 8px;
+        }
+
+        .error-box {
+            background: #fff0f1;
+            border: 1px solid #f5c2c7;
+            border-radius: 12px;
+            padding: 14px;
+            color: #842029;
+        }
+
+        .footer {
+            text-align: center;
+            color: #8a8f98;
+            font-size: 14px;
+            padding: 30px 0;
+        }
+
+        @media (max-width: 768px) {
+
+            .page-header {
+                padding: 22px;
+            }
+
+            .page-title {
+                font-size: 25px;
+            }
+
+            .header-buttons {
+                margin-top: 15px;
+            }
+
+        }
+
+    </style>
+
 </head>
 
-<body class="bg-light">
+<body>
 
-<div class="container py-5">
 
-    <!-- Header -->
+<!-- NAVBAR -->
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+<nav class="navbar py-3">
 
-        <div>
+    <div class="container">
 
-            <h2 class="fw-bold">
-                ➕ Add Product
-            </h2>
-
-            <p class="text-muted mb-0">
-                Add a new product to {{ shop.name }}
-            </p>
-
-        </div>
+        <a
+            href="{% url 'shop_dashboard' %}"
+            class="brand"
+        >
+            Yum<span>zo</span>
+        </a>
 
         <a
             href="{% url 'product_list' %}"
-            class="btn btn-outline-secondary"
+            class="btn-back"
         >
-            ← Back to Products
+            ← My Products
         </a>
 
     </div>
 
-
-    <!-- Form -->
-
-    <div class="card shadow-sm">
-
-        <div class="card-body p-4">
-
-            <form
-                method="POST"
-                enctype="multipart/form-data"
-            >
-
-                {% csrf_token %}
+</nav>
 
 
-                {% if form.non_field_errors %}
+<div class="container py-4">
 
-                    <div class="alert alert-danger">
 
-                        {{ form.non_field_errors }}
+    <!-- PAGE HEADER -->
 
+    <div class="page-header">
+
+        <div class="row align-items-center">
+
+            <div class="col-md-8">
+
+                <div class="page-title">
+                    ➕ Add New Product
+                </div>
+
+                <div class="page-subtitle mt-2">
+
+                    Add a delicious new item to
+                    <strong>{{ shop.name }}</strong>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4 text-md-end header-buttons">
+
+                <a
+                    href="{% url 'product_list' %}"
+                    class="btn-back"
+                >
+                    ← Back to Products
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="row g-4">
+
+
+        <!-- MAIN FORM -->
+
+        <div class="col-lg-8">
+
+            <div class="product-card">
+
+                <div class="p-4 p-md-5">
+
+                    <div class="section-title">
+                        Product Information
+                    </div>
+
+
+                    <form
+                        method="POST"
+                        enctype="multipart/form-data"
+                    >
+
+                        {% csrf_token %}
+
+
+                        <!-- GENERAL ERRORS -->
+
+                        {% if form.non_field_errors %}
+
+                            <div class="error-box mb-4">
+
+                                <strong>
+                                    Please fix the following:
+                                </strong>
+
+                                <div class="mt-2">
+                                    {{ form.non_field_errors }}
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- CATEGORY -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Category
+                            </label>
+
+                            {{ form.category }}
+
+                            {% for error in form.category.errors %}
+
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- PRODUCT NAME -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Product Name
+                            </label>
+
+                            {{ form.name }}
+
+                            {% for error in form.name.errors %}
+
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- DESCRIPTION -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Description
+                            </label>
+
+                            {{ form.description }}
+
+                            <div class="form-text">
+                                Describe the ingredients, taste, size,
+                                or other important details.
+                            </div>
+
+                            {% for error in form.description.errors %}
+
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- PRICE -->
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label">
+                                    Price (₹)
+                                </label>
+
+                                {{ form.price }}
+
+                                {% for error in form.price.errors %}
+
+                                    <div class="text-danger small mt-1">
+                                        {{ error }}
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label">
+                                    Discount Price (₹)
+                                </label>
+
+                                {{ form.discount_price }}
+
+                                <div class="form-text">
+                                    Optional. Leave empty if there is no discount.
+                                </div>
+
+                                {% for error in form.discount_price.errors %}
+
+                                    <div class="text-danger small mt-1">
+                                        {{ error }}
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- STOCK -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Stock Quantity
+                            </label>
+
+                            {{ form.stock }}
+
+                            <div class="form-text">
+                                Number of items currently available.
+                            </div>
+
+                            {% for error in form.stock.errors %}
+
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- IMAGE -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Product Image
+                            </label>
+
+                            <div class="image-box">
+
+                                <div class="image-icon">
+                                    📷
+                                </div>
+
+                                <div class="fw-bold mb-2">
+                                    Upload Product Photo
+                                </div>
+
+                                <div class="text-muted small mb-3">
+                                    Use a clear, high-quality image
+                                    of your food item.
+                                </div>
+
+                                {{ form.image }}
+
+                            </div>
+
+                            {% for error in form.image.errors %}
+
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- AVAILABILITY -->
+
+                        <div class="mb-4">
+
+                            <div class="form-check">
+
+                                {{ form.is_available }}
+
+                                <label
+                                    class="form-check-label fw-semibold"
+                                >
+                                    Product is available for customers
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- BUTTONS -->
+
+                        <div class="d-flex flex-wrap gap-2 pt-2">
+
+                            <button
+                                type="submit"
+                                class="btn-yumzo"
+                            >
+                                💾 Save Product
+                            </button>
+
+                            <a
+                                href="{% url 'product_list' %}"
+                                class="btn-back"
+                            >
+                                Cancel
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SIDE INFORMATION -->
+
+        <div class="col-lg-4">
+
+
+            <div class="info-card mb-4">
+
+                <h6>
+                    💡 Product Tips
+                </h6>
+
+                <ul class="small text-muted mb-0 ps-3">
+
+                    <li class="mb-2">
+                        Use a simple and clear product name.
+                    </li>
+
+                    <li class="mb-2">
+                        Add a useful description for customers.
+                    </li>
+
+                    <li class="mb-2">
+                        Upload a high-quality food image.
+                    </li>
+
+                    <li class="mb-2">
+                        Keep the stock quantity updated.
+                    </li>
+
+                    <li>
+                        Set a discount price only when needed.
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="product-card p-4">
+
+                <h6 class="fw-bold mb-3">
+                    🏪 Your Restaurant
+                </h6>
+
+                <div class="fw-bold">
+                    {{ shop.name }}
+                </div>
+
+                {% if shop.city %}
+
+                    <div class="text-muted small mt-1">
+                        📍 {{ shop.city }}
                     </div>
 
                 {% endif %}
 
+                {% if shop.phone %}
 
-                <!-- Category -->
-
-                <div class="mb-3">
-
-                    <label class="form-label fw-bold">
-                        Category
-                    </label>
-
-                    {{ form.category }}
-
-                    {% for error in form.category.errors %}
-                        <div class="text-danger small">
-                            {{ error }}
-                        </div>
-                    {% endfor %}
-
-                </div>
-
-
-                <!-- Product Name -->
-
-                <div class="mb-3">
-
-                    <label class="form-label fw-bold">
-                        Product Name
-                    </label>
-
-                    {{ form.name }}
-
-                    {% for error in form.name.errors %}
-                        <div class="text-danger small">
-                            {{ error }}
-                        </div>
-                    {% endfor %}
-
-                </div>
-
-
-                <!-- Description -->
-
-                <div class="mb-3">
-
-                    <label class="form-label fw-bold">
-                        Description
-                    </label>
-
-                    {{ form.description }}
-
-                    {% for error in form.description.errors %}
-                        <div class="text-danger small">
-                            {{ error }}
-                        </div>
-                    {% endfor %}
-
-                </div>
-
-
-                <!-- Price -->
-
-                <div class="row">
-
-                    <div class="col-md-6 mb-3">
-
-                        <label class="form-label fw-bold">
-                            Price (₹)
-                        </label>
-
-                        {{ form.price }}
-
-                        {% for error in form.price.errors %}
-                            <div class="text-danger small">
-                                {{ error }}
-                            </div>
-                        {% endfor %}
-
+                    <div class="text-muted small mt-1">
+                        📞 {{ shop.phone }}
                     </div>
 
+                {% endif %}
 
-                    <div class="col-md-6 mb-3">
+                <hr>
 
-                        <label class="form-label fw-bold">
-                            Discount Price (₹)
-                        </label>
+                <a
+                    href="{% url 'shop_profile' %}"
+                    class="btn btn-outline-danger w-100 rounded-3"
+                >
+                    View Restaurant
+                </a>
 
-                        {{ form.discount_price }}
-
-                        <small class="text-muted">
-                            Optional
-                        </small>
-
-                        {% for error in form.discount_price.errors %}
-                            <div class="text-danger small">
-                                {{ error }}
-                            </div>
-                        {% endfor %}
-
-                    </div>
-
-                </div>
-
-
-                <!-- Stock -->
-
-                <div class="mb-3">
-
-                    <label class="form-label fw-bold">
-                        Stock Quantity
-                    </label>
-
-                    {{ form.stock }}
-
-                    {% for error in form.stock.errors %}
-                        <div class="text-danger small">
-                            {{ error }}
-                        </div>
-                    {% endfor %}
-
-                </div>
-
-
-                <!-- Image -->
-
-                <div class="mb-3">
-
-                    <label class="form-label fw-bold">
-                        Product Image
-                    </label>
-
-                    {{ form.image }}
-
-                    <small class="text-muted d-block mt-1">
-                        Upload a clear image of your product.
-                    </small>
-
-                    {% for error in form.image.errors %}
-                        <div class="text-danger small">
-                            {{ error }}
-                        </div>
-                    {% endfor %}
-
-                </div>
-
-
-                <!-- Availability -->
-
-                <div class="form-check mb-4">
-
-                    {{ form.is_available }}
-
-                    <label class="form-check-label">
-                        Product is available for customers
-                    </label>
-
-                </div>
-
-
-                <!-- Buttons -->
-
-                <div class="d-flex gap-2">
-
-                    <button
-                        type="submit"
-                        class="btn btn-primary px-4"
-                    >
-                        💾 Save Product
-                    </button>
-
-                    <a
-                        href="{% url 'product_list' %}"
-                        class="btn btn-outline-secondary"
-                    >
-                        Cancel
-                    </a>
-
-                </div>
-
-            </form>
+            </div>
 
         </div>
 
@@ -258,6 +619,17 @@
 
 </div>
 
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+    © 2026 <strong>Yumzo</strong> · Restaurant Partner Panel
+
+</div>
+
+
 </body>
 
 </html>
+```

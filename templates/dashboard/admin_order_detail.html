@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +12,7 @@
     >
 
     <title>
-        Order #{{ order.id }} | LocalKart Admin
+        Order #{{ order.id }} | Yumzo Admin
     </title>
 
     <link
@@ -21,98 +22,509 @@
 
     <style>
 
-        body {
-            background: #f5f7fb;
+        * {
+            box-sizing: border-box;
         }
 
-        .card {
-            border: none;
-            border-radius: 14px;
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f7f8;
+            color: #212529;
         }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 250px;
+            background: #ffffff;
+            border-right: 1px solid #eeeeee;
+            padding: 25px 18px;
+            z-index: 1000;
+        }
+
+        .brand {
+            display: block;
+            color: #e23744;
+            text-decoration: none;
+            font-size: 27px;
+            font-weight: 900;
+            margin-bottom: 35px;
+            padding-left: 10px;
+        }
+
+        .brand span {
+            color: #ff7a00;
+        }
+
+        .admin-label {
+            font-size: 11px;
+            color: #999999;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 12px;
+            margin-bottom: 12px;
+        }
+
+        .side-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 14px;
+            border-radius: 12px;
+            margin-bottom: 5px;
+            text-decoration: none;
+            color: #555555;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.2s ease;
+        }
+
+        .side-link:hover {
+            background: #fff1f2;
+            color: #e23744;
+        }
+
+        .side-link.active {
+            background: #e23744;
+            color: #ffffff;
+        }
+
+        .side-icon {
+            width: 25px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .sidebar-bottom {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .logout-link {
+            color: #dc3545;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main-content {
+            margin-left: 250px;
+            min-height: 100vh;
+            padding: 30px 35px;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
 
         .page-header {
-            margin-bottom: 30px;
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 18px;
+            padding: 22px 25px;
+            margin-bottom: 25px;
+        }
+
+        .page-title {
+            font-size: 25px;
+            font-weight: 850;
+            margin-bottom: 5px;
+        }
+
+        .page-subtitle {
+            color: #777777;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .back-btn {
+            border: 1px solid #e23744;
+            color: #e23744;
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 9px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: #e23744;
+            color: #ffffff;
+        }
+
+        /* =========================
+           CARDS
+        ========================= */
+
+        .yumzo-card {
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 18px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .card-body-custom {
+            padding: 24px;
         }
 
         .section-title {
-            font-weight: 700;
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 22px;
         }
 
+        /* =========================
+           INFO
+        ========================= */
+
         .info-label {
-            font-size: 13px;
-            color: #6c757d;
-            margin-bottom: 3px;
+            font-size: 11px;
+            color: #999999;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+            margin-bottom: 5px;
         }
 
         .info-value {
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: 700;
+            color: #333333;
         }
 
+        .info-box {
+            background: #fafafa;
+            border: 1px solid #eeeeee;
+            border-radius: 13px;
+            padding: 16px;
+        }
+
+        /* =========================
+           ADDRESS
+        ========================= */
+
+        .address-box {
+            background: #fff7f7;
+            border: 1px solid #f6d4d7;
+            border-radius: 14px;
+            padding: 17px;
+        }
+
+        .address-main {
+            font-size: 14px;
+            font-weight: 750;
+            line-height: 1.6;
+        }
+
+        .address-secondary {
+            color: #777777;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* =========================
+           PRODUCTS
+        ========================= */
+
         .product-row {
-            border-bottom: 1px solid #eee;
-            padding: 15px 0;
+            padding: 16px 0;
+            border-bottom: 1px solid #eeeeee;
         }
 
         .product-row:last-child {
             border-bottom: none;
         }
 
-        .order-total {
-            font-size: 20px;
+        .product-name {
+            font-weight: 750;
+            font-size: 14px;
+        }
+
+        .product-meta {
+            color: #888888;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .qty-badge {
+            background: #f1f1f1;
+            color: #555555;
+            border-radius: 8px;
+            padding: 6px 9px;
+            font-size: 11px;
             font-weight: 700;
+        }
+
+        .product-price {
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 35px 15px;
+            color: #888888;
+        }
+
+        .empty-icon {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status-card {
+            border-top: 4px solid #e23744;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .status-placed {
+            background: #eef4ff;
+            color: #2166d1;
+        }
+
+        .status-accepted {
+            background: #eaf8ff;
+            color: #147da8;
+        }
+
+        .status-preparing {
+            background: #fff5df;
+            color: #9b6800;
+        }
+
+        .status-ready {
+            background: #f0efff;
+            color: #6255c7;
+        }
+
+        .status-delivery {
+            background: #eaf8ff;
+            color: #147da8;
+        }
+
+        .status-delivered {
+            background: #eaf8ef;
+            color: #25753b;
+        }
+
+        .status-cancelled {
+            background: #fff0f1;
+            color: #b4232d;
+        }
+
+        .status-default {
+            background: #f1f1f1;
+            color: #555555;
+        }
+
+        .form-select {
+            border-radius: 10px;
+            padding: 11px 12px;
+            border-color: #dddddd;
+        }
+
+        .update-btn {
+            width: 100%;
+            background: #e23744;
+            border: none;
+            color: #ffffff;
+            border-radius: 10px;
+            padding: 11px;
+            font-size: 13px;
+            font-weight: 750;
+        }
+
+        .update-btn:hover {
+            background: #c92f3b;
+        }
+
+        /* =========================
+           PAYMENT
+        ========================= */
+
+        .payment-badge {
+            display: inline-block;
+            padding: 7px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
         }
 
         .payment-id {
             word-break: break-all;
+            font-size: 11px;
+            color: #777777;
         }
 
-        .status-card {
-            border-left: 4px solid #0d6efd;
+        .divider {
+            border-top: 1px solid #eeeeee;
+            margin: 20px 0;
         }
 
-        .empty-state {
-            padding: 30px;
-        }
+        /* =========================
+           TIMELINE
+        ========================= */
 
         .status-timeline {
             position: relative;
-            margin-left: 10px;
+            padding-left: 5px;
         }
 
         .timeline-item {
             position: relative;
             display: flex;
-            gap: 15px;
+            gap: 13px;
             padding-bottom: 25px;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
         }
 
         .timeline-item:not(:last-child)::before {
             content: "";
             position: absolute;
-            left: 16px;
-            top: 34px;
+            left: 15px;
+            top: 32px;
             width: 2px;
-            height: calc(100% - 10px);
-            background: #dee2e6;
+            height: calc(100% - 5px);
+            background: #e2e2e2;
         }
 
         .timeline-dot {
-            width: 34px;
-            height: 34px;
-            min-width: 34px;
+            width: 31px;
+            height: 31px;
+            min-width: 31px;
             border-radius: 50%;
-            background: #0d6efd;
-            color: white;
+            background: #e23744;
+            color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 12px;
             position: relative;
             z-index: 1;
         }
 
         .timeline-content {
-            padding-top: 5px;
+            padding-top: 3px;
+        }
+
+        .timeline-status {
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .timeline-date {
+            color: #888888;
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        /* =========================
+           SUMMARY
+        ========================= */
+
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 13px;
+        }
+
+        .summary-line span:last-child {
+            font-weight: 700;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-label {
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .total-value {
+            font-size: 24px;
+            font-weight: 900;
+            color: #e23744;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 991px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #eeeeee;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .sidebar-bottom {
+                margin-top: 10px;
+            }
+
+        }
+
+        @media (max-width: 576px) {
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .page-header {
+                padding: 18px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start !important;
+                gap: 15px;
+            }
+
+            .page-title {
+                font-size: 21px;
+            }
+
+            .card-body-custom {
+                padding: 18px;
+            }
+
         }
 
     </style>
@@ -123,20 +535,133 @@
 <body>
 
 
-<div class="container py-5">
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+    <a
+        href="{% url 'admin_dashboard' %}"
+        class="brand"
+    >
+        🍽️ Yum<span>zo</span>
+    </a>
 
 
-    <!-- ================= HEADER ================= -->
+    <div class="admin-label">
+        Administration
+    </div>
 
-    <div class="d-flex justify-content-between align-items-center page-header">
+
+    <a
+        href="{% url 'admin_dashboard' %}"
+        class="side-link"
+    >
+        <span class="side-icon">📊</span>
+        Dashboard
+    </a>
+
+
+    <a
+        href="{% url 'manage_users' %}"
+        class="side-link"
+    >
+        <span class="side-icon">👥</span>
+        Manage Users
+    </a>
+
+
+    <a
+        href="{% url 'manage_shops' %}"
+        class="side-link"
+    >
+        <span class="side-icon">🏪</span>
+        Manage Restaurants
+    </a>
+
+
+    <a
+        href="{% url 'manage_products' %}"
+        class="side-link"
+    >
+        <span class="side-icon">🍔</span>
+        Manage Products
+    </a>
+
+
+    <a
+        href="{% url 'manage_categories' %}"
+        class="side-link"
+    >
+        <span class="side-icon">📂</span>
+        Categories
+    </a>
+
+
+    <a
+        href="{% url 'manage_orders' %}"
+        class="side-link active"
+    >
+        <span class="side-icon">📦</span>
+        Orders
+    </a>
+
+
+    <a
+        href="{% url 'manage_reviews' %}"
+        class="side-link"
+    >
+        <span class="side-icon">⭐</span>
+        Reviews
+    </a>
+
+
+    <div class="sidebar-bottom">
+
+        <a
+            href="/admin/"
+            class="side-link"
+        >
+            <span class="side-icon">⚙️</span>
+            Django Admin
+        </a>
+
+
+        <a
+            href="{% url 'logout' %}"
+            class="side-link logout-link"
+        >
+            <span class="side-icon">🚪</span>
+            Logout
+        </a>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main-content">
+
+
+    <!-- HEADER -->
+
+    <div
+        class="page-header d-flex justify-content-between align-items-center"
+    >
 
         <div>
 
-            <h2 class="fw-bold mb-1">
+            <h1 class="page-title">
                 📦 Order #{{ order.id }}
-            </h2>
+            </h1>
 
-            <p class="text-muted mb-0">
+            <p class="page-subtitle">
                 Order placed on
                 {{ order.created_at|date:"d M Y, h:i A" }}
             </p>
@@ -146,7 +671,7 @@
 
         <a
             href="{% url 'manage_orders' %}"
-            class="btn btn-outline-primary"
+            class="back-btn"
         >
             ← Back to Orders
         </a>
@@ -155,40 +680,46 @@
 
 
 
-    <!-- ================= MAIN GRID ================= -->
+    <!-- =================================================
+         MAIN GRID
+    ================================================= -->
 
     <div class="row g-4">
 
 
-        <!-- ================================================= -->
-        <!-- LEFT SIDE -->
-        <!-- ================================================= -->
+        <!-- =================================================
+             LEFT COLUMN
+        ================================================= -->
 
         <div class="col-lg-8">
 
 
-            <!-- ================= CUSTOMER ================= -->
+            <!-- CUSTOMER -->
 
-            <div class="card shadow-sm mb-4">
+            <div class="yumzo-card">
 
-                <div class="card-body p-4">
+                <div class="card-body-custom">
 
-                    <h5 class="section-title mb-4">
+                    <h5 class="section-title">
                         👤 Customer Information
                     </h5>
 
 
-                    <div class="row g-4">
+                    <div class="row g-3">
 
 
                         <div class="col-md-6">
 
-                            <div class="info-label">
-                                Full Name
-                            </div>
+                            <div class="info-box">
 
-                            <div class="info-value">
-                                {{ order.full_name }}
+                                <div class="info-label">
+                                    Full Name
+                                </div>
+
+                                <div class="info-value">
+                                    {{ order.full_name }}
+                                </div>
+
                             </div>
 
                         </div>
@@ -196,25 +727,16 @@
 
                         <div class="col-md-6">
 
-                            <div class="info-label">
-                                Username
-                            </div>
+                            <div class="info-box">
 
-                            <div class="info-value">
-                                {{ order.customer.username }}
-                            </div>
+                                <div class="info-label">
+                                    Username
+                                </div>
 
-                        </div>
+                                <div class="info-value">
+                                    {{ order.customer.username }}
+                                </div>
 
-
-                        <div class="col-md-6">
-
-                            <div class="info-label">
-                                Phone
-                            </div>
-
-                            <div class="info-value">
-                                {{ order.phone|default:"-" }}
                             </div>
 
                         </div>
@@ -222,12 +744,33 @@
 
                         <div class="col-md-6">
 
-                            <div class="info-label">
-                                Email
+                            <div class="info-box">
+
+                                <div class="info-label">
+                                    Phone
+                                </div>
+
+                                <div class="info-value">
+                                    {{ order.phone|default:"-" }}
+                                </div>
+
                             </div>
 
-                            <div class="info-value">
-                                {{ order.customer.email|default:"-" }}
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="info-box">
+
+                                <div class="info-label">
+                                    Email
+                                </div>
+
+                                <div class="info-value">
+                                    {{ order.customer.email|default:"-" }}
+                                </div>
+
                             </div>
 
                         </div>
@@ -241,37 +784,42 @@
 
 
 
-            <!-- ================= DELIVERY ADDRESS ================= -->
+            <!-- DELIVERY ADDRESS -->
 
-            <div class="card shadow-sm mb-4">
+            <div class="yumzo-card">
 
-                <div class="card-body p-4">
+                <div class="card-body-custom">
 
-                    <h5 class="section-title mb-4">
+                    <h5 class="section-title">
                         📍 Delivery Address
                     </h5>
 
 
-                    <div class="p-3 bg-light rounded">
+                    <div class="address-box">
 
-                        <strong>
+                        <div class="address-main">
+
                             {{ order.address }}
-                        </strong>
 
-                        <br>
+                        </div>
 
-                        {{ order.city }} -
-                        {{ order.pincode }}
+
+                        <div class="address-secondary">
+
+                            {{ order.city }} -
+                            {{ order.pincode }}
+
+                        </div>
 
 
                         {% if order.landmark %}
 
-                            <br>
+                            <div class="address-secondary">
 
-                            <span class="text-muted">
-                                Landmark:
+                                📌 Landmark:
                                 {{ order.landmark }}
-                            </span>
+
+                            </div>
 
                         {% endif %}
 
@@ -283,27 +831,31 @@
 
 
 
-            <!-- ================= SHOP ================= -->
+            <!-- SHOP -->
 
-            <div class="card shadow-sm mb-4">
+            <div class="yumzo-card">
 
-                <div class="card-body p-4">
+                <div class="card-body-custom">
 
-                    <h5 class="section-title mb-4">
-                        🏪 Shop Information
+                    <h5 class="section-title">
+                        🏪 Restaurant Information
                     </h5>
 
 
-                    <div class="row">
+                    <div class="row g-3">
 
                         <div class="col-md-6">
 
-                            <div class="info-label">
-                                Shop Name
-                            </div>
+                            <div class="info-box">
 
-                            <div class="info-value">
-                                {{ order.shop.name }}
+                                <div class="info-label">
+                                    Restaurant Name
+                                </div>
+
+                                <div class="info-value">
+                                    {{ order.shop.name }}
+                                </div>
+
                             </div>
 
                         </div>
@@ -311,12 +863,16 @@
 
                         <div class="col-md-6">
 
-                            <div class="info-label">
-                                City
-                            </div>
+                            <div class="info-box">
 
-                            <div class="info-value">
-                                {{ order.shop.city|default:"-" }}
+                                <div class="info-label">
+                                    City
+                                </div>
+
+                                <div class="info-value">
+                                    {{ order.shop.city|default:"-" }}
+                                </div>
+
                             </div>
 
                         </div>
@@ -329,13 +885,13 @@
 
 
 
-            <!-- ================= ORDERED PRODUCTS ================= -->
+            <!-- ORDERED PRODUCTS -->
 
-            <div class="card shadow-sm">
+            <div class="yumzo-card">
 
-                <div class="card-body p-4">
+                <div class="card-body-custom">
 
-                    <h5 class="section-title mb-4">
+                    <h5 class="section-title">
                         🛒 Ordered Products
                     </h5>
 
@@ -344,46 +900,45 @@
 
                         <div class="product-row">
 
-                            <div class="row align-items-center">
+                            <div class="row align-items-center g-3">
 
-
-                                <!-- Product -->
 
                                 <div class="col-md-6">
 
-                                    <strong>
+                                    <div class="product-name">
                                         {{ item.product_name }}
-                                    </strong>
+                                    </div>
 
-                                    <br>
+                                    <div class="product-meta">
 
-                                    <small class="text-muted">
                                         ₹{{ item.price }}
                                         ×
                                         {{ item.quantity }}
-                                    </small>
+
+                                    </div>
 
                                 </div>
 
 
-                                <!-- Quantity -->
-
                                 <div class="col-md-2">
 
-                                    <span class="badge bg-secondary">
-                                        Qty: {{ item.quantity }}
+                                    <span class="qty-badge">
+
+                                        Qty:
+                                        {{ item.quantity }}
+
                                     </span>
 
                                 </div>
 
 
-                                <!-- Subtotal -->
-
                                 <div class="col-md-4 text-md-end">
 
-                                    <strong>
+                                    <div class="product-price">
+
                                         ₹{{ item.subtotal }}
-                                    </strong>
+
+                                    </div>
 
                                 </div>
 
@@ -395,20 +950,17 @@
 
                     {% empty %}
 
-                        <div class="empty-state text-center">
+                        <div class="empty-state">
 
-                            <div style="font-size: 40px;">
+                            <div class="empty-icon">
                                 📦
                             </div>
 
-                            <p class="text-muted mb-0">
-                                No products found for this order.
-                            </p>
+                            No products found for this order.
 
                         </div>
 
                     {% endfor %}
-
 
                 </div>
 
@@ -419,75 +971,84 @@
 
 
 
-        <!-- ================================================= -->
-        <!-- RIGHT SIDE -->
-        <!-- ================================================= -->
+        <!-- =================================================
+             RIGHT COLUMN
+        ================================================= -->
 
         <div class="col-lg-4">
 
 
-            <!-- ================= ORDER STATUS ================= -->
+            <!-- ORDER STATUS -->
 
-            <div class="card shadow-sm status-card mb-4">
+            <div class="yumzo-card status-card">
 
-                <div class="card-body p-4">
+                <div class="card-body-custom">
 
-                    <h5 class="section-title mb-3">
+                    <h5 class="section-title">
                         🚚 Order Status
                     </h5>
 
 
-                    <div class="mb-3">
+                    <div class="mb-4">
+
 
                         {% if order.status == 'delivered' %}
 
-                            <span class="badge bg-success fs-6">
+                            <span class="status-badge status-delivered">
                                 🟢 Delivered
                             </span>
 
+
                         {% elif order.status == 'cancelled' %}
 
-                            <span class="badge bg-danger fs-6">
+                            <span class="status-badge status-cancelled">
                                 🔴 Cancelled
                             </span>
 
+
                         {% elif order.status == 'placed' %}
 
-                            <span class="badge bg-primary fs-6">
+                            <span class="status-badge status-placed">
                                 📦 Order Placed
                             </span>
 
+
                         {% elif order.status == 'accepted' %}
 
-                            <span class="badge bg-info text-dark fs-6">
+                            <span class="status-badge status-accepted">
                                 ✓ Accepted
                             </span>
 
+
                         {% elif order.status == 'preparing' %}
 
-                            <span class="badge bg-warning text-dark fs-6">
+                            <span class="status-badge status-preparing">
                                 👨‍🍳 Preparing
                             </span>
 
+
                         {% elif order.status == 'ready' %}
 
-                            <span class="badge bg-primary fs-6">
+                            <span class="status-badge status-ready">
                                 🍱 Ready
                             </span>
 
+
                         {% elif order.status == 'out_for_delivery' %}
 
-                            <span class="badge bg-info text-dark fs-6">
+                            <span class="status-badge status-delivery">
                                 🚚 Out for Delivery
                             </span>
 
+
                         {% else %}
 
-                            <span class="badge bg-secondary fs-6">
+                            <span class="status-badge status-default">
                                 {{ order.get_status_display }}
                             </span>
 
                         {% endif %}
+
 
                     </div>
 
@@ -496,7 +1057,8 @@
 
                         {% csrf_token %}
 
-                        <label class="form-label fw-bold">
+
+                        <label class="info-label mb-2">
                             Change Status
                         </label>
 
@@ -524,9 +1086,9 @@
 
                         <button
                             type="submit"
-                            class="btn btn-primary w-100"
+                            class="update-btn"
                         >
-                            🔄 Update Status
+                            🔄 Update Order Status
                         </button>
 
                     </form>
@@ -537,34 +1099,35 @@
 
 
 
-            <!-- ================= PAYMENT ================= -->
+            <!-- PAYMENT -->
 
-            <div class="card shadow-sm mb-4">
+            <div class="yumzo-card">
 
-                <div class="card-body p-4">
+                <div class="card-body-custom">
 
-                    <h5 class="section-title mb-4">
+                    <h5 class="section-title">
                         💳 Payment & Refund
                     </h5>
 
 
-                    <!-- Payment Method -->
+                    <!-- PAYMENT METHOD -->
 
-                    <div class="mb-3">
+                    <div class="mb-4">
 
                         <div class="info-label">
                             Payment Method
                         </div>
 
+
                         {% if order.payment_method == 'cod' %}
 
-                            <span class="badge bg-secondary">
+                            <span class="payment-badge bg-secondary text-white">
                                 💵 Cash on Delivery
                             </span>
 
                         {% else %}
 
-                            <span class="badge bg-primary">
+                            <span class="payment-badge bg-primary text-white">
                                 💳 Online Payment
                             </span>
 
@@ -574,9 +1137,9 @@
 
 
 
-                    <!-- Payment Status -->
+                    <!-- PAYMENT STATUS -->
 
-                    <div class="mb-3">
+                    <div class="mb-4">
 
                         <div class="info-label">
                             Payment Status
@@ -585,19 +1148,21 @@
 
                         {% if order.payment_status == 'paid' %}
 
-                            <span class="badge bg-success">
+                            <span class="payment-badge bg-success text-white">
                                 🟢 Paid
                             </span>
 
+
                         {% elif order.payment_status == 'failed' %}
 
-                            <span class="badge bg-danger">
+                            <span class="payment-badge bg-danger text-white">
                                 🔴 Failed
                             </span>
 
+
                         {% else %}
 
-                            <span class="badge bg-warning text-dark">
+                            <span class="payment-badge bg-warning text-dark">
                                 🟡 Pending
                             </span>
 
@@ -607,11 +1172,12 @@
 
 
 
-                    <!-- Online Payment -->
+                    <!-- ONLINE PAYMENT -->
 
                     {% if order.payment_method == 'online' and order.payment %}
 
-                        <hr>
+                        <div class="divider"></div>
+
 
                         <h6 class="fw-bold mb-3">
                             Online Payment Details
@@ -620,22 +1186,22 @@
 
                         {% if order.payment.razorpay_payment_id %}
 
-                            <div class="mb-3">
+                            <div class="mb-4">
 
                                 <div class="info-label">
                                     Payment ID
                                 </div>
 
-                                <small class="text-muted payment-id">
+                                <div class="payment-id">
                                     {{ order.payment.razorpay_payment_id }}
-                                </small>
+                                </div>
 
                             </div>
 
                         {% endif %}
 
 
-                        <div class="mb-3">
+                        <div class="mb-4">
 
                             <div class="info-label">
                                 Payment Amount
@@ -649,18 +1215,19 @@
 
 
 
-                        <!-- Refund -->
+                        <!-- REFUND -->
 
                         {% if order.status == 'cancelled' and order.payment_status == 'paid' %}
 
-                            <hr>
+                            <div class="divider"></div>
+
 
                             <h6 class="fw-bold mb-3">
                                 💰 Refund Information
                             </h6>
 
 
-                            <div class="mb-3">
+                            <div class="mb-4">
 
                                 <div class="info-label">
                                     Refund Status
@@ -669,25 +1236,28 @@
 
                                 {% if order.payment.refund_status == 'processed' %}
 
-                                    <span class="badge bg-success">
+                                    <span class="payment-badge bg-success text-white">
                                         💰 Processed
                                     </span>
 
+
                                 {% elif order.payment.refund_status == 'pending' %}
 
-                                    <span class="badge bg-warning text-dark">
+                                    <span class="payment-badge bg-warning text-dark">
                                         ⏳ Pending
                                     </span>
 
+
                                 {% elif order.payment.refund_status == 'failed' %}
 
-                                    <span class="badge bg-danger">
+                                    <span class="payment-badge bg-danger text-white">
                                         ❌ Failed
                                     </span>
 
+
                                 {% else %}
 
-                                    <span class="badge bg-secondary">
+                                    <span class="payment-badge bg-secondary text-white">
                                         Not Requested
                                     </span>
 
@@ -704,9 +1274,9 @@
                                         Refund ID
                                     </div>
 
-                                    <small class="text-muted payment-id">
+                                    <div class="payment-id">
                                         {{ order.payment.razorpay_refund_id }}
-                                    </small>
+                                    </div>
 
                                 </div>
 
@@ -720,13 +1290,15 @@
 
             </div>
 
-            <!-- ================= STATUS TIMELINE ================= -->
 
-            <div class="card shadow-sm mb-4">
 
-                <div class="card-body p-4">
+            <!-- STATUS TIMELINE -->
 
-                    <h5 class="section-title mb-4">
+            <div class="yumzo-card">
+
+                <div class="card-body-custom">
+
+                    <h5 class="section-title">
                         📋 Order Status Timeline
                     </h5>
 
@@ -735,36 +1307,47 @@
 
                         <div class="status-timeline">
 
+
                             {% for history in status_history %}
 
                                 <div class="timeline-item">
 
+
                                     <div class="timeline-dot">
+
                                         {% if history.status == 'delivered' %}
                                             ✓
+
                                         {% elif history.status == 'cancelled' %}
                                             ✕
+
                                         {% elif history.status == 'out_for_delivery' %}
                                             🚚
+
                                         {% elif history.status == 'preparing' %}
                                             👨‍🍳
+
                                         {% elif history.status == 'ready' %}
                                             🍱
+
                                         {% elif history.status == 'accepted' %}
                                             ✓
+
                                         {% else %}
                                             📦
                                         {% endif %}
+
                                     </div>
 
 
                                     <div class="timeline-content">
 
-                                        <strong>
+                                        <div class="timeline-status">
                                             {{ history.get_status_display }}
-                                        </strong>
+                                        </div>
 
-                                        <div class="text-muted small mt-1">
+
+                                        <div class="timeline-date">
 
                                             {{ history.changed_at|date:"d M Y, h:i A" }}
 
@@ -773,7 +1356,7 @@
 
                                         {% if history.changed_by %}
 
-                                            <div class="text-muted small">
+                                            <div class="timeline-date">
 
                                                 Changed by:
                                                 {{ history.changed_by.username }}
@@ -790,9 +1373,10 @@
 
                         </div>
 
+
                     {% else %}
 
-                        <div class="text-center text-muted py-3">
+                        <div class="empty-state py-3">
 
                             📋 No status history available yet.
 
@@ -806,18 +1390,18 @@
 
 
 
-            <!-- ================= ORDER SUMMARY ================= -->
+            <!-- ORDER SUMMARY -->
 
-            <div class="card shadow-sm">
+            <div class="yumzo-card">
 
-                <div class="card-body p-4">
+                <div class="card-body-custom">
 
-                    <h5 class="section-title mb-4">
+                    <h5 class="section-title">
                         💰 Order Summary
                     </h5>
 
 
-                    <div class="d-flex justify-content-between mb-2">
+                    <div class="summary-line">
 
                         <span>
                             Subtotal
@@ -830,7 +1414,7 @@
                     </div>
 
 
-                    <div class="d-flex justify-content-between mb-3">
+                    <div class="summary-line">
 
                         <span>
                             Delivery Fee
@@ -843,18 +1427,18 @@
                     </div>
 
 
-                    <hr>
+                    <div class="divider"></div>
 
 
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="total-row">
 
-                        <strong>
+                        <span class="total-label">
                             Total
-                        </strong>
+                        </span>
 
-                        <strong class="text-success order-total">
+                        <span class="total-value">
                             ₹{{ order.total_amount }}
-                        </strong>
+                        </span>
 
                     </div>
 
@@ -867,13 +1451,16 @@
 
     </div>
 
-</div>
+
+</main>
 
 
 <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
 </script>
 
+
 </body>
 
 </html>
+```

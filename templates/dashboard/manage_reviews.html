@@ -1,11 +1,17 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Manage Reviews | LocalKart Admin</title>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Manage Reviews | Yumzo Admin</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -13,116 +19,681 @@
     >
 
     <style>
-        body {
-            background: #f5f7fb;
+
+        * {
+            box-sizing: border-box;
         }
 
-        .navbar-brand {
-            letter-spacing: 0.5px;
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f7f8;
+            color: #212529;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 250px;
+            background: #ffffff;
+            border-right: 1px solid #eeeeee;
+            padding: 25px 18px;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .brand {
+            display: block;
+            text-decoration: none;
+            font-size: 27px;
+            font-weight: 900;
+            color: #e23744;
+            padding-left: 10px;
+            margin-bottom: 35px;
+        }
+
+        .brand span {
+            color: #ff7a00;
+        }
+
+        .admin-label {
+            padding: 0 12px;
+            margin-bottom: 12px;
+            font-size: 11px;
+            color: #999999;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .side-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 14px;
+            margin-bottom: 5px;
+            border-radius: 12px;
+            color: #555555;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: .2s ease;
+        }
+
+        .side-link:hover {
+            background: #fff1f2;
+            color: #e23744;
+        }
+
+        .side-link.active {
+            background: #e23744;
+            color: #ffffff;
+        }
+
+        .side-icon {
+            width: 25px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .sidebar-bottom {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .logout-link {
+            color: #dc3545;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main-content {
+            margin-left: 250px;
+            min-height: 100vh;
+            padding: 30px 35px;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .topbar {
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 18px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
         }
 
         .page-title {
-            font-weight: 700;
+            font-size: 24px;
+            font-weight: 850;
+            margin-bottom: 5px;
         }
 
-        .filter-card,
-        .reviews-card {
+        .page-subtitle {
+            color: #777777;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .dashboard-btn {
+            border: 1px solid #dddddd;
+            background: #ffffff;
+            color: #555555;
+            border-radius: 10px;
+            padding: 9px 15px;
+            font-size: 13px;
+            font-weight: 750;
+            text-decoration: none;
+        }
+
+        .dashboard-btn:hover {
+            background: #f5f5f5;
+            color: #333333;
+        }
+
+        /* =========================
+           FILTER CARD
+        ========================= */
+
+        .filter-card {
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 25px;
+        }
+
+        .filter-title {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+
+        .filter-label {
+            display: block;
+            font-size: 11px;
+            color: #555555;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+            margin-bottom: 7px;
+        }
+
+        .form-control,
+        .form-select {
+            border: 1px solid #dddddd;
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 13px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #e23744;
+            box-shadow: 0 0 0 3px rgba(226, 55, 68, .10);
+        }
+
+        .filter-btn {
+            width: 100%;
             border: none;
-            border-radius: 14px;
+            background: #e23744;
+            color: #ffffff;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 750;
         }
 
-        .table th {
+        .filter-btn:hover {
+            background: #c92f3b;
+        }
+
+        .reset-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            border: 1px solid #dddddd;
+            color: #555555;
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 9px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .reset-btn:hover {
+            background: #f5f5f5;
+            color: #333333;
+        }
+
+        /* =========================
+           REVIEWS CARD
+        ========================= */
+
+        .reviews-card {
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .reviews-header {
+            padding: 20px 22px;
+            border-bottom: 1px solid #eeeeee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reviews-title {
+            font-size: 17px;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .review-count {
+            background: #fff1f2;
+            color: #e23744;
+            border-radius: 20px;
+            padding: 7px 11px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table {
+            margin: 0;
+        }
+
+        .table thead th {
+            background: #fafafa;
+            border-bottom: 1px solid #eeeeee;
+            color: #777777;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .45px;
+            padding: 14px 13px;
             white-space: nowrap;
         }
 
-        .table td {
+        .table tbody td {
+            padding: 16px 13px;
             vertical-align: middle;
+            border-color: #f0f0f0;
+            font-size: 13px;
         }
 
-        .review-comment {
-            max-width: 320px;
-            white-space: normal;
-            word-break: break-word;
+        .table tbody tr {
+            transition: .15s ease;
+        }
+
+        .table tbody tr:hover {
+            background: #fffafa;
+        }
+
+        /* =========================
+           NUMBER
+        ========================= */
+
+        .review-number {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9px;
+            background: #fff1f2;
+            color: #e23744;
+            font-size: 12px;
+            font-weight: 850;
+        }
+
+        /* =========================
+           CUSTOMER
+        ========================= */
+
+        .customer-name {
+            font-weight: 800;
+            color: #333333;
+        }
+
+        .secondary-text {
+            color: #888888;
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        /* =========================
+           SHOP
+        ========================= */
+
+        .shop-name {
+            font-weight: 750;
+            color: #333333;
+        }
+
+        /* =========================
+           RATING
+        ========================= */
+
+        .rating-box {
+            display: inline-flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .rating-stars {
+            color: #ffb400;
+            font-size: 15px;
+            white-space: nowrap;
+            letter-spacing: -2px;
+        }
+
+        .rating-number {
+            background: #fff5df;
+            color: #986500;
+            border-radius: 7px;
+            padding: 4px 7px;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        /* =========================
+           COMMENT
+        ========================= */
+
+        .review-comment {
+            max-width: 320px;
+            color: #555555;
+            line-height: 1.55;
+            word-break: break-word;
+        }
+
+        /* =========================
+           DATE
+        ========================= */
+
+        .review-date {
+            font-size: 12px;
+            font-weight: 700;
             white-space: nowrap;
         }
 
+        .review-time {
+            color: #999999;
+            font-size: 10px;
+            margin-top: 3px;
+        }
+
+        /* =========================
+           DELETE
+        ========================= */
+
+        .delete-btn {
+            border-radius: 8px;
+            padding: 7px 11px;
+            font-size: 11px;
+            font-weight: 750;
+        }
+
+        /* =========================
+           PAGINATION
+        ========================= */
+
+        .pagination-area {
+            padding: 18px;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .page-link {
+            border: 1px solid #eeeeee;
+            color: #555555;
+            font-size: 12px;
+            font-weight: 700;
+            margin: 0 2px;
+            border-radius: 8px !important;
+        }
+
+        .page-item.active .page-link {
+            background: #e23744;
+            border-color: #e23744;
+            color: #ffffff;
+        }
+
+        .page-link:hover {
+            color: #e23744;
+            background: #fff1f2;
+        }
+
+        /* =========================
+           EMPTY STATE
+        ========================= */
+
         .empty-state {
-            padding: 60px 20px;
+            padding: 70px 20px;
+            text-align: center;
         }
 
         .empty-icon {
-            font-size: 55px;
+            width: 80px;
+            height: 80px;
+            border-radius: 22px;
+            background: #fff5df;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            font-size: 35px;
         }
 
-        .pagination {
-            margin-bottom: 0;
+        .empty-title {
+            font-size: 19px;
+            font-weight: 800;
+            margin-top: 18px;
         }
+
+        .empty-text {
+            color: #888888;
+            font-size: 13px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 991px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #eeeeee;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .sidebar-bottom {
+                margin-top: 10px;
+            }
+
+        }
+
+        @media (max-width: 576px) {
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .filter-card {
+                padding: 18px;
+            }
+
+            .reviews-header {
+                padding: 17px;
+            }
+
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
 
-<nav class="navbar navbar-dark bg-dark shadow-sm">
-    <div class="container">
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
 
-        <a href="{% url 'admin_dashboard' %}"
-           class="navbar-brand fw-bold">
-            🛒 LocalKart Admin
+<aside class="sidebar">
+
+    <a
+        href="{% url 'admin_dashboard' %}"
+        class="brand"
+    >
+        🍽️ Yum<span>zo</span>
+    </a>
+
+
+    <div class="admin-label">
+        Administration
+    </div>
+
+
+    <a
+        href="{% url 'admin_dashboard' %}"
+        class="side-link"
+    >
+        <span class="side-icon">📊</span>
+        Dashboard
+    </a>
+
+
+    <a
+        href="{% url 'manage_users' %}"
+        class="side-link"
+    >
+        <span class="side-icon">👥</span>
+        Manage Users
+    </a>
+
+
+    <a
+        href="{% url 'manage_shops' %}"
+        class="side-link"
+    >
+        <span class="side-icon">🏪</span>
+        Manage Restaurants
+    </a>
+
+
+    <a
+        href="{% url 'manage_products' %}"
+        class="side-link"
+    >
+        <span class="side-icon">🍔</span>
+        Manage Products
+    </a>
+
+
+    <a
+        href="{% url 'manage_categories' %}"
+        class="side-link"
+    >
+        <span class="side-icon">📂</span>
+        Categories
+    </a>
+
+
+    <a
+        href="{% url 'manage_orders' %}"
+        class="side-link"
+    >
+        <span class="side-icon">📦</span>
+        Orders
+    </a>
+
+
+    <a
+        href="{% url 'manage_reviews' %}"
+        class="side-link active"
+    >
+        <span class="side-icon">⭐</span>
+        Reviews
+    </a>
+
+
+    <div class="sidebar-bottom">
+
+        <a
+            href="/admin/"
+            class="side-link"
+        >
+            <span class="side-icon">⚙️</span>
+            Django Admin
         </a>
 
-        <a href="{% url 'logout' %}"
-           class="btn btn-outline-light btn-sm">
+
+        <a
+            href="{% url 'logout' %}"
+            class="side-link logout-link"
+        >
+            <span class="side-icon">🚪</span>
             Logout
         </a>
 
     </div>
-</nav>
+
+</aside>
 
 
-<!-- ================= MAIN CONTENT ================= -->
 
-<div class="container py-4">
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
 
-    <!-- Header -->
+<main class="main-content">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <!-- HEADER -->
+
+    <div class="topbar">
 
         <div>
-            <h2 class="page-title mb-1">
-                ⭐ Manage Reviews
-            </h2>
 
-            <p class="text-muted mb-0">
-                View and manage customer reviews.
+            <h1 class="page-title">
+                ⭐ Manage Reviews
+            </h1>
+
+            <p class="page-subtitle">
+                View and manage customer reviews across Yumzo.
             </p>
+
         </div>
 
-        <a href="{% url 'admin_dashboard' %}"
-           class="btn btn-secondary">
-            ← Dashboard
+
+        <a
+            href="{% url 'admin_dashboard' %}"
+            class="dashboard-btn"
+        >
+            ← Admin Dashboard
         </a>
 
     </div>
 
 
-    <!-- ================= FILTER CARD ================= -->
 
-    <div class="card filter-card shadow-sm mb-4">
+    <!-- =================================================
+         FILTER
+    ================================================= -->
 
-        <div class="card-body">
+    <div class="filter-card">
 
-            <form method="get" class="row g-3 align-items-end">
+        <div class="filter-title">
+            🔎 Search & Filter Reviews
+        </div>
 
-                <!-- Search -->
+
+        <form method="get">
+
+            <div class="row g-3 align-items-end">
+
+
+                <!-- SEARCH -->
 
                 <div class="col-md-5">
 
-                    <label class="form-label fw-bold">
+                    <label class="filter-label">
                         Search Reviews
                     </label>
 
@@ -131,64 +702,94 @@
                         name="search"
                         value="{{ search }}"
                         class="form-control"
-                        placeholder="🔍 Search customer, shop or review..."
+                        placeholder="🔍 Search customer, restaurant or review..."
                     >
 
                 </div>
 
 
-                <!-- Rating -->
+
+                <!-- RATING -->
 
                 <div class="col-md-3">
 
-                    <label class="form-label fw-bold">
+                    <label class="filter-label">
                         Filter by Rating
                     </label>
 
-                    <select name="rating"
-                            class="form-select">
+                    <select
+                        name="rating"
+                        class="form-select"
+                    >
 
                         <option value="">
                             All Ratings
                         </option>
 
-                        <option value="5"
-                            {% if selected_rating == '5' %}selected{% endif %}>
+
+                        <option
+                            value="5"
+                            {% if selected_rating == '5' %}
+                                selected
+                            {% endif %}
+                        >
                             ⭐⭐⭐⭐⭐ 5 Stars
                         </option>
 
-                        <option value="4"
-                            {% if selected_rating == '4' %}selected{% endif %}>
+
+                        <option
+                            value="4"
+                            {% if selected_rating == '4' %}
+                                selected
+                            {% endif %}
+                        >
                             ⭐⭐⭐⭐ 4 Stars
                         </option>
 
-                        <option value="3"
-                            {% if selected_rating == '3' %}selected{% endif %}>
+
+                        <option
+                            value="3"
+                            {% if selected_rating == '3' %}
+                                selected
+                            {% endif %}
+                        >
                             ⭐⭐⭐ 3 Stars
                         </option>
 
-                        <option value="2"
-                            {% if selected_rating == '2' %}selected{% endif %}>
+
+                        <option
+                            value="2"
+                            {% if selected_rating == '2' %}
+                                selected
+                            {% endif %}
+                        >
                             ⭐⭐ 2 Stars
                         </option>
 
-                        <option value="1"
-                            {% if selected_rating == '1' %}selected{% endif %}>
+
+                        <option
+                            value="1"
+                            {% if selected_rating == '1' %}
+                                selected
+                            {% endif %}
+                        >
                             ⭐ 1 Star
                         </option>
+
 
                     </select>
 
                 </div>
 
 
-                <!-- Filter -->
+
+                <!-- FILTER -->
 
                 <div class="col-md-2">
 
                     <button
                         type="submit"
-                        class="btn btn-primary w-100"
+                        class="filter-btn"
                     >
                         🔍 Filter
                     </button>
@@ -196,246 +797,272 @@
                 </div>
 
 
-                <!-- Reset -->
+
+                <!-- RESET -->
 
                 <div class="col-md-2">
 
                     <a
                         href="{% url 'manage_reviews' %}"
-                        class="btn btn-outline-secondary w-100"
+                        class="reset-btn"
                     >
-                        Reset
+                        ↻ Reset
                     </a>
 
                 </div>
 
-            </form>
 
-        </div>
+            </div>
+
+        </form>
 
     </div>
 
 
-    <!-- ================= REVIEWS CARD ================= -->
 
-    <div class="card reviews-card shadow-sm">
+    <!-- =================================================
+         REVIEWS
+    ================================================= -->
 
-        <div class="card-header bg-white py-3">
+    <div class="reviews-card">
 
-            <div class="d-flex justify-content-between align-items-center">
 
-                <h5 class="mb-0 fw-bold">
-                    Customer Reviews
-                </h5>
+        <div class="reviews-header">
 
-                {% if reviews %}
-                    <span class="badge bg-primary">
-                        {{ reviews.paginator.count }} Reviews
-                    </span>
-                {% endif %}
+            <h5 class="reviews-title">
+                ⭐ Customer Reviews
+            </h5>
 
-            </div>
+
+            {% if reviews %}
+
+                <span class="review-count">
+                    {{ reviews.paginator.count }} Reviews
+                </span>
+
+            {% endif %}
 
         </div>
 
 
-        <div class="card-body p-0">
+
+        <div class="table-responsive">
+
 
             {% if reviews %}
 
-                <!-- ================= TABLE ================= -->
-
-                <div class="table-responsive">
-
-                    <table class="table table-hover align-middle mb-0">
-
-                        <thead class="table-dark">
-
-                            <tr>
-
-                                <th class="px-3">
-                                    #
-                                </th>
-
-                                <th>
-                                    Customer
-                                </th>
-
-                                <th>
-                                    Shop
-                                </th>
-
-                                <th>
-                                    Rating
-                                </th>
-
-                                <th>
-                                    Comment
-                                </th>
-
-                                <th>
-                                    Date
-                                </th>
-
-                                <th>
-                                    Action
-                                </th>
-
-                            </tr>
-
-                        </thead>
+                <table class="table table-hover align-middle mb-0">
 
 
-                        <tbody>
+                    <thead>
 
-                            {% for review in reviews %}
+                        <tr>
 
-                                <tr>
+                            <th class="px-3">
+                                #
+                            </th>
 
-                                    <!-- Number -->
+                            <th>
+                                Customer
+                            </th>
 
-                                    <td class="px-3 fw-bold">
-                                        {{ forloop.counter }}
-                                    </td>
+                            <th>
+                                Restaurant
+                            </th>
+
+                            <th>
+                                Rating
+                            </th>
+
+                            <th>
+                                Comment
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
 
 
-                                    <!-- Customer -->
+                    <tbody>
 
-                                    <td>
 
-                                        <strong>
-                                            {{ review.customer.username }}
-                                        </strong>
+                    {% for review in reviews %}
 
-                                        {% if review.customer.email %}
+                        <tr>
 
-                                            <br>
 
-                                            <small class="text-muted">
-                                                {{ review.customer.email }}
-                                            </small>
+                            <!-- NUMBER -->
+
+                            <td class="px-3">
+
+                                <div class="review-number">
+                                    {{ forloop.counter }}
+                                </div>
+
+                            </td>
+
+
+
+                            <!-- CUSTOMER -->
+
+                            <td>
+
+                                <div class="customer-name">
+                                    {{ review.customer.username }}
+                                </div>
+
+
+                                {% if review.customer.email %}
+
+                                    <div class="secondary-text">
+                                        {{ review.customer.email }}
+                                    </div>
+
+                                {% endif %}
+
+                            </td>
+
+
+
+                            <!-- SHOP -->
+
+                            <td>
+
+                                <div class="shop-name">
+                                    {{ review.shop.name }}
+                                </div>
+
+                            </td>
+
+
+
+                            <!-- RATING -->
+
+                            <td>
+
+                                <div class="rating-box">
+
+
+                                    <div class="rating-stars">
+
+                                        {% if review.rating == 5 %}
+                                            ⭐⭐⭐⭐⭐
+
+                                        {% elif review.rating == 4 %}
+                                            ⭐⭐⭐⭐
+
+                                        {% elif review.rating == 3 %}
+                                            ⭐⭐⭐
+
+                                        {% elif review.rating == 2 %}
+                                            ⭐⭐
+
+                                        {% elif review.rating == 1 %}
+                                            ⭐
 
                                         {% endif %}
 
-                                    </td>
+                                    </div>
 
 
-                                    <!-- Shop -->
-
-                                    <td>
-
-                                        <strong>
-                                            {{ review.shop.name }}
-                                        </strong>
-
-                                    </td>
+                                    <span class="rating-number">
+                                        {{ review.rating }}/5
+                                    </span>
 
 
-                                    <!-- Rating -->
+                                </div>
 
-                                    <td>
-
-                                        <div class="rating-stars">
-
-                                            {% if review.rating == 5 %}
-                                                ⭐⭐⭐⭐⭐
-
-                                            {% elif review.rating == 4 %}
-                                                ⭐⭐⭐⭐
-
-                                            {% elif review.rating == 3 %}
-                                                ⭐⭐⭐
-
-                                            {% elif review.rating == 2 %}
-                                                ⭐⭐
-
-                                            {% elif review.rating == 1 %}
-                                                ⭐
-
-                                            {% endif %}
-
-                                        </div>
-
-                                        <small class="text-muted">
-                                            {{ review.rating }}/5
-                                        </small>
-
-                                    </td>
+                            </td>
 
 
-                                    <!-- Comment -->
 
-                                    <td>
+                            <!-- COMMENT -->
 
-                                        <div class="review-comment">
+                            <td>
 
-                                            {{ review.comment }}
+                                <div class="review-comment">
+                                    {{ review.comment }}
+                                </div>
 
-                                        </div>
-
-                                    </td>
-
-
-                                    <!-- Date -->
-
-                                    <td>
-
-                                        {{ review.created_at|date:"d M Y" }}
-
-                                        <br>
-
-                                        <small class="text-muted">
-                                            {{ review.created_at|date:"h:i A" }}
-                                        </small>
-
-                                    </td>
+                            </td>
 
 
-                                    <!-- Action -->
 
-                                    <td>
+                            <!-- DATE -->
 
-                                        <form
-                                            method="post"
-                                            action="{% url 'delete_review' review.id %}"
-                                            onsubmit="return confirm('Are you sure you want to delete this review?');"
-                                        >
+                            <td>
 
-                                            {% csrf_token %}
+                                <div class="review-date">
+                                    {{ review.created_at|date:"d M Y" }}
+                                </div>
 
-                                            <button
-                                                type="submit"
-                                                class="btn btn-danger btn-sm"
-                                            >
-                                                🗑 Delete
-                                            </button>
+                                <div class="review-time">
+                                    {{ review.created_at|date:"h:i A" }}
+                                </div>
 
-                                        </form>
-
-                                    </td>
-
-                                </tr>
-
-                            {% endfor %}
-
-                        </tbody>
-
-                    </table>
-
-                </div>
+                            </td>
 
 
-                <!-- ================= PAGINATION ================= -->
+
+                            <!-- DELETE -->
+
+                            <td>
+
+                                <form
+                                    method="post"
+                                    action="{% url 'delete_review' review.id %}"
+                                    onsubmit="return confirm('Are you sure you want to delete this review?');"
+                                >
+
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-outline-danger delete-btn"
+                                    >
+                                        🗑 Delete
+                                    </button>
+
+                                </form>
+
+                            </td>
+
+
+                        </tr>
+
+
+                    {% endfor %}
+
+
+                    </tbody>
+
+
+                </table>
+
+
+
+                <!-- =================================================
+                     PAGINATION
+                ================================================= -->
 
                 {% if reviews.has_other_pages %}
 
-                    <div class="p-3">
+                    <div class="pagination-area">
 
                         <nav aria-label="Review pagination">
 
-                            <ul class="pagination justify-content-center">
+                            <ul class="pagination justify-content-center mb-0">
 
-                                <!-- Previous -->
+
+                                <!-- PREVIOUS -->
 
                                 {% if reviews.has_previous %}
 
@@ -453,7 +1080,8 @@
                                 {% endif %}
 
 
-                                <!-- Page Numbers -->
+
+                                <!-- PAGE NUMBERS -->
 
                                 {% for num in reviews.paginator.page_range %}
 
@@ -485,7 +1113,8 @@
                                 {% endfor %}
 
 
-                                <!-- Next -->
+
+                                <!-- NEXT -->
 
                                 {% if reviews.has_next %}
 
@@ -502,6 +1131,7 @@
 
                                 {% endif %}
 
+
                             </ul>
 
                         </nav>
@@ -513,39 +1143,45 @@
 
             {% else %}
 
-                <!-- ================= EMPTY STATE ================= -->
 
-                <div class="empty-state text-center">
+                <!-- EMPTY STATE -->
+
+                <div class="empty-state">
 
                     <div class="empty-icon">
                         ⭐
                     </div>
 
-                    <h5 class="mt-3 fw-bold">
-                        No Reviews Found
-                    </h5>
 
-                    <p class="text-muted mb-0">
+                    <div class="empty-title">
+                        No Reviews Found
+                    </div>
+
+
+                    <p class="empty-text">
                         There are no reviews matching your filter.
                     </p>
 
                 </div>
 
+
             {% endif %}
+
 
         </div>
 
     </div>
 
-</div>
 
+</main>
 
-<!-- ================= BOOTSTRAP JS ================= -->
 
 <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
 </script>
 
+
 </body>
 
 </html>
+```

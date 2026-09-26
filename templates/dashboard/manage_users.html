@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +11,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Manage Users - LocalKart</title>
+    <title>Manage Users | Yumzo Admin</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -19,33 +20,545 @@
 
     <style>
 
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            background: #f5f7fb;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f7f8;
+            color: #212529;
         }
 
-        .page-header {
-            margin-bottom: 30px;
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 250px;
+            background: #ffffff;
+            border-right: 1px solid #eeeeee;
+            padding: 25px 18px;
+            z-index: 1000;
+            overflow-y: auto;
         }
 
-        .card {
+        .brand {
+            display: block;
+            text-decoration: none;
+            font-size: 27px;
+            font-weight: 900;
+            color: #e23744;
+            padding-left: 10px;
+            margin-bottom: 35px;
+        }
+
+        .brand span {
+            color: #ff7a00;
+        }
+
+        .admin-label {
+            padding: 0 12px;
+            margin-bottom: 12px;
+            font-size: 11px;
+            color: #999999;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .side-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 14px;
+            margin-bottom: 5px;
+            border-radius: 12px;
+            color: #555555;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: .2s ease;
+        }
+
+        .side-link:hover {
+            background: #fff1f2;
+            color: #e23744;
+        }
+
+        .side-link.active {
+            background: #e23744;
+            color: #ffffff;
+        }
+
+        .side-icon {
+            width: 25px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .sidebar-bottom {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .logout-link {
+            color: #dc3545;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main-content {
+            margin-left: 250px;
+            min-height: 100vh;
+            padding: 30px 35px;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .topbar {
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 18px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 850;
+            margin-bottom: 5px;
+        }
+
+        .page-subtitle {
+            color: #777777;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .dashboard-btn {
+            border: 1px solid #dddddd;
+            background: #ffffff;
+            color: #555555;
+            border-radius: 10px;
+            padding: 9px 15px;
+            font-size: 13px;
+            font-weight: 750;
+            text-decoration: none;
+        }
+
+        .dashboard-btn:hover {
+            background: #f5f5f5;
+            color: #333333;
+        }
+
+        /* =========================
+           FILTER
+        ========================= */
+
+        .filter-card {
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 25px;
+        }
+
+        .filter-title {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+
+        .filter-label {
+            display: block;
+            font-size: 11px;
+            color: #555555;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+            margin-bottom: 7px;
+        }
+
+        .form-control,
+        .form-select {
+            border: 1px solid #dddddd;
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 13px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #e23744;
+            box-shadow: 0 0 0 3px rgba(226, 55, 68, .10);
+        }
+
+        .search-btn {
+            width: 100%;
             border: none;
-            border-radius: 14px;
+            background: #e23744;
+            color: #ffffff;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 750;
         }
+
+        .search-btn:hover {
+            background: #c92f3b;
+        }
+
+        .reset-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            border: 1px solid #dddddd;
+            color: #555555;
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 9px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .reset-btn:hover {
+            background: #f5f5f5;
+            color: #333333;
+        }
+
+        /* =========================
+           USERS CARD
+        ========================= */
+
+        .users-card {
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .users-header {
+            padding: 20px 22px;
+            border-bottom: 1px solid #eeeeee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .users-title {
+            font-size: 17px;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .user-count {
+            background: #fff1f2;
+            color: #e23744;
+            border-radius: 20px;
+            padding: 7px 11px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
 
         .table {
-            margin-bottom: 0;
+            margin: 0;
         }
 
-        .table th {
+        .table thead th {
+            background: #fafafa;
+            border-bottom: 1px solid #eeeeee;
+            color: #777777;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .45px;
+            padding: 14px 13px;
             white-space: nowrap;
         }
 
-        .table td {
+        .table tbody td {
+            padding: 16px 13px;
             vertical-align: middle;
+            border-color: #f0f0f0;
+            font-size: 13px;
         }
 
+        .table tbody tr {
+            transition: .15s ease;
+        }
+
+        .table tbody tr:hover {
+            background: #fffafa;
+        }
+
+        /* =========================
+           USER
+        ========================= */
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .user-avatar {
+            width: 43px;
+            height: 43px;
+            border-radius: 12px;
+            background: #fff1f2;
+            color: #e23744;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+
+        .username {
+            font-weight: 800;
+            color: #333333;
+        }
+
+        .super-admin {
+            display: inline-block;
+            margin-top: 4px;
+            padding: 4px 7px;
+            border-radius: 6px;
+            background: #212529;
+            color: #ffffff;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .email-text,
+        .phone-text {
+            color: #555555;
+            font-size: 12px;
+        }
+
+        /* =========================
+           ROLE
+        ========================= */
+
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 7px 10px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .role-customer {
+            background: #eef4ff;
+            color: #2166d1;
+        }
+
+        .role-owner {
+            background: #eaf8ef;
+            color: #26753c;
+        }
+
+        .role-admin {
+            background: #eeeeee;
+            color: #333333;
+        }
+
+        .role-other {
+            background: #f1f1f1;
+            color: #555555;
+        }
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 7px 10px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .status-active {
+            background: #eaf8ef;
+            color: #26753c;
+        }
+
+        .status-inactive {
+            background: #fff0f1;
+            color: #b4232d;
+        }
+
+        /* =========================
+           JOINED
+        ========================= */
+
+        .joined-date {
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .joined-time {
+            color: #999999;
+            font-size: 10px;
+            margin-top: 3px;
+        }
+
+        /* =========================
+           ACTION
+        ========================= */
+
         .action-btn {
-            min-width: 105px;
+            width: 115px;
+            border-radius: 8px;
+            padding: 7px 9px;
+            font-size: 11px;
+            font-weight: 750;
+        }
+
+        .current-admin {
+            display: inline-flex;
+            align-items: center;
+            padding: 7px 10px;
+            border-radius: 8px;
+            background: #f1f1f1;
+            color: #666666;
+            font-size: 10px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        /* =========================
+           PAGINATION
+        ========================= */
+
+        .pagination-area {
+            padding: 18px;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .page-link {
+            border: 1px solid #eeeeee;
+            color: #555555;
+            font-size: 12px;
+            font-weight: 700;
+            margin: 0 2px;
+            border-radius: 8px !important;
+        }
+
+        .page-item.active .page-link {
+            background: #e23744;
+            border-color: #e23744;
+            color: #ffffff;
+        }
+
+        .page-link:hover {
+            color: #e23744;
+            background: #fff1f2;
+        }
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty-state {
+            padding: 70px 20px;
+            text-align: center;
+        }
+
+        .empty-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 22px;
+            background: #fff1f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            font-size: 35px;
+        }
+
+        .empty-title {
+            font-size: 19px;
+            font-weight: 800;
+            margin-top: 18px;
+        }
+
+        .empty-text {
+            color: #888888;
+            font-size: 13px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 991px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #eeeeee;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .sidebar-bottom {
+                margin-top: 10px;
+            }
+
+        }
+
+        @media (max-width: 576px) {
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .filter-card {
+                padding: 18px;
+            }
+
+            .users-header {
+                padding: 17px;
+            }
+
         }
 
     </style>
@@ -55,20 +568,133 @@
 
 <body>
 
-<div class="container py-5">
 
-    <!-- ================= HEADER ================= -->
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
 
-    <div class="d-flex justify-content-between align-items-center page-header">
+<aside class="sidebar">
+
+    <a
+        href="{% url 'admin_dashboard' %}"
+        class="brand"
+    >
+        🍽️ Yum<span>zo</span>
+    </a>
+
+
+    <div class="admin-label">
+        Administration
+    </div>
+
+
+    <a
+        href="{% url 'admin_dashboard' %}"
+        class="side-link"
+    >
+        <span class="side-icon">📊</span>
+        Dashboard
+    </a>
+
+
+    <a
+        href="{% url 'manage_users' %}"
+        class="side-link active"
+    >
+        <span class="side-icon">👥</span>
+        Manage Users
+    </a>
+
+
+    <a
+        href="{% url 'manage_shops' %}"
+        class="side-link"
+    >
+        <span class="side-icon">🏪</span>
+        Manage Restaurants
+    </a>
+
+
+    <a
+        href="{% url 'manage_products' %}"
+        class="side-link"
+    >
+        <span class="side-icon">🍔</span>
+        Manage Products
+    </a>
+
+
+    <a
+        href="{% url 'manage_categories' %}"
+        class="side-link"
+    >
+        <span class="side-icon">📂</span>
+        Categories
+    </a>
+
+
+    <a
+        href="{% url 'manage_orders' %}"
+        class="side-link"
+    >
+        <span class="side-icon">📦</span>
+        Orders
+    </a>
+
+
+    <a
+        href="{% url 'manage_reviews' %}"
+        class="side-link"
+    >
+        <span class="side-icon">⭐</span>
+        Reviews
+    </a>
+
+
+    <div class="sidebar-bottom">
+
+        <a
+            href="/admin/"
+            class="side-link"
+        >
+            <span class="side-icon">⚙️</span>
+            Django Admin
+        </a>
+
+
+        <a
+            href="{% url 'logout' %}"
+            class="side-link logout-link"
+        >
+            <span class="side-icon">🚪</span>
+            Logout
+        </a>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main-content">
+
+
+    <!-- HEADER -->
+
+    <div class="topbar">
 
         <div>
 
-            <h2 class="fw-bold mb-1">
+            <h1 class="page-title">
                 👥 Manage Users
-            </h2>
+            </h1>
 
-            <p class="text-muted mb-0">
-                View and manage LocalKart customers and shop owners
+            <p class="page-subtitle">
+                View and manage Yumzo customers and restaurant owners.
             </p>
 
         </div>
@@ -76,7 +702,7 @@
 
         <a
             href="{% url 'admin_dashboard' %}"
-            class="btn btn-secondary"
+            class="dashboard-btn"
         >
             ← Admin Dashboard
         </a>
@@ -84,376 +710,467 @@
     </div>
 
 
-    <!-- ================= MAIN CARD ================= -->
 
-    <div class="card shadow-sm">
+    <!-- =================================================
+         SEARCH & FILTER
+    ================================================= -->
 
-        <div class="card-body p-4">
+    <div class="filter-card">
 
-
-            <!-- ================= SEARCH & FILTER ================= -->
-
-            <form method="GET" class="mb-4">
-
-                <div class="row g-3 align-items-end">
+        <div class="filter-title">
+            🔎 Search & Filter Users
+        </div>
 
 
-                    <!-- Search -->
+        <form method="GET">
 
-                    <div class="col-md-5">
-
-                        <label class="form-label fw-bold">
-                            Search Users
-                        </label>
-
-                        <input
-                            type="text"
-                            name="search"
-                            value="{{ search }}"
-                            class="form-control"
-                            placeholder="🔍 Search username, email or phone..."
-                        >
-
-                    </div>
+            <div class="row g-3 align-items-end">
 
 
-                    <!-- Role -->
+                <!-- SEARCH -->
 
-                    <div class="col-md-3">
+                <div class="col-md-5">
 
-                        <label class="form-label fw-bold">
-                            Filter by Role
-                        </label>
+                    <label class="filter-label">
+                        Search Users
+                    </label>
 
-                        <select
-                            name="role"
-                            class="form-select"
-                        >
-
-                            <option value="">
-                                All Roles
-                            </option>
-
-                            <option
-                                value="customer"
-                                {% if selected_role == 'customer' %}selected{% endif %}
-                            >
-                                Customer
-                            </option>
-
-                            <option
-                                value="shop_owner"
-                                {% if selected_role == 'shop_owner' %}selected{% endif %}
-                            >
-                                Shop Owner
-                            </option>
-
-                            <option
-                                value="admin"
-                                {% if selected_role == 'admin' %}selected{% endif %}
-                            >
-                                Admin
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-                    <!-- Search Button -->
-
-                    <div class="col-md-2">
-
-                        <button
-                            type="submit"
-                            class="btn btn-primary w-100"
-                        >
-                            🔍 Search
-                        </button>
-
-                    </div>
-
-
-                    <!-- Reset -->
-
-                    <div class="col-md-2">
-
-                        <a
-                            href="{% url 'manage_users' %}"
-                            class="btn btn-outline-secondary w-100"
-                        >
-                            Reset
-                        </a>
-
-                    </div>
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ search }}"
+                        class="form-control"
+                        placeholder="🔍 Username, email or phone..."
+                    >
 
                 </div>
 
-            </form>
 
 
-            <!-- ================= USER TABLE ================= -->
+                <!-- ROLE -->
 
-            <div class="table-responsive">
+                <div class="col-md-3">
 
-                <table class="table table-hover align-middle">
+                    <label class="filter-label">
+                        Filter by Role
+                    </label>
 
-                    <thead class="table-dark">
+                    <select
+                        name="role"
+                        class="form-select"
+                    >
 
-                        <tr>
+                        <option value="">
+                            All Roles
+                        </option>
 
-                            <th>
-                                Username
-                            </th>
 
-                            <th>
-                                Email
-                            </th>
+                        <option
+                            value="customer"
+                            {% if selected_role == 'customer' %}
+                                selected
+                            {% endif %}
+                        >
+                            👤 Customer
+                        </option>
 
-                            <th>
-                                Phone
-                            </th>
 
-                            <th>
-                                Role
-                            </th>
+                        <option
+                            value="shop_owner"
+                            {% if selected_role == 'shop_owner' %}
+                                selected
+                            {% endif %}
+                        >
+                            🏪 Shop Owner
+                        </option>
 
-                            <th>
-                                Status
-                            </th>
 
-                            <th>
-                                Joined
-                            </th>
+                        <option
+                            value="admin"
+                            {% if selected_role == 'admin' %}
+                                selected
+                            {% endif %}
+                        >
+                            🛡️ Admin
+                        </option>
 
-                            <th>
-                                Action
-                            </th>
 
-                        </tr>
+                    </select>
 
-                    </thead>
+                </div>
 
 
-                    <tbody>
 
-                    {% for user in users %}
+                <!-- SEARCH -->
 
-                        <tr>
+                <div class="col-md-2">
 
+                    <button
+                        type="submit"
+                        class="search-btn"
+                    >
+                        🔍 Search
+                    </button>
 
-                            <!-- ================= USERNAME ================= -->
+                </div>
 
-                            <td>
 
-                                <strong>
-                                    {{ user.username }}
-                                </strong>
 
+                <!-- RESET -->
 
-                                {% if user.is_superuser %}
+                <div class="col-md-2">
 
-                                    <br>
+                    <a
+                        href="{% url 'manage_users' %}"
+                        class="reset-btn"
+                    >
+                        ↻ Reset
+                    </a>
 
-                                    <span class="badge bg-dark mt-1">
-                                        Super Admin
-                                    </span>
+                </div>
 
-                                {% endif %}
-
-                            </td>
-
-
-                            <!-- ================= EMAIL ================= -->
-
-                            <td>
-
-                                {{ user.email|default:"-" }}
-
-                            </td>
-
-
-                            <!-- ================= PHONE ================= -->
-
-                            <td>
-
-                                {{ user.phone|default:"-" }}
-
-                            </td>
-
-
-                            <!-- ================= ROLE ================= -->
-
-                            <td>
-
-                                {% if user.role == 'customer' %}
-
-                                    <span class="badge bg-primary">
-                                        Customer
-                                    </span>
-
-                                {% elif user.role == 'shop_owner' %}
-
-                                    <span class="badge bg-success">
-                                        Shop Owner
-                                    </span>
-
-                                {% elif user.role == 'admin' %}
-
-                                    <span class="badge bg-dark">
-                                        Admin
-                                    </span>
-
-                                {% else %}
-
-                                    <span class="badge bg-secondary">
-                                        {{ user.role }}
-                                    </span>
-
-                                {% endif %}
-
-                            </td>
-
-
-                            <!-- ================= STATUS ================= -->
-
-                            <td>
-
-                                {% if user.is_active %}
-
-                                    <span class="badge bg-success">
-                                        ● Active
-                                    </span>
-
-                                {% else %}
-
-                                    <span class="badge bg-danger">
-                                        ● Inactive
-                                    </span>
-
-                                {% endif %}
-
-                            </td>
-
-
-                            <!-- ================= JOINED ================= -->
-
-                            <td>
-
-                                {{ user.date_joined|date:"d M Y" }}
-
-                                <br>
-
-                                <small class="text-muted">
-                                    {{ user.date_joined|date:"h:i A" }}
-                                </small>
-
-                            </td>
-
-
-                            <!-- ================= ACTION ================= -->
-
-                            <td>
-
-                                {% if user == request.user %}
-
-                                    <span class="badge bg-secondary">
-                                        Current Admin
-                                    </span>
-
-                                {% else %}
-
-                                    <form
-                                        method="post"
-                                        action="{% url 'toggle_user_status' user.id %}"
-                                        onsubmit="return confirm(
-                                            '{% if user.is_active %}Are you sure you want to deactivate this user?{% else %}Are you sure you want to activate this user?{% endif %}'
-                                        );"
-                                    >
-
-                                        {% csrf_token %}
-
-
-                                        {% if user.is_active %}
-
-                                            <button
-                                                type="submit"
-                                                class="btn btn-danger btn-sm action-btn"
-                                            >
-                                                🔴 Deactivate
-                                            </button>
-
-                                        {% else %}
-
-                                            <button
-                                                type="submit"
-                                                class="btn btn-success btn-sm action-btn"
-                                            >
-                                                🟢 Activate
-                                            </button>
-
-                                        {% endif %}
-
-                                    </form>
-
-                                {% endif %}
-
-                            </td>
-
-                        </tr>
-
-
-                    {% empty %}
-
-
-                        <!-- ================= EMPTY ================= -->
-
-                        <tr>
-
-                            <td
-                                colspan="7"
-                                class="text-center py-5"
-                            >
-
-                                <div style="font-size: 50px;">
-                                    👥
-                                </div>
-
-                                <h5 class="mt-3">
-                                    No Users Found
-                                </h5>
-
-                                <p class="text-muted mb-0">
-                                    No users match your search or filter.
-                                </p>
-
-                            </td>
-
-                        </tr>
-
-
-                    {% endfor %}
-
-                    </tbody>
-
-                </table>
 
             </div>
 
+        </form>
 
-            <!-- ================= PAGINATION ================= -->
-
-            {% if users.has_other_pages %}
-
-                <nav
-                    aria-label="User pagination"
-                    class="mt-4"
-                >
-
-                    <ul class="pagination justify-content-center">
+    </div>
 
 
-                        <!-- Previous -->
+
+    <!-- =================================================
+         USERS
+    ================================================= -->
+
+    <div class="users-card">
+
+
+        <div class="users-header">
+
+            <h5 class="users-title">
+                👥 User List
+            </h5>
+
+
+            {% if users %}
+
+                <span class="user-count">
+                    {{ users.paginator.count }} Users
+                </span>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            User
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            Phone
+                        </th>
+
+                        <th>
+                            Role
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Joined
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                {% for user in users %}
+
+                    <tr>
+
+
+                        <!-- USERNAME -->
+
+                        <td>
+
+                            <div class="user-profile">
+
+                                <div class="user-avatar">
+                                    {{ user.username|first|upper }}
+                                </div>
+
+
+                                <div>
+
+                                    <div class="username">
+                                        {{ user.username }}
+                                    </div>
+
+
+                                    {% if user.is_superuser %}
+
+                                        <span class="super-admin">
+                                            Super Admin
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- EMAIL -->
+
+                        <td>
+
+                            <div class="email-text">
+                                {{ user.email|default:"-" }}
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- PHONE -->
+
+                        <td>
+
+                            <div class="phone-text">
+                                {{ user.phone|default:"-" }}
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- ROLE -->
+
+                        <td>
+
+
+                            {% if user.role == 'customer' %}
+
+                                <span class="role-badge role-customer">
+                                    👤 Customer
+                                </span>
+
+
+                            {% elif user.role == 'shop_owner' %}
+
+                                <span class="role-badge role-owner">
+                                    🏪 Shop Owner
+                                </span>
+
+
+                            {% elif user.role == 'admin' %}
+
+                                <span class="role-badge role-admin">
+                                    🛡️ Admin
+                                </span>
+
+
+                            {% else %}
+
+                                <span class="role-badge role-other">
+                                    {{ user.role }}
+                                </span>
+
+                            {% endif %}
+
+
+                        </td>
+
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+
+                            {% if user.is_active %}
+
+                                <span class="status-badge status-active">
+                                    ● Active
+                                </span>
+
+
+                            {% else %}
+
+                                <span class="status-badge status-inactive">
+                                    ● Inactive
+                                </span>
+
+                            {% endif %}
+
+
+                        </td>
+
+
+
+                        <!-- JOINED -->
+
+                        <td>
+
+                            <div class="joined-date">
+                                {{ user.date_joined|date:"d M Y" }}
+                            </div>
+
+                            <div class="joined-time">
+                                {{ user.date_joined|date:"h:i A" }}
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- ACTION -->
+
+                        <td>
+
+
+                            {% if user == request.user %}
+
+                                <span class="current-admin">
+                                    Current Admin
+                                </span>
+
+
+                            {% else %}
+
+                                <form
+                                    method="post"
+                                    action="{% url 'toggle_user_status' user.id %}"
+                                    onsubmit="return confirm(
+                                        '{% if user.is_active %}Are you sure you want to deactivate this user?{% else %}Are you sure you want to activate this user?{% endif %}'
+                                    );"
+                                >
+
+                                    {% csrf_token %}
+
+
+                                    {% if user.is_active %}
+
+                                        <button
+                                            type="submit"
+                                            class="btn btn-danger action-btn"
+                                        >
+                                            🔴 Deactivate
+                                        </button>
+
+
+                                    {% else %}
+
+                                        <button
+                                            type="submit"
+                                            class="btn btn-success action-btn"
+                                        >
+                                            🟢 Activate
+                                        </button>
+
+                                    {% endif %}
+
+
+                                </form>
+
+                            {% endif %}
+
+
+                        </td>
+
+
+                    </tr>
+
+
+                {% empty %}
+
+
+                    <!-- EMPTY STATE -->
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="text-center"
+                        >
+
+                            <div class="empty-state">
+
+                                <div class="empty-icon">
+                                    👥
+                                </div>
+
+
+                                <div class="empty-title">
+                                    No Users Found
+                                </div>
+
+
+                                <p class="empty-text">
+                                    No users match your search or role filter.
+                                </p>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                {% endfor %}
+
+
+                </tbody>
+
+
+            </table>
+
+        </div>
+
+
+
+        <!-- =================================================
+             PAGINATION
+        ================================================= -->
+
+        {% if users.has_other_pages %}
+
+            <div class="pagination-area">
+
+                <nav aria-label="User pagination">
+
+                    <ul class="pagination justify-content-center mb-0">
+
+
+                        <!-- PREVIOUS -->
 
                         {% if users.has_previous %}
 
@@ -471,7 +1188,8 @@
                         {% endif %}
 
 
-                        <!-- Page Numbers -->
+
+                        <!-- PAGE NUMBERS -->
 
                         {% for num in users.paginator.page_range %}
 
@@ -503,7 +1221,8 @@
                         {% endfor %}
 
 
-                        <!-- Next -->
+
+                        <!-- NEXT -->
 
                         {% if users.has_next %}
 
@@ -525,22 +1244,24 @@
 
                 </nav>
 
-            {% endif %}
+            </div>
 
+        {% endif %}
 
-        </div>
 
     </div>
 
-</div>
+
+</main>
 
 
-<!-- ================= BOOTSTRAP JS ================= -->
 
 <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
 </script>
 
+
 </body>
 
 </html>
+```

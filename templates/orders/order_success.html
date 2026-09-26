@@ -1,70 +1,421 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 
-    <title>Order Successful - LocalKart</title>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Order Confirmed | Yumzo</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
 
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f8f8f8;
+            color: #1c1c1c;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .success-page {
+            max-width: 850px;
+            margin: auto;
+            padding: 55px 15px 70px;
+        }
+
+        /* =========================
+           SUCCESS HEADER
+        ========================= */
+
+        .success-card {
+            background: white;
+            border-radius: 22px;
+            padding: 45px 30px;
+            text-align: center;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.07);
+        }
+
+        .success-icon {
+            width: 95px;
+            height: 95px;
+            margin: auto;
+            border-radius: 50%;
+            background: #e9f8ee;
+            color: #267e3e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .success-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-top: 22px;
+            margin-bottom: 8px;
+        }
+
+        .success-message {
+            color: #777;
+            margin-bottom: 35px;
+        }
+
+        /* =========================
+           ORDER CARD
+        ========================= */
+
+        .order-card {
+            text-align: left;
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 15px;
+            padding: 22px;
+            margin-bottom: 15px;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e5e5e5;
+            margin-bottom: 15px;
+        }
+
+        .order-number {
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .order-status {
+            background: #e9f8ee;
+            color: #267e3e;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .order-detail {
+            display: flex;
+            justify-content: space-between;
+            padding: 9px 0;
+            font-size: 14px;
+        }
+
+        .detail-label {
+            color: #777;
+        }
+
+        .total-amount {
+            color: #e23744;
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        /* =========================
+           ACTIONS
+        ========================= */
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .primary-btn {
+            flex: 1;
+            background: #e23744;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            padding: 13px 18px;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .primary-btn:hover {
+            background: #c91f2d;
+            color: white;
+        }
+
+        .secondary-btn {
+            flex: 1;
+            background: white;
+            color: #e23744;
+            border: 1px solid #e23744;
+            border-radius: 9px;
+            padding: 13px 18px;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .secondary-btn:hover {
+            background: #fff1f2;
+            color: #e23744;
+        }
+
+        /* =========================
+           FOOTER MESSAGE
+        ========================= */
+
+        .thank-you {
+            margin-top: 25px;
+            color: #888;
+            font-size: 13px;
+        }
+
+        .thank-you i {
+            color: #e23744;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .success-page {
+                padding: 30px 12px 50px;
+            }
+
+            .success-card {
+                padding: 35px 18px;
+            }
+
+            .success-title {
+                font-size: 26px;
+            }
+
+            .order-header {
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
 </head>
 
-<body class="bg-light">
 
-<div class="container mt-5">
+<body>
 
-    <div class="card shadow">
 
-        <div class="card-body text-center">
+{% include 'includes/navbar.html' %}
 
-            <h1 class="text-success">
-                ✅ Order Placed Successfully!
-            </h1>
 
-            <p class="mt-3">
-                Thank you for ordering from LocalKart.
-            </p>
+<div class="success-page">
 
-            {% for order in orders %}
 
-                <div class="border rounded p-3 mt-3">
+    <div class="success-card">
 
-                    <h4>
-                        Order #{{ order.id }}
-                    </h4>
 
-                    <p>
-                        Shop: {{ order.shop.name }}
-                    </p>
+        <!-- SUCCESS ICON -->
 
-                    <p>
-                        Total:
-                        <strong>₹{{ order.total_amount }}</strong>
-                    </p>
+        <div class="success-icon">
 
-                    <p>
-                        Payment:
-                        {{ order.get_payment_method_display }}
-                    </p>
-
-                </div>
-
-            {% endfor %}
-
-            <a
-                href="{% url 'my_orders' %}"
-                class="btn btn-primary mt-3"
-            >
-                View My Orders
-            </a>
+            <i class="bi bi-check-lg"></i>
 
         </div>
 
+
+        <!-- TITLE -->
+
+        <h1 class="success-title">
+
+            Order Placed Successfully!
+
+        </h1>
+
+
+        <p class="success-message">
+
+            Thank you for ordering with
+
+            <strong style="color:#e23744;">
+                Yumzo
+            </strong>.
+
+            Your food is being prepared with care.
+
+        </p>
+
+
+        <!-- ORDERS -->
+
+        {% for order in orders %}
+
+
+            <div class="order-card">
+
+
+                <div class="order-header">
+
+
+                    <div class="order-number">
+
+                        <i
+                            class="bi bi-receipt me-2"
+                            style="color:#e23744;"
+                        ></i>
+
+                        Order #{{ order.id }}
+
+                    </div>
+
+
+                    <span class="order-status">
+
+                        <i class="bi bi-check-circle me-1"></i>
+
+                        Order Placed
+
+                    </span>
+
+
+                </div>
+
+
+                <!-- SHOP -->
+
+                <div class="order-detail">
+
+                    <span class="detail-label">
+
+                        <i class="bi bi-shop me-1"></i>
+
+                        Restaurant
+
+                    </span>
+
+                    <strong>
+
+                        {{ order.shop.name }}
+
+                    </strong>
+
+                </div>
+
+
+                <!-- TOTAL -->
+
+                <div class="order-detail">
+
+                    <span class="detail-label">
+
+                        <i class="bi bi-wallet2 me-1"></i>
+
+                        Total Amount
+
+                    </span>
+
+                    <span class="total-amount">
+
+                        ₹{{ order.total_amount }}
+
+                    </span>
+
+                </div>
+
+
+                <!-- PAYMENT -->
+
+                <div class="order-detail">
+
+                    <span class="detail-label">
+
+                        <i class="bi bi-credit-card me-1"></i>
+
+                        Payment Method
+
+                    </span>
+
+                    <strong>
+
+                        {{ order.get_payment_method_display }}
+
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        {% endfor %}
+
+
+        <!-- ACTIONS -->
+
+        <div class="action-buttons">
+
+
+            <a
+                href="{% url 'my_orders' %}"
+                class="primary-btn text-center"
+            >
+
+                <i class="bi bi-bag-check me-2"></i>
+
+                View My Orders
+
+            </a>
+
+
+            <a
+                href="{% url 'marketplace' %}"
+                class="secondary-btn text-center"
+            >
+
+                <i class="bi bi-search me-2"></i>
+
+                Order More Food
+
+            </a>
+
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <div class="thank-you">
+
+            <i class="bi bi-heart-fill me-1"></i>
+
+            Thanks for choosing Yumzo. Enjoy your meal!
+
+        </div>
+
+
     </div>
+
 
 </div>
 
+
 </body>
+
 </html>

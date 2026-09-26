@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,51 +11,380 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>LocalKart - Customer Dashboard</title>
+    <title>Yumzo - Customer Dashboard</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
 
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
     <style>
 
         body {
-            background: #f8f9fa;
+            background: #f8f8f8;
+            color: #222;
+            font-family: Arial, sans-serif;
         }
 
-        .navbar-brand {
-            font-size: 25px;
-            font-weight: 700;
-        }
+        /* =========================
+           HERO
+        ========================= */
 
         .hero {
-            background: linear-gradient(
-                135deg,
-                #0d6efd,
-                #6610f2
-            );
+            background:
+                linear-gradient(
+                    135deg,
+                    #e23744,
+                    #ff7043
+                );
+
             color: white;
-            border-radius: 20px;
-            padding: 50px;
+
+            border-radius: 25px;
+
+            padding: 55px 45px;
+
+            overflow: hidden;
+
+            position: relative;
+
+            box-shadow:
+                0 12px 35px rgba(226, 55, 68, 0.18);
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 260px;
+            height: 260px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.08);
+
+            right: -80px;
+            top: -100px;
+        }
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.07);
+
+            right: 100px;
+            bottom: -100px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 40px;
+
+            font-weight: 800;
+
+            line-height: 1.2;
+        }
+
+        .hero-text {
+            color: rgba(255,255,255,0.92);
+
+            font-size: 17px;
+
+            line-height: 1.6;
+
+            max-width: 650px;
+        }
+
+        .hero-btn {
+            border-radius: 12px;
+
+            padding: 13px 22px;
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            transition: 0.2s ease;
+        }
+
+        .hero-btn-primary {
+            background: white;
+
+            color: #e23744;
+        }
+
+        .hero-btn-primary:hover {
+            background: #fff4f4;
+
+            color: #c91f2d;
+
+            transform: translateY(-2px);
+        }
+
+        .hero-btn-outline {
+            color: white;
+
+            border: 1px solid rgba(255,255,255,0.7);
+        }
+
+        .hero-btn-outline:hover {
+            background: white;
+
+            color: #e23744;
+        }
+
+        .hero-icon {
+            font-size: 125px;
+
+            position: relative;
+
+            z-index: 2;
+
+            filter:
+                drop-shadow(
+                    0 10px 15px rgba(0,0,0,0.12)
+                );
+        }
+
+
+        /* =========================
+           SECTION TITLE
+        ========================= */
+
+        .section-title {
+            font-size: 27px;
+
+            font-weight: 800;
+        }
+
+        .section-subtitle {
+            color: #777;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           QUICK ACTION CARDS
+        ========================= */
+
+        .feature-link {
+            text-decoration: none;
+
+            color: inherit;
         }
 
         .feature-card {
+            background: white;
+
             border: none;
-            transition: 0.2s;
+
+            border-radius: 18px;
+
+            height: 100%;
+
+            padding: 10px;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.05);
+
+            transition: 0.25s ease;
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-7px);
+
+            box-shadow:
+                0 14px 30px rgba(0,0,0,0.10);
         }
 
         .feature-icon {
-            font-size: 42px;
+            width: 62px;
+            height: 62px;
+
+            border-radius: 16px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: #fff1f2;
+
+            color: #e23744;
+
+            font-size: 28px;
+
+            margin-bottom: 18px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+
+            font-weight: 800;
+
+            margin-bottom: 7px;
+        }
+
+        .feature-text {
+            color: #777;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            margin-bottom: 0;
+        }
+
+        .arrow-icon {
+            color: #e23744;
+
+            font-size: 18px;
+        }
+
+
+        /* =========================
+           DISCOVER BANNER
+        ========================= */
+
+        .discover-card {
+            background: white;
+
+            border-radius: 20px;
+
+            padding: 30px;
+
+            margin-top: 40px;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .discover-icon {
+            width: 60px;
+            height: 60px;
+
+            border-radius: 15px;
+
+            background: #fff5e6;
+
+            color: #f39c12;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 28px;
+        }
+
+        .discover-title {
+            font-size: 21px;
+
+            font-weight: 800;
+        }
+
+        .discover-text {
+            color: #777;
+
+            margin-bottom: 0;
+        }
+
+        .discover-btn {
+            background: #e23744;
+
+            color: white;
+
+            padding: 11px 20px;
+
+            border-radius: 11px;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            display: inline-block;
+        }
+
+        .discover-btn:hover {
+            background: #c91f2d;
+
+            color: white;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer-message {
+            color: #888;
+
+            font-size: 13px;
+
+            padding: 35px 0 10px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 768px) {
+
+            .hero {
+                padding: 35px 25px;
+            }
+
+            .hero-title {
+                font-size: 30px;
+            }
+
+            .hero-text {
+                font-size: 15px;
+            }
+
+            .hero-icon {
+                font-size: 85px;
+
+                margin-top: 25px;
+            }
+
+            .section-title {
+                font-size: 23px;
+            }
+
+            .discover-card {
+                text-align: center;
+            }
+
         }
 
     </style>
 
 </head>
+
 
 <body>
 
@@ -64,56 +394,79 @@
 {% include 'includes/navbar.html' %}
 
 
-
-
-<!-- MAIN -->
-
 <div class="container py-5">
 
 
-    <!-- HERO -->
+    <!-- =========================
+         HERO
+    ========================= -->
 
     <div class="hero mb-5">
 
         <div class="row align-items-center">
 
-            <div class="col-md-8">
+            <div class="col-lg-8">
 
-                <h1 class="fw-bold">
-                    Shop Local. Support Local. ❤️
-                </h1>
+                <div class="hero-content">
 
-                <p class="lead mt-3">
-                    Discover fresh products and trusted local
-                    shops near you.
-                </p>
+                    <h1 class="hero-title">
+
+                        Good Food.
+                        <br>
+
+                        Great Mood. ❤️
+
+                    </h1>
 
 
-                <div class="mt-4">
+                    <p class="hero-text mt-3">
 
-                    <a
-                        href="{% url 'marketplace' %}"
-                        class="btn btn-light btn-lg me-2"
-                    >
-                        🛍️ Explore Marketplace
-                    </a>
+                        Discover delicious food, explore restaurants,
+                        order your favourites and enjoy a seamless
+                        experience with Yumzo.
 
-                    <a
-                        href="{% url 'shop_list' %}"
-                        class="btn btn-outline-light btn-lg"
-                    >
-                        🏪 Find Shops
-                    </a>
+                    </p>
+
+
+                    <div class="d-flex flex-wrap gap-2 mt-4">
+
+
+                        <a
+                            href="{% url 'marketplace' %}"
+                            class="hero-btn hero-btn-primary"
+                        >
+
+                            <i class="bi bi-search me-2"></i>
+
+                            Explore Food
+
+                        </a>
+
+
+                        <a
+                            href="{% url 'shop_list' %}"
+                            class="hero-btn hero-btn-outline"
+                        >
+
+                            <i class="bi bi-shop me-2"></i>
+
+                            Find Restaurants
+
+                        </a>
+
+                    </div>
 
                 </div>
 
             </div>
 
 
-            <div class="col-md-4 text-center">
+            <div class="col-lg-4 text-center">
 
-                <div style="font-size: 110px;">
-                    🛒
+                <div class="hero-icon">
+
+                    🍔
+
                 </div>
 
             </div>
@@ -123,11 +476,25 @@
     </div>
 
 
-    <!-- QUICK ACTIONS -->
+    <!-- =========================
+         QUICK ACCESS
+    ========================= -->
 
-    <h3 class="fw-bold mb-4">
-        Quick Access
-    </h3>
+    <div class="mb-4">
+
+        <h2 class="section-title mb-1">
+
+            What are you craving?
+
+        </h2>
+
+        <p class="section-subtitle">
+
+            Everything you need, right at your fingertips.
+
+        </p>
+
+    </div>
 
 
     <div class="row g-4">
@@ -135,27 +502,43 @@
 
         <!-- Marketplace -->
 
-        <div class="col-md-6 col-lg-3">
+        <div class="col-6 col-lg-3">
 
             <a
                 href="{% url 'marketplace' %}"
-                class="text-decoration-none text-dark"
+                class="feature-link"
             >
 
-                <div class="card feature-card shadow-sm h-100">
+                <div class="feature-card">
 
-                    <div class="card-body text-center p-4">
+                    <div class="card-body p-3">
+
 
                         <div class="feature-icon">
-                            🛍️
+
+                            <i class="bi bi-grid-fill"></i>
+
                         </div>
 
-                        <h5 class="fw-bold mt-3">
-                            Marketplace
-                        </h5>
 
-                        <p class="text-muted">
-                            Browse products from local shops.
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <h3 class="feature-title mb-0">
+
+                                Marketplace
+
+                            </h3>
+
+                            <i class="bi bi-arrow-right arrow-icon"></i>
+
+                        </div>
+
+
+                        <p class="feature-text mt-2">
+
+                            Browse delicious food from
+                            restaurants.
+
                         </p>
 
                     </div>
@@ -167,29 +550,45 @@
         </div>
 
 
-        <!-- Shops -->
+        <!-- Restaurants -->
 
-        <div class="col-md-6 col-lg-3">
+        <div class="col-6 col-lg-3">
 
             <a
                 href="{% url 'shop_list' %}"
-                class="text-decoration-none text-dark"
+                class="feature-link"
             >
 
-                <div class="card feature-card shadow-sm h-100">
+                <div class="feature-card">
 
-                    <div class="card-body text-center p-4">
+                    <div class="card-body p-3">
+
 
                         <div class="feature-icon">
-                            🏪
+
+                            <i class="bi bi-shop-window"></i>
+
                         </div>
 
-                        <h5 class="fw-bold mt-3">
-                            Local Shops
-                        </h5>
 
-                        <p class="text-muted">
-                            Discover trusted nearby shops.
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <h3 class="feature-title mb-0">
+
+                                Restaurants
+
+                            </h3>
+
+                            <i class="bi bi-arrow-right arrow-icon"></i>
+
+                        </div>
+
+
+                        <p class="feature-text mt-2">
+
+                            Discover trusted restaurants
+                            near you.
+
                         </p>
 
                     </div>
@@ -203,27 +602,43 @@
 
         <!-- Cart -->
 
-        <div class="col-md-6 col-lg-3">
+        <div class="col-6 col-lg-3">
 
             <a
                 href="{% url 'cart_detail' %}"
-                class="text-decoration-none text-dark"
+                class="feature-link"
             >
 
-                <div class="card feature-card shadow-sm h-100">
+                <div class="feature-card">
 
-                    <div class="card-body text-center p-4">
+                    <div class="card-body p-3">
+
 
                         <div class="feature-icon">
-                            🛒
+
+                            <i class="bi bi-cart3"></i>
+
                         </div>
 
-                        <h5 class="fw-bold mt-3">
-                            My Cart
-                        </h5>
 
-                        <p class="text-muted">
-                            Review your selected products.
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <h3 class="feature-title mb-0">
+
+                                My Cart
+
+                            </h3>
+
+                            <i class="bi bi-arrow-right arrow-icon"></i>
+
+                        </div>
+
+
+                        <p class="feature-text mt-2">
+
+                            Review your selected food
+                            and checkout.
+
                         </p>
 
                     </div>
@@ -237,27 +652,43 @@
 
         <!-- Orders -->
 
-        <div class="col-md-6 col-lg-3">
+        <div class="col-6 col-lg-3">
 
             <a
                 href="{% url 'my_orders' %}"
-                class="text-decoration-none text-dark"
+                class="feature-link"
             >
 
-                <div class="card feature-card shadow-sm h-100">
+                <div class="feature-card">
 
-                    <div class="card-body text-center p-4">
+                    <div class="card-body p-3">
+
 
                         <div class="feature-icon">
-                            📦
+
+                            <i class="bi bi-receipt"></i>
+
                         </div>
 
-                        <h5 class="fw-bold mt-3">
-                            My Orders
-                        </h5>
 
-                        <p class="text-muted">
-                            Track your current and past orders.
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <h3 class="feature-title mb-0">
+
+                                My Orders
+
+                            </h3>
+
+                            <i class="bi bi-arrow-right arrow-icon"></i>
+
+                        </div>
+
+
+                        <p class="feature-text mt-2">
+
+                            Track your current and
+                            previous orders.
+
                         </p>
 
                     </div>
@@ -271,20 +702,89 @@
     </div>
 
 
-    <!-- FOOTER MESSAGE -->
+    <!-- =========================
+         DISCOVER BANNER
+    ========================= -->
 
-    <div class="text-center mt-5">
+    <div class="discover-card">
 
-        <p class="text-muted">
-            🏪 LocalKart — Empowering local businesses,
-            one order at a time.
-        </p>
+        <div class="row align-items-center">
+
+            <div class="col-md-8">
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <div class="discover-icon">
+
+                        <i class="bi bi-stars"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h3 class="discover-title mb-1">
+
+                            Ready for something delicious?
+
+                        </h3>
+
+
+                        <p class="discover-text">
+
+                            Explore the Yumzo marketplace
+                            and find your next favourite meal.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+
+                <a
+                    href="{% url 'marketplace' %}"
+                    class="discover-btn"
+                >
+
+                    Start Ordering
+
+                    <i class="bi bi-arrow-right ms-1"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <div class="text-center footer-message">
+
+        <i class="bi bi-heart-fill text-danger me-1"></i>
+
+        Yumzo — Delicious food, delivered with love.
 
     </div>
 
 
 </div>
 
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
 </body>
 
 </html>
+```

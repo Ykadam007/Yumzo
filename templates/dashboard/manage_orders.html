@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +11,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Manage Orders | LocalKart Admin</title>
+    <title>Manage Orders | Yumzo Admin</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -19,45 +20,564 @@
 
     <style>
 
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            background: #f5f7fb;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f7f8;
+            color: #212529;
         }
 
-        .page-header {
-            margin-bottom: 30px;
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 250px;
+            background: #ffffff;
+            border-right: 1px solid #eeeeee;
+            padding: 25px 18px;
+            z-index: 1000;
+            overflow-y: auto;
         }
 
-        .card {
+        .brand {
+            display: block;
+            text-decoration: none;
+            font-size: 27px;
+            font-weight: 900;
+            color: #e23744;
+            padding-left: 10px;
+            margin-bottom: 35px;
+        }
+
+        .brand span {
+            color: #ff7a00;
+        }
+
+        .admin-label {
+            font-size: 11px;
+            color: #999999;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 12px;
+            margin-bottom: 12px;
+        }
+
+        .side-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 14px;
+            border-radius: 12px;
+            margin-bottom: 5px;
+            text-decoration: none;
+            color: #555555;
+            font-size: 14px;
+            font-weight: 600;
+            transition: .2s ease;
+        }
+
+        .side-link:hover {
+            background: #fff1f2;
+            color: #e23744;
+        }
+
+        .side-link.active {
+            background: #e23744;
+            color: #ffffff;
+        }
+
+        .side-icon {
+            width: 25px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .sidebar-bottom {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .logout-link {
+            color: #dc3545;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main-content {
+            margin-left: 250px;
+            min-height: 100vh;
+            padding: 30px 35px;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .topbar {
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 18px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 850;
+            margin-bottom: 5px;
+        }
+
+        .page-subtitle {
+            color: #777777;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .dashboard-btn {
+            border: 1px solid #dddddd;
+            background: #ffffff;
+            color: #555555;
+            border-radius: 10px;
+            padding: 9px 15px;
+            font-size: 13px;
+            font-weight: 750;
+            text-decoration: none;
+        }
+
+        .dashboard-btn:hover {
+            background: #f5f5f5;
+            color: #333333;
+        }
+
+        /* =========================
+           FILTER CARD
+        ========================= */
+
+        .filter-card {
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 25px;
+        }
+
+        .filter-title {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+
+        .filter-label {
+            display: block;
+            font-size: 11px;
+            color: #555555;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+            margin-bottom: 7px;
+        }
+
+        .form-control,
+        .form-select {
+            border: 1px solid #dddddd;
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 13px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #e23744;
+            box-shadow: 0 0 0 3px rgba(226, 55, 68, .10);
+        }
+
+        .search-btn {
+            width: 100%;
             border: none;
-            border-radius: 14px;
+            background: #e23744;
+            color: #ffffff;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 750;
         }
 
-        .table th {
+        .search-btn:hover {
+            background: #c92f3b;
+        }
+
+        .reset-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            border: 1px solid #dddddd;
+            color: #555555;
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 9px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .reset-btn:hover {
+            background: #f5f5f5;
+            color: #333333;
+        }
+
+        /* =========================
+           ORDERS CARD
+        ========================= */
+
+        .orders-card {
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .orders-header {
+            padding: 20px 22px;
+            border-bottom: 1px solid #eeeeee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .orders-title {
+            font-size: 17px;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .count-badge {
+            background: #fff1f2;
+            color: #e23744;
+            border-radius: 20px;
+            padding: 7px 11px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table {
+            margin: 0;
+        }
+
+        .table thead th {
+            background: #fafafa;
+            border-bottom: 1px solid #eeeeee;
+            color: #777777;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .45px;
+            padding: 14px 13px;
             white-space: nowrap;
         }
 
-        .table td {
+        .table tbody td {
+            padding: 15px 13px;
             vertical-align: middle;
+            border-color: #f0f0f0;
+            font-size: 13px;
         }
+
+        .table tbody tr {
+            transition: .15s ease;
+        }
+
+        .table tbody tr:hover {
+            background: #fffafa;
+        }
+
+        /* =========================
+           ORDER ID
+        ========================= */
 
         .order-id {
-            font-weight: 700;
+            display: inline-block;
+            background: #fff1f2;
+            color: #e23744;
+            border-radius: 8px;
+            padding: 7px 9px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 800;
         }
+
+        .order-id:hover {
+            background: #e23744;
+            color: #ffffff;
+        }
+
+        /* =========================
+           CUSTOMER / SHOP
+        ========================= */
+
+        .customer-name,
+        .shop-name {
+            font-weight: 750;
+            color: #333333;
+        }
+
+        .secondary-text {
+            color: #888888;
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        /* =========================
+           TOTAL
+        ========================= */
 
         .order-total {
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 850;
+            color: #222222;
+            white-space: nowrap;
         }
 
-        .action-btn {
-            min-width: 90px;
+        /* =========================
+           BADGES
+        ========================= */
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 7px 9px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 800;
+            white-space: nowrap;
         }
+
+        .badge-placed {
+            background: #eef4ff;
+            color: #2166d1;
+        }
+
+        .badge-accepted {
+            background: #eaf8ff;
+            color: #147da8;
+        }
+
+        .badge-preparing {
+            background: #fff5df;
+            color: #986500;
+        }
+
+        .badge-ready {
+            background: #f0efff;
+            color: #6255c7;
+        }
+
+        .badge-delivery {
+            background: #eaf8ff;
+            color: #147da8;
+        }
+
+        .badge-delivered {
+            background: #eaf8ef;
+            color: #26753c;
+        }
+
+        .badge-cancelled {
+            background: #fff0f1;
+            color: #b4232d;
+        }
+
+        .badge-default {
+            background: #f1f1f1;
+            color: #555555;
+        }
+
+        .payment-cod {
+            background: #f1f1f1;
+            color: #555555;
+        }
+
+        .payment-online {
+            background: #eef4ff;
+            color: #2166d1;
+        }
+
+        .payment-paid {
+            background: #eaf8ef;
+            color: #26753c;
+        }
+
+        .payment-failed {
+            background: #fff0f1;
+            color: #b4232d;
+        }
+
+        .payment-pending {
+            background: #fff5df;
+            color: #986500;
+        }
+
+        .refund-processed {
+            background: #eaf8ef;
+            color: #26753c;
+        }
+
+        .refund-pending {
+            background: #fff5df;
+            color: #986500;
+        }
+
+        .refund-failed {
+            background: #fff0f1;
+            color: #b4232d;
+        }
+
+        .refund-none {
+            background: #f1f1f1;
+            color: #777777;
+        }
+
+        /* =========================
+           DATE
+        ========================= */
+
+        .order-date {
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .order-time {
+            color: #999999;
+            font-size: 10px;
+            margin-top: 3px;
+        }
+
+        /* =========================
+           PAGINATION
+        ========================= */
+
+        .pagination-area {
+            padding: 18px;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .page-link {
+            border: 1px solid #eeeeee;
+            color: #555555;
+            font-size: 12px;
+            font-weight: 700;
+            margin: 0 2px;
+            border-radius: 8px !important;
+        }
+
+        .page-item.active .page-link {
+            background: #e23744;
+            border-color: #e23744;
+            color: #ffffff;
+        }
+
+        .page-link:hover {
+            color: #e23744;
+            background: #fff1f2;
+        }
+
+        /* =========================
+           EMPTY STATE
+        ========================= */
 
         .empty-state {
-            padding: 60px 20px;
+            padding: 70px 20px;
+            text-align: center;
         }
 
         .empty-icon {
-            font-size: 55px;
+            width: 80px;
+            height: 80px;
+            border-radius: 22px;
+            background: #fff1f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            font-size: 35px;
+        }
+
+        .empty-title {
+            font-size: 19px;
+            font-weight: 800;
+            margin-top: 18px;
+        }
+
+        .empty-text {
+            color: #888888;
+            font-size: 13px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 991px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #eeeeee;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .sidebar-bottom {
+                margin-top: 10px;
+            }
+
+        }
+
+        @media (max-width: 576px) {
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 18px;
+            }
+
+            .filter-card {
+                padding: 18px;
+            }
+
+            .orders-header {
+                padding: 17px;
+            }
+
         }
 
     </style>
@@ -68,21 +588,132 @@
 <body>
 
 
-<div class="container py-5">
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+    <a
+        href="{% url 'admin_dashboard' %}"
+        class="brand"
+    >
+        🍽️ Yum<span>zo</span>
+    </a>
 
 
-    <!-- ================= HEADER ================= -->
+    <div class="admin-label">
+        Administration
+    </div>
 
-    <div class="d-flex justify-content-between align-items-center page-header">
+
+    <a
+        href="{% url 'admin_dashboard' %}"
+        class="side-link"
+    >
+        <span class="side-icon">📊</span>
+        Dashboard
+    </a>
+
+
+    <a
+        href="{% url 'manage_users' %}"
+        class="side-link"
+    >
+        <span class="side-icon">👥</span>
+        Manage Users
+    </a>
+
+
+    <a
+        href="{% url 'manage_shops' %}"
+        class="side-link"
+    >
+        <span class="side-icon">🏪</span>
+        Manage Restaurants
+    </a>
+
+
+    <a
+        href="{% url 'manage_products' %}"
+        class="side-link"
+    >
+        <span class="side-icon">🍔</span>
+        Manage Products
+    </a>
+
+
+    <a
+        href="{% url 'manage_categories' %}"
+        class="side-link"
+    >
+        <span class="side-icon">📂</span>
+        Categories
+    </a>
+
+
+    <a
+        href="{% url 'manage_orders' %}"
+        class="side-link active"
+    >
+        <span class="side-icon">📦</span>
+        Orders
+    </a>
+
+
+    <a
+        href="{% url 'manage_reviews' %}"
+        class="side-link"
+    >
+        <span class="side-icon">⭐</span>
+        Reviews
+    </a>
+
+
+    <div class="sidebar-bottom">
+
+        <a
+            href="/admin/"
+            class="side-link"
+        >
+            <span class="side-icon">⚙️</span>
+            Django Admin
+        </a>
+
+
+        <a
+            href="{% url 'logout' %}"
+            class="side-link logout-link"
+        >
+            <span class="side-icon">🚪</span>
+            Logout
+        </a>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main-content">
+
+
+    <!-- HEADER -->
+
+    <div class="topbar">
 
         <div>
 
-            <h2 class="fw-bold mb-1">
+            <h1 class="page-title">
                 📦 Manage Orders
-            </h2>
+            </h1>
 
-            <p class="text-muted mb-0">
-                Monitor all LocalKart customer orders
+            <p class="page-subtitle">
+                Monitor all Yumzo customer orders.
             </p>
 
         </div>
@@ -90,7 +721,7 @@
 
         <a
             href="{% url 'admin_dashboard' %}"
-            class="btn btn-secondary"
+            class="dashboard-btn"
         >
             ← Admin Dashboard
         </a>
@@ -98,730 +729,732 @@
     </div>
 
 
-    <!-- ================= SEARCH & FILTER ================= -->
 
-    <div class="card shadow-sm mb-4">
+    <!-- =================================================
+         SEARCH & FILTER
+    ================================================= -->
 
-        <div class="card-body p-4">
+    <div class="filter-card">
 
-            <form method="GET">
-
-
-                <!-- ================= ROW 1 ================= -->
-
-                <div class="row g-3 align-items-end">
-
-
-                    <!-- Search -->
-
-                    <div class="col-md-4">
-
-                        <label class="form-label fw-bold">
-                            Search Orders
-                        </label>
-
-                        <input
-                            type="text"
-                            name="search"
-                            value="{{ search }}"
-                            class="form-control"
-                            placeholder="🔍 Search customer, email or shop..."
-                        >
-
-                    </div>
-
-
-                    <!-- Order Status -->
-
-                    <div class="col-md-2">
-
-                        <label class="form-label fw-bold">
-                            Order Status
-                        </label>
-
-                        <select
-                            name="status"
-                            class="form-select"
-                        >
-
-                            <option value="">
-                                All Statuses
-                            </option>
-
-                            {% for value, label in status_choices %}
-
-                                <option
-                                    value="{{ value }}"
-                                    {% if selected_status == value %}selected{% endif %}
-                                >
-                                    {{ label }}
-                                </option>
-
-                            {% endfor %}
-
-                        </select>
-
-                    </div>
-
-
-                    <!-- Payment Status -->
-
-                    <div class="col-md-2">
-
-                        <label class="form-label fw-bold">
-                            Payment Status
-                        </label>
-
-                        <select
-                            name="payment_status"
-                            class="form-select"
-                        >
-
-                            <option value="">
-                                All Payment Statuses
-                            </option>
-
-                            {% for value, label in payment_status_choices %}
-
-                                <option
-                                    value="{{ value }}"
-                                    {% if selected_payment_status == value %}selected{% endif %}
-                                >
-                                    {{ label }}
-                                </option>
-
-                            {% endfor %}
-
-                        </select>
-
-                    </div>
-
-
-                    <!-- Payment Method -->
-
-                    <div class="col-md-2">
-
-                        <label class="form-label fw-bold">
-                            Payment Method
-                        </label>
-
-                        <select
-                            name="payment_method"
-                            class="form-select"
-                        >
-
-                            <option value="">
-                                All Methods
-                            </option>
-
-                            {% for value, label in payment_method_choices %}
-
-                                <option
-                                    value="{{ value }}"
-                                    {% if selected_payment_method == value %}selected{% endif %}
-                                >
-                                    {{ label }}
-                                </option>
-
-                            {% endfor %}
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-
-                <!-- ================= ROW 2 ================= -->
-
-                <div class="row g-3 align-items-end mt-1">
-
-
-                    <!-- From Date -->
-
-                    <div class="col-md-3">
-
-                        <label class="form-label fw-bold">
-                            From Date
-                        </label>
-
-                        <input
-                            type="date"
-                            name="date_from"
-                            value="{{ date_from }}"
-                            class="form-control"
-                        >
-
-                    </div>
-
-
-                    <!-- To Date -->
-
-                    <div class="col-md-3">
-
-                        <label class="form-label fw-bold">
-                            To Date
-                        </label>
-
-                        <input
-                            type="date"
-                            name="date_to"
-                            value="{{ date_to }}"
-                            class="form-control"
-                        >
-
-                    </div>
-
-
-                    <!-- Search Button -->
-
-                    <div class="col-md-2">
-
-                        <button
-                            type="submit"
-                            class="btn btn-primary w-100"
-                        >
-                            🔍 Search
-                        </button>
-
-                    </div>
-
-
-                    <!-- Reset Button -->
-
-                    <div class="col-md-2">
-
-                        <a
-                            href="{% url 'manage_orders' %}"
-                            class="btn btn-outline-secondary w-100"
-                        >
-                            ↻ Reset
-                        </a>
-
-                    </div>
-
-
-                </div>
-
-
-            </form>
-
+        <div class="filter-title">
+            🔎 Search & Filter Orders
         </div>
+
+
+        <form method="GET">
+
+
+            <!-- ROW 1 -->
+
+            <div class="row g-3 align-items-end">
+
+
+                <!-- SEARCH -->
+
+                <div class="col-md-4">
+
+                    <label class="filter-label">
+                        Search Orders
+                    </label>
+
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ search }}"
+                        class="form-control"
+                        placeholder="🔍 Customer, email or restaurant..."
+                    >
+
+                </div>
+
+
+                <!-- ORDER STATUS -->
+
+                <div class="col-md-2">
+
+                    <label class="filter-label">
+                        Order Status
+                    </label>
+
+                    <select
+                        name="status"
+                        class="form-select"
+                    >
+
+                        <option value="">
+                            All Statuses
+                        </option>
+
+
+                        {% for value, label in status_choices %}
+
+                            <option
+                                value="{{ value }}"
+                                {% if selected_status == value %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ label }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- PAYMENT STATUS -->
+
+                <div class="col-md-2">
+
+                    <label class="filter-label">
+                        Payment Status
+                    </label>
+
+                    <select
+                        name="payment_status"
+                        class="form-select"
+                    >
+
+                        <option value="">
+                            All Payment Statuses
+                        </option>
+
+
+                        {% for value, label in payment_status_choices %}
+
+                            <option
+                                value="{{ value }}"
+                                {% if selected_payment_status == value %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ label }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- PAYMENT METHOD -->
+
+                <div class="col-md-2">
+
+                    <label class="filter-label">
+                        Payment Method
+                    </label>
+
+                    <select
+                        name="payment_method"
+                        class="form-select"
+                    >
+
+                        <option value="">
+                            All Methods
+                        </option>
+
+
+                        {% for value, label in payment_method_choices %}
+
+                            <option
+                                value="{{ value }}"
+                                {% if selected_payment_method == value %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ label }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ROW 2 -->
+
+            <div class="row g-3 align-items-end mt-1">
+
+
+                <!-- FROM DATE -->
+
+                <div class="col-md-3">
+
+                    <label class="filter-label">
+                        From Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="date_from"
+                        value="{{ date_from }}"
+                        class="form-control"
+                    >
+
+                </div>
+
+
+                <!-- TO DATE -->
+
+                <div class="col-md-3">
+
+                    <label class="filter-label">
+                        To Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="date_to"
+                        value="{{ date_to }}"
+                        class="form-control"
+                    >
+
+                </div>
+
+
+                <!-- SEARCH -->
+
+                <div class="col-md-2">
+
+                    <button
+                        type="submit"
+                        class="search-btn"
+                    >
+                        🔍 Search
+                    </button>
+
+                </div>
+
+
+                <!-- RESET -->
+
+                <div class="col-md-2">
+
+                    <a
+                        href="{% url 'manage_orders' %}"
+                        class="reset-btn"
+                    >
+                        ↻ Reset
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+        </form>
 
     </div>
 
 
-    <!-- ================= ORDERS CARD ================= -->
 
-    <div class="card shadow-sm">
+    <!-- =================================================
+         ORDERS
+    ================================================= -->
 
-
-        <div class="card-header bg-white py-3">
-
-            <div class="d-flex justify-content-between align-items-center">
-
-                <h5 class="mb-0 fw-bold">
-                    📋 All Orders
-                </h5>
+    <div class="orders-card">
 
 
-                {% if orders %}
+        <div class="orders-header">
 
-                    <span class="badge bg-primary">
-                        {{ orders.paginator.count }} Orders
-                    </span>
-
-                {% endif %}
-
-            </div>
-
-        </div>
-
-
-
-        <div class="card-body p-0">
+            <h5 class="orders-title">
+                📋 All Orders
+            </h5>
 
 
             {% if orders %}
 
+                <span class="count-badge">
+                    {{ orders.paginator.count }} Orders
+                </span>
 
-                <!-- ================= ORDERS TABLE ================= -->
+            {% endif %}
 
-                <div class="table-responsive">
-
-                    <table class="table table-hover align-middle mb-0">
-
-
-                        <thead class="table-dark">
-
-                            <tr>
-
-                                <th class="px-3">
-                                    Order
-                                </th>
-
-                                <th>
-                                    Customer
-                                </th>
-
-                                <th>
-                                    Shop
-                                </th>
-
-                                <th>
-                                    Total
-                                </th>
-
-                                <th>
-                                    Payment
-                                </th>
-
-                                <th>
-                                    Payment Status
-                                </th>
-
-                                <th>
-                                    Refund
-                                </th>
-
-                                <th>
-                                    Order Status
-                                </th>
-
-                                <th>
-                                    Date
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody>
-
-
-                        {% for order in orders %}
-
-                            <tr>
-
-
-                                <!-- ================= ORDER ================= -->
-
-                                <td class="px-3">
-
-                                    <a
-                                        href="{% url 'admin_order_detail' order.id %}"
-                                        class="text-decoration-none"
-                                    >
-
-                                        <span class="order-id">
-                                            #{{ order.id }}
-                                        </span>
-
-                                    </a>
-
-                                </td>
+        </div>
 
 
 
-                                <!-- ================= CUSTOMER ================= -->
-
-                                <td>
-
-                                    <strong>
-                                        {{ order.customer.username }}
-                                    </strong>
+        {% if orders %}
 
 
-                                    {% if order.customer.email %}
+            <div class="table-responsive">
 
-                                        <br>
-
-                                        <small class="text-muted">
-                                            {{ order.customer.email }}
-                                        </small>
-
-                                    {% endif %}
+                <table class="table table-hover align-middle mb-0">
 
 
-                                    {% if order.phone %}
+                    <thead>
 
-                                        <br>
+                        <tr>
 
-                                        <small class="text-muted">
-                                            📞 {{ order.phone }}
-                                        </small>
+                            <th class="px-3">
+                                Order
+                            </th>
 
-                                    {% endif %}
+                            <th>
+                                Customer
+                            </th>
 
-                                </td>
+                            <th>
+                                Restaurant
+                            </th>
+
+                            <th>
+                                Total
+                            </th>
+
+                            <th>
+                                Payment
+                            </th>
+
+                            <th>
+                                Payment Status
+                            </th>
+
+                            <th>
+                                Refund
+                            </th>
+
+                            <th>
+                                Order Status
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                    {% for order in orders %}
+
+                        <tr>
+
+
+                            <!-- ORDER -->
+
+                            <td class="px-3">
+
+                                <a
+                                    href="{% url 'admin_order_detail' order.id %}"
+                                    class="order-id"
+                                >
+                                    #{{ order.id }}
+                                </a>
+
+                            </td>
 
 
 
-                                <!-- ================= SHOP ================= -->
+                            <!-- CUSTOMER -->
 
-                                <td>
+                            <td>
 
-                                    <strong>
-                                        {{ order.shop.name }}
-                                    </strong>
-
-                                </td>
+                                <div class="customer-name">
+                                    {{ order.customer.username }}
+                                </div>
 
 
+                                {% if order.customer.email %}
 
-                                <!-- ================= TOTAL ================= -->
+                                    <div class="secondary-text">
+                                        {{ order.customer.email }}
+                                    </div>
 
-                                <td>
+                                {% endif %}
 
-                                    <span class="order-total">
-                                        ₹{{ order.total_amount }}
+
+                                {% if order.phone %}
+
+                                    <div class="secondary-text">
+                                        📞 {{ order.phone }}
+                                    </div>
+
+                                {% endif %}
+
+                            </td>
+
+
+
+                            <!-- SHOP -->
+
+                            <td>
+
+                                <div class="shop-name">
+                                    {{ order.shop.name }}
+                                </div>
+
+                            </td>
+
+
+
+                            <!-- TOTAL -->
+
+                            <td>
+
+                                <span class="order-total">
+                                    ₹{{ order.total_amount }}
+                                </span>
+
+                            </td>
+
+
+
+                            <!-- PAYMENT METHOD -->
+
+                            <td>
+
+                                {% if order.payment_method == 'cod' %}
+
+                                    <span class="status-badge payment-cod">
+                                        💵 COD
                                     </span>
 
-                                </td>
+                                {% else %}
+
+                                    <span class="status-badge payment-online">
+                                        💳 Online
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
 
 
 
-                                <!-- ================= PAYMENT METHOD ================= -->
+                            <!-- PAYMENT STATUS -->
 
-                                <td>
+                            <td>
 
-                                    {% if order.payment_method == 'cod' %}
+                                {% if order.payment_status == 'paid' %}
 
-                                        <span class="badge bg-secondary">
-                                            💵 COD
+                                    <span class="status-badge payment-paid">
+                                        🟢 Paid
+                                    </span>
+
+
+                                {% elif order.payment_status == 'failed' %}
+
+                                    <span class="status-badge payment-failed">
+                                        🔴 Failed
+                                    </span>
+
+
+                                {% else %}
+
+                                    <span class="status-badge payment-pending">
+                                        🟡 Pending
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+
+                            <!-- REFUND -->
+
+                            <td>
+
+                                {% if order.payment_method == 'online' and order.payment %}
+
+
+                                    {% if order.payment.refund_status == 'processed' %}
+
+                                        <span class="status-badge refund-processed">
+                                            💰 Processed
                                         </span>
 
-                                    {% else %}
 
-                                        <span class="badge bg-primary">
-                                            💳 Online
-                                        </span>
+                                        {% if order.payment.razorpay_refund_id %}
 
-                                    {% endif %}
-
-                                </td>
-
-
-
-                                <!-- ================= PAYMENT STATUS ================= -->
-
-                                <td>
-
-                                    {% if order.payment_status == 'paid' %}
-
-                                        <span class="badge bg-success">
-                                            🟢 Paid
-                                        </span>
-
-                                    {% elif order.payment_status == 'failed' %}
-
-                                        <span class="badge bg-danger">
-                                            🔴 Failed
-                                        </span>
-
-                                    {% else %}
-
-                                        <span class="badge bg-warning text-dark">
-                                            🟡 Pending
-                                        </span>
-
-                                    {% endif %}
-
-                                </td>
-
-
-
-                                <!-- ================= REFUND ================= -->
-
-                                <td>
-
-                                    {% if order.payment_method == 'online' and order.payment %}
-
-
-                                        {% if order.payment.refund_status == 'processed' %}
-
-                                            <span class="badge bg-success">
-                                                💰 Processed
-                                            </span>
-
-
-                                            {% if order.payment.razorpay_refund_id %}
-
-                                                <br>
-
-                                                <small
-                                                    class="text-muted"
-                                                    title="{{ order.payment.razorpay_refund_id }}"
-                                                >
-                                                    Refund completed
-                                                </small>
-
-                                            {% endif %}
-
-
-                                        {% elif order.payment.refund_status == 'pending' %}
-
-                                            <span class="badge bg-warning text-dark">
-                                                ⏳ Pending
-                                            </span>
-
-
-                                        {% elif order.payment.refund_status == 'failed' %}
-
-                                            <span class="badge bg-danger">
-                                                ❌ Failed
-                                            </span>
-
-
-                                        {% else %}
-
-                                            <span class="badge bg-secondary">
-                                                Not Requested
-                                            </span>
+                                            <div
+                                                class="secondary-text"
+                                                title="{{ order.payment.razorpay_refund_id }}"
+                                            >
+                                                Refund completed
+                                            </div>
 
                                         {% endif %}
 
 
-                                    {% else %}
+                                    {% elif order.payment.refund_status == 'pending' %}
 
-                                        <span class="text-muted">
-                                            —
-                                        </span>
-
-                                    {% endif %}
-
-                                </td>
-
-
-
-                                <!-- ================= ORDER STATUS ================= -->
-
-                                <td>
-
-
-                                    {% if order.status == 'delivered' %}
-
-                                        <span class="badge bg-success">
-                                            🟢 Delivered
+                                        <span class="status-badge refund-pending">
+                                            ⏳ Pending
                                         </span>
 
 
-                                    {% elif order.status == 'cancelled' %}
+                                    {% elif order.payment.refund_status == 'failed' %}
 
-                                        <span class="badge bg-danger">
-                                            🔴 Cancelled
-                                        </span>
-
-
-                                    {% elif order.status == 'placed' %}
-
-                                        <span class="badge bg-primary">
-                                            📦 Order Placed
-                                        </span>
-
-
-                                    {% elif order.status == 'accepted' %}
-
-                                        <span class="badge bg-info text-dark">
-                                            ✓ Accepted
-                                        </span>
-
-
-                                    {% elif order.status == 'preparing' %}
-
-                                        <span class="badge bg-warning text-dark">
-                                            👨‍🍳 Preparing
-                                        </span>
-
-
-                                    {% elif order.status == 'ready' %}
-
-                                        <span class="badge bg-primary">
-                                            🍱 Ready
-                                        </span>
-
-
-                                    {% elif order.status == 'out_for_delivery' %}
-
-                                        <span class="badge bg-info text-dark">
-                                            🚚 Out for Delivery
+                                        <span class="status-badge refund-failed">
+                                            ❌ Failed
                                         </span>
 
 
                                     {% else %}
 
-                                        <span class="badge bg-secondary">
-                                            {{ order.get_status_display }}
+                                        <span class="status-badge refund-none">
+                                            Not Requested
                                         </span>
 
                                     {% endif %}
 
-                                </td>
+
+                                {% else %}
+
+                                    <span class="status-badge refund-none">
+                                        —
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
 
 
 
-                                <!-- ================= DATE ================= -->
+                            <!-- ORDER STATUS -->
 
-                                <td>
+                            <td>
 
+
+                                {% if order.status == 'delivered' %}
+
+                                    <span class="status-badge badge-delivered">
+                                        🟢 Delivered
+                                    </span>
+
+
+                                {% elif order.status == 'cancelled' %}
+
+                                    <span class="status-badge badge-cancelled">
+                                        🔴 Cancelled
+                                    </span>
+
+
+                                {% elif order.status == 'placed' %}
+
+                                    <span class="status-badge badge-placed">
+                                        📦 Order Placed
+                                    </span>
+
+
+                                {% elif order.status == 'accepted' %}
+
+                                    <span class="status-badge badge-accepted">
+                                        ✓ Accepted
+                                    </span>
+
+
+                                {% elif order.status == 'preparing' %}
+
+                                    <span class="status-badge badge-preparing">
+                                        👨‍🍳 Preparing
+                                    </span>
+
+
+                                {% elif order.status == 'ready' %}
+
+                                    <span class="status-badge badge-ready">
+                                        🍱 Ready
+                                    </span>
+
+
+                                {% elif order.status == 'out_for_delivery' %}
+
+                                    <span class="status-badge badge-delivery">
+                                        🚚 Out for Delivery
+                                    </span>
+
+
+                                {% else %}
+
+                                    <span class="status-badge badge-default">
+                                        {{ order.get_status_display }}
+                                    </span>
+
+                                {% endif %}
+
+
+                            </td>
+
+
+
+                            <!-- DATE -->
+
+                            <td>
+
+                                <div class="order-date">
                                     {{ order.created_at|date:"d M Y" }}
+                                </div>
 
-                                    <br>
+                                <div class="order-time">
+                                    {{ order.created_at|date:"h:i A" }}
+                                </div>
 
-                                    <small class="text-muted">
-                                        {{ order.created_at|date:"h:i A" }}
-                                    </small>
-
-                                </td>
-
-
-                            </tr>
+                            </td>
 
 
-                        {% endfor %}
+                        </tr>
 
 
-                        </tbody>
+                    {% endfor %}
 
 
-                    </table>
-
-                </div>
+                    </tbody>
 
 
+                </table>
 
-                <!-- ================= PAGINATION ================= -->
-
-                {% if orders.has_other_pages %}
-
-                    <div class="p-3">
-
-                        <nav aria-label="Order pagination">
-
-                            <ul class="pagination justify-content-center mb-0">
+            </div>
 
 
-                                <!-- Previous -->
 
-                                {% if orders.has_previous %}
+            <!-- =================================================
+                 PAGINATION
+            ================================================= -->
+
+            {% if orders.has_other_pages %}
+
+                <div class="pagination-area">
+
+                    <nav aria-label="Order pagination">
+
+                        <ul class="pagination justify-content-center mb-0">
+
+
+                            <!-- PREVIOUS -->
+
+                            {% if orders.has_previous %}
+
+                                <li class="page-item">
+
+                                    <a
+                                        class="page-link"
+                                        href="?page={{ orders.previous_page_number }}{% if search %}&search={{ search|urlencode }}{% endif %}{% if selected_status %}&status={{ selected_status|urlencode }}{% endif %}{% if selected_payment_status %}&payment_status={{ selected_payment_status|urlencode }}{% endif %}{% if selected_payment_method %}&payment_method={{ selected_payment_method|urlencode }}{% endif %}{% if date_from %}&date_from={{ date_from|urlencode }}{% endif %}{% if date_to %}&date_to={{ date_to|urlencode }}{% endif %}"
+                                    >
+                                        ← Previous
+                                    </a>
+
+                                </li>
+
+                            {% endif %}
+
+
+
+                            <!-- PAGES -->
+
+                            {% for num in orders.paginator.page_range %}
+
+                                {% if orders.number == num %}
+
+                                    <li class="page-item active">
+
+                                        <span class="page-link">
+                                            {{ num }}
+                                        </span>
+
+                                    </li>
+
+                                {% else %}
 
                                     <li class="page-item">
 
                                         <a
                                             class="page-link"
-                                            href="?page={{ orders.previous_page_number }}{% if search %}&search={{ search|urlencode }}{% endif %}{% if selected_status %}&status={{ selected_status|urlencode }}{% endif %}{% if selected_payment_status %}&payment_status={{ selected_payment_status|urlencode }}{% endif %}{% if selected_payment_method %}&payment_method={{ selected_payment_method|urlencode }}{% endif %}{% if date_from %}&date_from={{ date_from|urlencode }}{% endif %}{% if date_to %}&date_to={{ date_to|urlencode }}{% endif %}"
+                                            href="?page={{ num }}{% if search %}&search={{ search|urlencode }}{% endif %}{% if selected_status %}&status={{ selected_status|urlencode }}{% endif %}{% if selected_payment_status %}&payment_status={{ selected_payment_status|urlencode }}{% endif %}{% if selected_payment_method %}&payment_method={{ selected_payment_method|urlencode }}{% endif %}{% if date_from %}&date_from={{ date_from|urlencode }}{% endif %}{% if date_to %}&date_to={{ date_to|urlencode }}{% endif %}"
                                         >
-                                            ← Previous
+                                            {{ num }}
                                         </a>
 
                                     </li>
 
                                 {% endif %}
 
-
-
-                                <!-- Pages -->
-
-                                {% for num in orders.paginator.page_range %}
-
-                                    {% if orders.number == num %}
-
-                                        <li class="page-item active">
-
-                                            <span class="page-link">
-                                                {{ num }}
-                                            </span>
-
-                                        </li>
-
-                                    {% else %}
-
-                                        <li class="page-item">
-
-                                            <a
-                                                class="page-link"
-                                                href="?page={{ num }}{% if search %}&search={{ search|urlencode }}{% endif %}{% if selected_status %}&status={{ selected_status|urlencode }}{% endif %}{% if selected_payment_status %}&payment_status={{ selected_payment_status|urlencode }}{% endif %}{% if selected_payment_method %}&payment_method={{ selected_payment_method|urlencode }}{% endif %}{% if date_from %}&date_from={{ date_from|urlencode }}{% endif %}{% if date_to %}&date_to={{ date_to|urlencode }}{% endif %}"
-                                            >
-                                                {{ num }}
-                                            </a>
-
-                                        </li>
-
-                                    {% endif %}
-
-                                {% endfor %}
+                            {% endfor %}
 
 
 
-                                <!-- Next -->
+                            <!-- NEXT -->
 
-                                {% if orders.has_next %}
+                            {% if orders.has_next %}
 
-                                    <li class="page-item">
+                                <li class="page-item">
 
-                                        <a
-                                            class="page-link"
-                                            href="?page={{ orders.next_page_number }}{% if search %}&search={{ search|urlencode }}{% endif %}{% if selected_status %}&status={{ selected_status|urlencode }}{% endif %}{% if selected_payment_status %}&payment_status={{ selected_payment_status|urlencode }}{% endif %}{% if selected_payment_method %}&payment_method={{ selected_payment_method|urlencode }}{% endif %}{% if date_from %}&date_from={{ date_from|urlencode }}{% endif %}{% if date_to %}&date_to={{ date_to|urlencode }}{% endif %}"
-                                        >
-                                            Next →
-                                        </a>
+                                    <a
+                                        class="page-link"
+                                        href="?page={{ orders.next_page_number }}{% if search %}&search={{ search|urlencode }}{% endif %}{% if selected_status %}&status={{ selected_status|urlencode }}{% endif %}{% if selected_payment_status %}&payment_status={{ selected_payment_status|urlencode }}{% endif %}{% if selected_payment_method %}&payment_method={{ selected_payment_method|urlencode }}{% endif %}{% if date_from %}&date_from={{ date_from|urlencode }}{% endif %}{% if date_to %}&date_to={{ date_to|urlencode }}{% endif %}"
+                                    >
+                                        Next →
+                                    </a>
 
-                                    </li>
+                                </li>
 
-                                {% endif %}
-
-
-                            </ul>
-
-                        </nav>
-
-                    </div>
-
-                {% endif %}
+                            {% endif %}
 
 
-            {% else %}
+                        </ul>
 
-
-                <!-- ================= EMPTY STATE ================= -->
-
-                <div class="empty-state text-center">
-
-                    <div class="empty-icon">
-                        📦
-                    </div>
-
-                    <h5 class="mt-3 fw-bold">
-                        No Orders Found
-                    </h5>
-
-                    <p class="text-muted mb-0">
-                        No orders match your search or status filter.
-                    </p>
+                    </nav>
 
                 </div>
-
 
             {% endif %}
 
 
-        </div>
+        {% else %}
+
+
+            <!-- EMPTY STATE -->
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    📦
+                </div>
+
+
+                <div class="empty-title">
+                    No Orders Found
+                </div>
+
+
+                <p class="empty-text">
+                    No orders match your search or status filter.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
 
     </div>
 
 
-</div>
+</main>
 
-
-
-<!-- ================= BOOTSTRAP JS ================= -->
 
 <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-></script>
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
 
 
 </body>
 
 </html>
+```

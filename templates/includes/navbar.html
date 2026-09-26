@@ -1,51 +1,69 @@
-<nav class="navbar navbar-expand-lg bg-white shadow-sm">
+```html
+<nav class="navbar navbar-expand-lg yumzo-navbar">
 
     <div class="container">
 
-        <!-- Brand -->
+        <!-- BRAND -->
 
         <a
-            class="navbar-brand fw-bold fs-4"
+            class="navbar-brand yumzo-brand"
             href="{% url 'customer_dashboard' %}"
         >
-            🛒 LocalKart
+            <span class="brand-icon">🍽️</span>
+            Yum<span>zo</span>
         </a>
 
 
-        <!-- Navigation -->
+        <!-- NAVIGATION -->
 
-        <div class="d-flex align-items-center gap-2 flex-wrap">
+        <div class="d-flex align-items-center gap-2 flex-wrap yumzo-nav">
+
+            <!-- Home -->
 
             <a
                 href="{% url 'customer_dashboard' %}"
-                class="btn btn-outline-primary"
+                class="yumzo-nav-link"
             >
-                🏠 Home
+                🏠
+                <span>Home</span>
             </a>
+
+
+            <!-- Shops -->
 
             <a
                 href="{% url 'shop_list' %}"
-                class="btn btn-outline-primary"
+                class="yumzo-nav-link"
             >
-                🏪 Shops
+                🏪
+                <span>Restaurants</span>
             </a>
+
+
+            <!-- Marketplace -->
 
             <a
                 href="{% url 'marketplace' %}"
-                class="btn btn-outline-primary"
+                class="yumzo-nav-link"
             >
-                🛍️ Marketplace
+                🍔
+                <span>Explore</span>
             </a>
+
+
+            <!-- Cart -->
 
             <a
                 href="{% url 'cart_detail' %}"
-                class="btn btn-outline-success"
+                class="yumzo-nav-link cart-link"
             >
-                🛒 Cart
+
+                🛒
+                <span>Cart</span>
 
                 {% if cart_count > 0 %}
 
-                    <span class="badge bg-danger">
+                    <span class="yumzo-badge">
                         {{ cart_count }}
                     </span>
 
@@ -53,32 +71,55 @@
 
             </a>
 
+
+            <!-- Orders -->
+
             <a
                 href="{% url 'my_orders' %}"
-                class="btn btn-outline-primary"
+                class="yumzo-nav-link"
             >
-                📦 Orders
+                📦
+                <span>Orders</span>
             </a>
 
-            <a href="{% url 'notifications' %}" class="nav-link">
-                🔔 Notifications
+
+            <!-- Notifications -->
+
+            <a
+                href="{% url 'notifications' %}"
+                class="yumzo-nav-link notification-link"
+            >
+
+                🔔
+                <span>Notifications</span>
 
                 {% if unread_notifications > 0 %}
-                    <span class="badge bg-danger">
+
+                    <span class="yumzo-badge">
                         {{ unread_notifications }}
                     </span>
+
                 {% endif %}
+
             </a>
 
-            <a href="{% url 'profile' %}"
-                class="btn btn-outline-primary"
+
+            <!-- Account -->
+
+            <a
+                href="{% url 'profile' %}"
+                class="yumzo-nav-link"
             >
-                👤 Account
+                👤
+                <span>Account</span>
             </a>
+
+
+            <!-- Logout -->
 
             <a
                 href="{% url 'logout' %}"
-                class="btn btn-outline-danger"
+                class="yumzo-logout"
             >
                 Logout
             </a>
@@ -88,3 +129,156 @@
     </div>
 
 </nav>
+
+
+<style>
+
+    .yumzo-navbar {
+        background: rgba(255, 255, 255, 0.97);
+        border-bottom: 1px solid #eeeeee;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        padding: 14px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+
+    /* BRAND */
+
+    .yumzo-brand {
+        font-size: 27px;
+        font-weight: 800;
+        color: #e23744 !important;
+        text-decoration: none;
+        letter-spacing: -0.5px;
+        white-space: nowrap;
+    }
+
+    .yumzo-brand span {
+        color: #ff7a00;
+    }
+
+    .brand-icon {
+        font-size: 25px;
+        margin-right: 4px;
+    }
+
+
+    /* NAV LINKS */
+
+    .yumzo-nav {
+        justify-content: flex-end;
+    }
+
+    .yumzo-nav-link {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 9px 13px;
+        border-radius: 10px;
+        color: #343a40;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .yumzo-nav-link:hover {
+        background: #fff1f2;
+        color: #e23744;
+        transform: translateY(-1px);
+    }
+
+
+    /* BADGES */
+
+    .yumzo-badge {
+        min-width: 19px;
+        height: 19px;
+        padding: 2px 5px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #e23744;
+        color: #ffffff;
+        border-radius: 50px;
+        font-size: 11px;
+        font-weight: 800;
+    }
+
+
+    /* LOGOUT */
+
+    .yumzo-logout {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 9px 16px;
+        border-radius: 10px;
+        background: #fff0f1;
+        color: #dc3545;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 700;
+        border: 1px solid #f5c2c7;
+        transition: all 0.2s ease;
+    }
+
+    .yumzo-logout:hover {
+        background: #dc3545;
+        color: #ffffff;
+        transform: translateY(-1px);
+    }
+
+
+    /* MOBILE */
+
+    @media (max-width: 991px) {
+
+        .yumzo-navbar .container {
+            flex-direction: column;
+            align-items: stretch !important;
+        }
+
+        .yumzo-brand {
+            margin-bottom: 12px;
+        }
+
+        .yumzo-nav {
+            justify-content: flex-start;
+        }
+
+    }
+
+
+    @media (max-width: 576px) {
+
+        .yumzo-navbar {
+            padding: 12px 0;
+        }
+
+        .yumzo-nav {
+            gap: 5px !important;
+        }
+
+        .yumzo-nav-link {
+            padding: 8px 10px;
+            font-size: 13px;
+        }
+
+        .yumzo-nav-link span:not(.yumzo-badge) {
+            display: none;
+        }
+
+        .yumzo-logout {
+            padding: 8px 12px;
+            font-size: 13px;
+        }
+
+    }
+
+</style>
+```

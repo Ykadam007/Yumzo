@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,59 +11,283 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Delete Product - LocalKart</title>
+    <title>Delete Product - Yumzo</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
 
+    <style>
+
+        body {
+            background: #f8f9fa;
+            font-family: Arial, sans-serif;
+            color: #212529;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: #ffffff;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: 800;
+            color: #e23744;
+            text-decoration: none;
+        }
+
+        .brand span {
+            color: #ff7a00;
+        }
+
+        .page-wrapper {
+            min-height: calc(100vh - 75px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 15px;
+        }
+
+        .delete-card {
+            width: 100%;
+            max-width: 600px;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .warning-area {
+            background: linear-gradient(135deg, #fff1f2, #fff8f0);
+            padding: 35px 25px 25px;
+        }
+
+        .warning-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            border-radius: 50%;
+            background: #fff0f1;
+            border: 1px solid #f5c2c7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .delete-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-top: 20px;
+        }
+
+        .delete-description {
+            color: #6c757d;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .product-preview {
+            margin: 25px;
+            padding: 18px;
+            border: 1px solid #eeeeee;
+            border-radius: 18px;
+            background: #ffffff;
+        }
+
+        .product-name {
+            font-size: 19px;
+            font-weight: 750;
+        }
+
+        .danger-message {
+            margin: 0 25px;
+            padding: 14px 16px;
+            background: #fff0f1;
+            border: 1px solid #f5c2c7;
+            border-radius: 12px;
+            color: #842029;
+            font-size: 14px;
+        }
+
+        .actions {
+            padding: 25px;
+        }
+
+        .btn-cancel {
+            border: 1px solid #dee2e6;
+            background: #ffffff;
+            color: #343a40;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 650;
+            text-decoration: none;
+        }
+
+        .btn-cancel:hover {
+            background: #f8f9fa;
+            color: #e23744;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 700;
+            transition: 0.2s ease;
+        }
+
+        .btn-delete:hover {
+            background: #bb2d3b;
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .footer {
+            text-align: center;
+            color: #8a8f98;
+            font-size: 13px;
+            padding: 20px;
+        }
+
+        @media (max-width: 576px) {
+
+            .delete-title {
+                font-size: 24px;
+            }
+
+            .actions .btn {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
 </head>
 
-<body class="bg-light">
+<body>
 
-<div class="container py-5">
 
-    <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+<!-- NAVBAR -->
 
-        <div class="card-body text-center p-5">
+<nav class="navbar py-3">
 
-            <div style="font-size: 60px;">
+    <div class="container">
+
+        <a
+            href="{% url 'shop_dashboard' %}"
+            class="brand"
+        >
+            Yum<span>zo</span>
+        </a>
+
+        <a
+            href="{% url 'product_list' %}"
+            class="btn-cancel"
+        >
+            ← My Products
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- DELETE PAGE -->
+
+<div class="page-wrapper">
+
+    <div class="delete-card">
+
+
+        <!-- WARNING HEADER -->
+
+        <div class="warning-area text-center">
+
+            <div class="warning-icon">
                 ⚠️
             </div>
 
-            <h3 class="fw-bold mt-3">
+            <div class="delete-title">
                 Delete Product?
-            </h3>
+            </div>
 
-            <p class="text-muted">
-                Are you sure you want to delete
-                <strong>{{ product.name }}</strong>?
+            <p class="delete-description mb-0 mt-2">
+                Are you sure you want to permanently delete this product?
             </p>
 
-            <p class="text-danger">
-                This action cannot be undone.
-            </p>
+        </div>
 
+
+        <!-- PRODUCT -->
+
+        <div class="product-preview">
+
+            <div class="text-muted small mb-1">
+                Product to be deleted
+            </div>
+
+            <div class="product-name">
+                🍽️ {{ product.name }}
+            </div>
+
+            {% if product.category %}
+
+                <div class="text-muted small mt-1">
+                    {{ product.category.name }}
+                </div>
+
+            {% endif %}
+
+            <div class="text-danger fw-bold mt-2">
+                ₹{{ product.final_price }}
+            </div>
+
+        </div>
+
+
+        <!-- WARNING -->
+
+        <div class="danger-message">
+
+            <strong>⚠️ This action cannot be undone.</strong>
+
+            <div class="mt-1">
+                Once deleted, this product will be permanently removed
+                from your restaurant menu.
+            </div>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div class="actions">
 
             <form method="POST">
 
                 {% csrf_token %}
 
-                <div class="d-flex justify-content-center gap-2">
+                <div class="d-flex justify-content-center gap-2 flex-wrap">
 
                     <a
                         href="{% url 'product_list' %}"
-                        class="btn btn-outline-secondary"
+                        class="btn-cancel"
                     >
                         Cancel
                     </a>
 
                     <button
                         type="submit"
-                        class="btn btn-danger"
+                        class="btn-delete"
                     >
-                        🗑️ Yes, Delete
+                        🗑️ Yes, Delete Product
                     </button>
 
                 </div>
@@ -71,10 +296,22 @@
 
         </div>
 
+
     </div>
 
 </div>
 
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+    © 2026 <strong>Yumzo</strong> · Restaurant Partner Panel
+
+</div>
+
+
 </body>
 
 </html>
+```

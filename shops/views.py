@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import Shop
+from products.models import Product
 from .forms import ShopForm
 from django.db.models import Avg, Count
 
@@ -54,6 +55,31 @@ def shop_profile(request):
         'shops/shop_profile.html',
         {
             'shop': shop
+        }
+    )
+
+def home(request):
+    shops = Shop.objects.filter(
+        approval_status='approved'
+    ).annotate(
+        review_count=Count('reviews'),
+        average_review_rating=Avg('reviews__rating')
+    ).order_by('-rating', 'name')[:8]
+
+    products = Product.objects.filter(
+        is_available=True,
+        shop__approval_status='approved'
+    ).select_related(
+        'shop',
+        'category'
+    ).order_by('-created_at')[:8]
+
+    return render(
+        request,
+        'home.html',
+        {
+            'shops': shops,
+            'products': products
         }
     )
 

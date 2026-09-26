@@ -9,220 +9,736 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Marketplace - LocalKart</title>
+    <title>Yumzo | Explore Food</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f8f8f8;
+            color: #1c1c1c;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .marketplace-hero {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(225, 48, 55, 0.96),
+                    rgba(255, 100, 55, 0.92)
+                );
+
+            color: white;
+            padding: 55px 20px 75px;
+        }
+
+        .hero-content {
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        .hero-title {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .hero-subtitle {
+            font-size: 17px;
+            opacity: 0.92;
+            margin-bottom: 30px;
+        }
+
+        /* =========================
+           SEARCH
+        ========================= */
+
+        .search-box {
+            background: white;
+            border-radius: 14px;
+            padding: 7px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            flex: 1;
+            padding: 14px;
+            font-size: 15px;
+        }
+
+        .search-icon {
+            color: #777;
+            font-size: 20px;
+            margin-left: 12px;
+        }
+
+        .search-btn {
+            border: none;
+            background: #e23744;
+            color: white;
+            border-radius: 10px;
+            padding: 13px 24px;
+            font-weight: 600;
+        }
+
+        .search-btn:hover {
+            background: #c91f2d;
+            color: white;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .marketplace-container {
+            max-width: 1200px;
+            margin: -35px auto 0;
+            position: relative;
+        }
+
+        /* =========================
+           FILTER CARD
+        ========================= */
+
+        .filter-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            margin-bottom: 35px;
+        }
+
+        .filter-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .category-select {
+            height: 48px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .filter-button {
+            height: 48px;
+            border: none;
+            border-radius: 10px;
+            background: #e23744;
+            color: white;
+            font-weight: 600;
+        }
+
+        .filter-button:hover {
+            background: #c91f2d;
+            color: white;
+        }
+
+        /* =========================
+           SECTION HEADER
+        ========================= */
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .section-title {
+            font-size: 26px;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .result-text {
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* =========================
+           PRODUCT CARD
+        ========================= */
+
+        .product-card {
+            background: white;
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            height: 100%;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
+            transition: 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-image-wrapper {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.4s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.06);
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            background: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+        }
+
+        .discount-badge {
+            position: absolute;
+            left: 12px;
+            bottom: 12px;
+            background: #e23744;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .product-body {
+            padding: 17px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 7px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .shop-name {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .rating {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #267e3e;
+            color: white;
+            padding: 4px 7px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .review-count {
+            color: #777;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        .product-description {
+            color: #777;
+            font-size: 13px;
+            line-height: 1.5;
+            min-height: 39px;
+            margin-top: 10px;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            margin-bottom: 15px;
+        }
+
+        .current-price {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .old-price {
+            color: #999;
+            text-decoration: line-through;
+            font-size: 13px;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .view-btn {
+            flex: 1;
+            border: 1px solid #e23744;
+            color: #e23744;
+            background: white;
+            border-radius: 8px;
+            padding: 10px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .view-btn:hover {
+            background: #fff1f2;
+            color: #e23744;
+        }
+
+        .cart-btn {
+            flex: 1;
+            border: none;
+            background: #e23744;
+            color: white;
+            border-radius: 8px;
+            padding: 10px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .cart-btn:hover {
+            background: #c91f2d;
+            color: white;
+        }
+
+        /* =========================
+           EMPTY STATE
+        ========================= */
+
+        .empty-card {
+            background: white;
+            border-radius: 18px;
+            padding: 70px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .empty-icon {
+            width: 90px;
+            height: 90px;
+            background: #fff1f2;
+            color: #e23744;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            font-size: 38px;
+        }
+
+        .empty-card h3 {
+            margin-top: 20px;
+            font-weight: 800;
+        }
+
+        .empty-card p {
+            color: #777;
+        }
+
+        .reset-btn {
+            display: inline-block;
+            margin-top: 10px;
+            background: #e23744;
+            color: white;
+            padding: 11px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .reset-btn:hover {
+            background: #c91f2d;
+            color: white;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 768px) {
+
+            .marketplace-hero {
+                padding: 40px 15px 65px;
+            }
+
+            .hero-title {
+                font-size: 30px;
+            }
+
+            .search-box {
+                flex-wrap: wrap;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+
+            .search-btn {
+                width: 100%;
+                margin-top: 5px;
+            }
+
+            .marketplace-container {
+                margin: -25px 12px 0;
+            }
+
+            .section-title {
+                font-size: 21px;
+            }
+
+            .product-image-wrapper {
+                height: 190px;
+            }
+
+        }
+
+    </style>
+
 </head>
 
-<body class="bg-light">
+<body>
 
 {% include 'includes/navbar.html' %}
 
-<div class="container py-5">
 
-    <!-- Header -->
-    <div class="mb-4">
+<!-- =========================
+     HERO
+========================= -->
 
-        <h2 class="fw-bold">
-            🛍️ LocalKart Marketplace
-        </h2>
+<section class="marketplace-hero">
 
-        <p class="text-muted">
-            Discover delicious food and products from local shops.
-        </p>
+    <div class="hero-content">
+
+        <div class="text-center">
+
+            <h1 class="hero-title">
+                Discover Great Food Near You 🍽️
+            </h1>
+
+            <p class="hero-subtitle">
+                Order delicious food from your favourite local restaurants and shops.
+            </p>
+
+        </div>
+
+
+        <!-- Search -->
+
+        <form
+            method="GET"
+            class="search-box"
+        >
+
+            <i class="bi bi-search search-icon"></i>
+
+            <input
+                type="text"
+                name="search"
+                value="{{ search }}"
+                placeholder="Search for dishes, restaurants or cuisines..."
+            >
+
+            {% if selected_category %}
+
+                <input
+                    type="hidden"
+                    name="category"
+                    value="{{ selected_category }}"
+                >
+
+            {% endif %}
+
+            <button
+                type="submit"
+                class="search-btn"
+            >
+                <i class="bi bi-search me-1"></i>
+                Search
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<div class="container marketplace-container">
+
+
+    <!-- FILTER -->
+
+    <div class="filter-card">
+
+        <div class="filter-title">
+            <i class="bi bi-sliders me-2"></i>
+            Filter Food
+        </div>
+
+        <form method="GET">
+
+            {% if search %}
+
+                <input
+                    type="hidden"
+                    name="search"
+                    value="{{ search }}"
+                >
+
+            {% endif %}
+
+            <div class="row g-3">
+
+                <div class="col-md-9">
+
+                    <select
+                        name="category"
+                        class="form-select category-select"
+                    >
+
+                        <option value="">
+                            All Categories
+                        </option>
+
+                        {% for category in categories %}
+
+                            <option
+                                value="{{ category.id }}"
+                                {% if selected_category == category.id|stringformat:"s" %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ category.name }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <button
+                        type="submit"
+                        class="filter-button w-100"
+                    >
+                        <i class="bi bi-funnel me-1"></i>
+                        Apply Filter
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
 
     </div>
 
 
-    <!-- Search & Filter -->
+    <!-- SECTION HEADER -->
 
-    <div class="card shadow-sm mb-4">
+    <div class="section-header">
 
-        <div class="card-body">
+        <div>
 
-            <form method="GET">
+            <h2 class="section-title">
+                Explore Food
+            </h2>
 
-                <div class="row g-2">
-
-                    <div class="col-md-6">
-
-                        <input
-                            type="text"
-                            name="search"
-                            value="{{ search }}"
-                            class="form-control"
-                            placeholder="🔍 Search products, shops..."
-                        >
-
-                    </div>
-
-
-                    <div class="col-md-4">
-
-                        <select
-                            name="category"
-                            class="form-select"
-                        >
-
-                            <option value="">
-                                All Categories
-                            </option>
-
-                            {% for category in categories %}
-
-                                <option
-                                    value="{{ category.id }}"
-                                    {% if selected_category == category.id|stringformat:"s" %}
-                                        selected
-                                    {% endif %}
-                                >
-                                    {{ category.name }}
-                                </option>
-
-                            {% endfor %}
-
-                        </select>
-
-                    </div>
-
-
-                    <div class="col-md-2">
-
-                        <button
-                            type="submit"
-                            class="btn btn-primary w-100"
-                        >
-                            Search
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </form>
+            <div class="result-text">
+                Delicious food from approved local restaurants
+            </div>
 
         </div>
 
     </div>
 
 
-    <!-- Products -->
+    <!-- PRODUCTS -->
 
-    <div class="row">
+    <div class="row g-4">
 
         {% for product in products %}
 
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="col-xl-3 col-lg-4 col-md-6">
 
-                <div class="card shadow-sm h-100">
-
-
-                    <!-- Image -->
-
-                    {% if product.image %}
-
-                        <img
-                            src="{{ product.image.url }}"
-                            class="card-img-top"
-                            style="height: 210px; object-fit: cover;"
-                            alt="{{ product.name }}"
-                        >
-
-                    {% else %}
-
-                        <div
-                            class="bg-white d-flex align-items-center justify-content-center"
-                            style="height: 210px; font-size: 60px;"
-                        >
-                            🍽️
-                        </div>
-
-                    {% endif %}
+                <div class="product-card">
 
 
-                    <div class="card-body d-flex flex-column">
+                    <!-- IMAGE -->
 
-                        <!-- Product Name -->
+                    <div class="product-image-wrapper">
 
-                        <h5 class="card-title fw-bold">
-                            {{ product.name }}
-                        </h5>
+                        {% if product.image %}
+
+                            <img
+                                src="{{ product.image.url }}"
+                                class="product-image"
+                                alt="{{ product.name }}"
+                            >
+
+                        {% else %}
+
+                            <div class="image-placeholder">
+                                <i class="bi bi-egg-fried"></i>
+                            </div>
+
+                        {% endif %}
 
 
-                        <!-- Category -->
+                        <!-- CATEGORY -->
 
                         {% if product.category %}
 
-                            <span class="badge bg-light text-dark border mb-2 align-self-start">
+                            <span class="category-badge">
                                 {{ product.category.name }}
                             </span>
 
                         {% endif %}
 
 
-                        <!-- Description -->
+                        <!-- DISCOUNT -->
 
-                        <p class="text-muted small">
+                        {% if product.discount_price %}
 
-                            {{ product.description|truncatechars:70 }}
+                            <span class="discount-badge">
+                                OFFER
+                            </span>
 
-                        </p>
+                        {% endif %}
+
+                    </div>
 
 
-                        <!-- Rating -->
+                    <!-- BODY -->
 
-                        <div class="mb-2">
+                    <div class="product-body">
+
+
+                        <!-- PRODUCT NAME -->
+
+                        <div class="product-name">
+                            {{ product.name }}
+                        </div>
+
+
+                        <!-- SHOP -->
+
+                        <div class="shop-name">
+
+                            <i class="bi bi-shop me-1"></i>
+
+                            {{ product.shop.name }}
+
+                        </div>
+
+
+                        <!-- RATING -->
+
+                        <div>
 
                             {% if product.review_count > 0 %}
 
-                                <span class="fw-bold">
-                                    ⭐ {{ product.average_rating|floatformat:1 }}
+                                <span class="rating">
+
+                                    <i class="bi bi-star-fill"></i>
+
+                                    {{ product.average_rating|floatformat:1 }}
+
                                 </span>
 
-                                <small class="text-muted">
-                                    ({{ product.review_count }})
-                                </small>
+                                <span class="review-count">
+                                    {{ product.review_count }} reviews
+                                </span>
 
                             {% else %}
 
-                                <small class="text-muted">
-                                    ⭐ No reviews yet
-                                </small>
+                                <span class="review-count">
+                                    No reviews yet
+                                </span>
 
                             {% endif %}
 
                         </div>
 
 
-                        <!-- Shop -->
+                        <!-- DESCRIPTION -->
 
-                        <div class="small text-muted mb-2">
+                        <div class="product-description">
 
-                            🏪 {{ product.shop.name }}
+                            {{ product.description|truncatechars:70 }}
 
                         </div>
 
 
-                        <!-- Price -->
+                        <!-- PRICE -->
 
-                        <div class="mb-3">
+                        <div class="price-row">
 
                             {% if product.discount_price %}
 
-                                <span class="fw-bold fs-5">
+                                <span class="current-price">
                                     ₹{{ product.discount_price }}
                                 </span>
 
-                                <span class="text-muted text-decoration-line-through ms-2">
+                                <span class="old-price">
                                     ₹{{ product.price }}
                                 </span>
 
                             {% else %}
 
-                                <span class="fw-bold fs-5">
+                                <span class="current-price">
                                     ₹{{ product.price }}
                                 </span>
 
@@ -231,20 +747,23 @@
                         </div>
 
 
-                        <!-- Buttons -->
+                        <!-- BUTTONS -->
 
-                        <div class="mt-auto">
+                        <div class="action-row">
 
                             <a
                                 href="{% url 'product_detail' product.id %}"
-                                class="btn btn-outline-primary w-100 mb-2"
+                                class="view-btn text-center text-decoration-none"
                             >
-                                View Details
+                                <i class="bi bi-eye me-1"></i>
+                                View
                             </a>
+
 
                             <form
                                 method="POST"
                                 action="{% url 'add_to_cart' product.id %}"
+                                class="flex-fill"
                             >
 
                                 {% csrf_token %}
@@ -257,9 +776,10 @@
 
                                 <button
                                     type="submit"
-                                    class="btn btn-success w-100"
+                                    class="cart-btn w-100"
                                 >
-                                    🛒 Add to Cart
+                                    <i class="bi bi-cart-plus me-1"></i>
+                                    Add
                                 </button>
 
                             </form>
@@ -274,32 +794,34 @@
 
         {% empty %}
 
+
+            <!-- EMPTY -->
+
             <div class="col-12">
 
-                <div class="card shadow-sm">
+                <div class="empty-card">
 
-                    <div class="card-body text-center py-5">
+                    <div class="empty-icon">
 
-                        <div style="font-size: 60px;">
-                            🔍
-                        </div>
-
-                        <h4 class="fw-bold mt-3">
-                            No Products Found
-                        </h4>
-
-                        <p class="text-muted">
-                            Try another search or category.
-                        </p>
-
-                        <a
-                            href="{% url 'marketplace' %}"
-                            class="btn btn-primary"
-                        >
-                            View All Products
-                        </a>
+                        <i class="bi bi-search"></i>
 
                     </div>
+
+                    <h3>
+                        No Food Found
+                    </h3>
+
+                    <p>
+                        We couldn't find anything matching your search.
+                    </p>
+
+                    <a
+                        href="{% url 'marketplace' %}"
+                        class="reset-btn"
+                    >
+                        <i class="bi bi-arrow-clockwise me-1"></i>
+                        Explore All Food
+                    </a>
 
                 </div>
 
@@ -309,7 +831,16 @@
 
     </div>
 
+
+    <div style="height: 60px;"></div>
+
 </div>
 
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+
 </body>
+
 </html>

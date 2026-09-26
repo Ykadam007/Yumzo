@@ -1,0 +1,1786 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Yumzo | Food & Local Shops</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet"
+    >
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #ffffff;
+            color: #1c1c1c;
+            font-family: "Inter", sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+            background: #ffffff;
+            border-bottom: 1px solid #eeeeee;
+            min-height: 72px;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: 800;
+            color: #e23744;
+            letter-spacing: -1px;
+        }
+
+        .brand span {
+            color: #ff7a00;
+        }
+
+        .location {
+            margin-left: 30px;
+            padding-left: 25px;
+            border-left: 1px solid #dddddd;
+            color: #555;
+            cursor: pointer;
+        }
+
+        .location i {
+            color: #e23744;
+        }
+
+        .navbar-search {
+            width: 350px;
+            height: 44px;
+            background: #f6f6f6;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            margin-left: 25px;
+        }
+
+        .navbar-search i {
+            color: #777;
+        }
+
+        .navbar-search input {
+            border: none;
+            outline: none;
+            background: transparent;
+            width: 100%;
+            padding-left: 10px;
+        }
+
+        .nav-item-custom {
+            color: #444;
+            font-weight: 500;
+            margin-left: 22px;
+            transition: 0.2s;
+        }
+
+        .nav-item-custom:hover {
+            color: #e23744;
+        }
+
+        .cart-icon {
+            position: relative;
+        }
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            min-height: 550px;
+
+            background:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.42),
+                    rgba(0, 0, 0, 0.55)
+                ),
+                url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1800&q=90")
+                center / cover;
+
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content {
+            width: 100%;
+            max-width: 950px;
+            margin: auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 9px 18px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .hero h1 {
+            font-size: 58px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #ffb000;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #f3f3f3;
+            margin-bottom: 32px;
+        }
+
+        /* =====================================================
+           HERO SEARCH
+        ===================================================== */
+
+        .hero-search {
+            background: white;
+            max-width: 800px;
+            margin: auto;
+            padding: 8px;
+            border-radius: 14px;
+            display: flex;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+        }
+
+        .hero-location {
+            color: #555;
+            display: flex;
+            align-items: center;
+            padding: 0 18px;
+            border-right: 1px solid #dddddd;
+            white-space: nowrap;
+        }
+
+        .hero-location i {
+            color: #e23744;
+            margin-right: 7px;
+        }
+
+        .hero-search input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 15px;
+            font-size: 15px;
+        }
+
+        .search-button {
+            border: none;
+            background: #e23744;
+            color: white;
+            border-radius: 9px;
+            padding: 0 28px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .search-button:hover {
+            background: #c92130;
+        }
+
+        /* =====================================================
+           COMMON SECTIONS
+        ===================================================== */
+
+        .section {
+            padding: 65px 0;
+        }
+
+        .section-title {
+            font-size: 30px;
+            font-weight: 800;
+            margin-bottom: 7px;
+        }
+
+        .section-subtitle {
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        .view-all {
+            color: #e23744;
+            font-weight: 600;
+        }
+
+        /* =====================================================
+           CATEGORIES
+        ===================================================== */
+
+        .category-scroll {
+            display: flex;
+            gap: 22px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .category-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category {
+            min-width: 120px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .category-image {
+            width: 105px;
+            height: 105px;
+            border-radius: 50%;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 47px;
+            background: #fff5f5;
+            transition: 0.3s;
+        }
+
+        .category:hover .category-image {
+            transform: scale(1.08);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+
+        .category-name {
+            margin-top: 12px;
+            font-weight: 600;
+        }
+
+        /* =====================================================
+           OFFERS
+        ===================================================== */
+
+        .offers {
+            background: #fff7f0;
+        }
+
+        .offer-card {
+            min-height: 210px;
+            border-radius: 18px;
+            padding: 28px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .offer-red {
+            background: linear-gradient(135deg, #e23744, #ff5260);
+            color: white;
+        }
+
+        .offer-orange {
+            background: linear-gradient(135deg, #ff7a00, #ff9d38);
+            color: white;
+        }
+
+        .offer-purple {
+            background: linear-gradient(135deg, #5427e8, #7b4dff);
+            color: white;
+        }
+
+        .offer-card h3 {
+            font-size: 25px;
+            font-weight: 800;
+            max-width: 300px;
+        }
+
+        .offer-card p {
+            opacity: .9;
+        }
+
+        .offer-emoji {
+            position: absolute;
+            right: 25px;
+            bottom: 15px;
+            font-size: 85px;
+            opacity: .85;
+        }
+
+        .offer-btn {
+            display: inline-block;
+            background: white;
+            color: #e23744;
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        /* =====================================================
+           SHOP CARDS
+        ===================================================== */
+
+        .shop-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #eeeeee;
+            transition: .3s;
+            height: 100%;
+        }
+
+        .shop-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0,0,0,.12);
+        }
+
+        .shop-image {
+            height: 205px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .shop-content {
+            padding: 17px;
+        }
+
+        .shop-name {
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .rating {
+            background: #24963f;
+            color: white;
+            padding: 4px 7px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .shop-details {
+            color: #777;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .shop-details i {
+            margin-right: 5px;
+        }
+
+        .shop-btn {
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+            padding: 9px;
+            background: #fff1f2;
+            color: #e23744;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        .shop-btn:hover {
+            background: #e23744;
+            color: white;
+        }
+
+        /* =====================================================
+           PRODUCT CARDS
+        ===================================================== */
+
+        .product-card {
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12) !important;
+        }
+
+        .product-card img {
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-image-wrapper {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .offer-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #e23744;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .product-category {
+            color: #e23744;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .product-shop {
+            color: #777;
+            font-size: 13px;
+        }
+
+        .product-rating {
+            background: #24963f;
+            color: white;
+            padding: 4px 7px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .product-price {
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        .old-price {
+            color: #999;
+            font-size: 13px;
+        }
+
+        .add-cart-btn {
+            background: #e23744;
+            color: white;
+            border: none;
+            transition: .2s;
+        }
+
+        .add-cart-btn:hover {
+            background: #c92130;
+            color: white;
+        }
+
+        /* =====================================================
+           WHY YUMZO
+        ===================================================== */
+
+        .why-section {
+            background: #fafafa;
+        }
+
+        .why-card {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .why-icon {
+            width: 75px;
+            height: 75px;
+            margin: auto auto 18px;
+            background: #fff0f1;
+            color: #e23744;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .why-card h5 {
+            font-weight: 700;
+        }
+
+        .why-card p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* =====================================================
+           APP SECTION
+        ===================================================== */
+
+        .app-section {
+            background: #fff1f2;
+            padding: 60px 0;
+        }
+
+        .app-content h2 {
+            font-size: 38px;
+            font-weight: 800;
+        }
+
+        .app-content p {
+            color: #666;
+            font-size: 17px;
+        }
+
+        .app-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .app-btn {
+            background: #1c1c1c;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .app-btn i {
+            font-size: 25px;
+        }
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+            background: #202020;
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        footer h4 {
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        footer p,
+        footer a {
+            color: #aaa;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        .footer-brand {
+            color: white;
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .footer-brand span {
+            color: #ff7a00;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            width: 38px;
+            height: 38px;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #555;
+            border-radius: 50%;
+            margin-right: 7px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #444;
+            margin-top: 35px;
+            padding-top: 20px;
+            text-align: center;
+            color: #888;
+        }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 991px) {
+
+            .navbar {
+                height: auto;
+            }
+
+            .location {
+                margin-left: 0;
+                padding-left: 0;
+                border-left: none;
+                margin-top: 12px;
+            }
+
+            .navbar-search {
+                width: 100%;
+                margin: 15px 0;
+            }
+
+            .nav-item-custom {
+                margin: 8px 0;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+        }
+
+        @media (max-width: 768px) {
+
+            .hero {
+                min-height: 600px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+                letter-spacing: -1px;
+            }
+
+            .hero p {
+                font-size: 17px;
+            }
+
+            .hero-search {
+                display: block;
+                padding: 10px;
+            }
+
+            .hero-location {
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+                padding: 12px;
+                justify-content: center;
+            }
+
+            .hero-search input {
+                width: 100%;
+            }
+
+            .search-button {
+                width: 100%;
+                height: 48px;
+            }
+
+            .section {
+                padding: 45px 0;
+            }
+
+            .offer-card {
+                margin-bottom: 15px;
+            }
+
+            .app-content h2 {
+                font-size: 30px;
+            }
+
+            .app-buttons {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<nav class="navbar navbar-expand-lg">
+
+    <div class="container">
+
+        <a href="{% url 'home' %}" class="brand">
+            Yum<span>zo</span>
+        </a>
+
+
+        <div class="location d-none d-lg-flex align-items-center">
+
+            <i class="bi bi-geo-alt-fill me-2"></i>
+
+            <div>
+
+                <small class="text-muted d-block">
+                    Delivering to
+                </small>
+
+                <strong>
+                    Your Location
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="navbar-search d-none d-lg-flex">
+
+            <i class="bi bi-search"></i>
+
+            <input
+                type="text"
+                placeholder="Search for food, dishes or shops..."
+            >
+
+        </div>
+
+
+        <div class="ms-auto d-flex align-items-center">
+
+            <a
+                href="{% url 'shop_list' %}"
+                class="nav-item-custom d-none d-lg-block"
+            >
+                Restaurants
+            </a>
+
+
+            <a
+                href="/products/"
+                class="nav-item-custom d-none d-lg-block"
+            >
+                Marketplace
+            </a>
+
+
+            <a
+                href="/orders/"
+                class="nav-item-custom d-none d-lg-block"
+            >
+                Orders
+            </a>
+
+
+            <a
+                href="/cart/"
+                class="nav-item-custom cart-icon"
+            >
+                <i class="bi bi-cart3 fs-5"></i>
+            </a>
+
+
+            <a
+                href="{% url 'profile' %}"
+                class="nav-item-custom d-none d-lg-block"
+            >
+                <i class="bi bi-person-circle fs-5"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+                🍴 Discover your local favourites
+            </div>
+
+
+            <h1>
+                Good Food.
+                <span>Great Mood.</span>
+            </h1>
+
+
+            <p>
+                Discover the best restaurants, dishes and local shops
+                near you.
+            </p>
+
+
+            <div class="hero-search">
+
+                <div class="hero-location">
+
+                    <i class="bi bi-geo-alt-fill"></i>
+
+                    <span>
+                        Your Location
+                    </span>
+
+                </div>
+
+
+                <input
+                    type="text"
+                    placeholder="Search for restaurant, dish or cuisine..."
+                >
+
+
+                <button class="search-button">
+
+                    <i class="bi bi-search me-2"></i>
+
+                    Search
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CATEGORIES
+========================================================= -->
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h2 class="section-title">
+                    What's on your mind?
+                </h2>
+
+                <p class="section-subtitle mb-0">
+                    Explore popular food categories
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="category-scroll">
+
+            <div class="category">
+                <div class="category-image">🍕</div>
+                <div class="category-name">Pizza</div>
+            </div>
+
+
+            <div class="category">
+                <div class="category-image">🍔</div>
+                <div class="category-name">Burgers</div>
+            </div>
+
+
+            <div class="category">
+                <div class="category-image">🍜</div>
+                <div class="category-name">Chinese</div>
+            </div>
+
+
+            <div class="category">
+                <div class="category-image">🍛</div>
+                <div class="category-name">Indian</div>
+            </div>
+
+
+            <div class="category">
+                <div class="category-image">🍗</div>
+                <div class="category-name">Biryani</div>
+            </div>
+
+
+            <div class="category">
+                <div class="category-image">🥗</div>
+                <div class="category-name">Healthy</div>
+            </div>
+
+
+            <div class="category">
+                <div class="category-image">🍰</div>
+                <div class="category-name">Desserts</div>
+            </div>
+
+
+            <div class="category">
+                <div class="category-image">☕</div>
+                <div class="category-name">Beverages</div>
+            </div>
+
+
+            <div class="category">
+                <div class="category-image">🍟</div>
+                <div class="category-name">Fast Food</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     OFFERS
+========================================================= -->
+
+<section class="section offers">
+
+    <div class="container">
+
+        <h2 class="section-title">
+            Exclusive Offers
+        </h2>
+
+        <p class="section-subtitle">
+            Delicious deals available on Yumzo
+        </p>
+
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+
+                <div class="offer-card offer-red">
+
+                    <h3>
+                        50% OFF
+                    </h3>
+
+                    <p>
+                        On your first order
+                    </p>
+
+                    <a href="/products/" class="offer-btn">
+                        Order Now
+                    </a>
+
+                    <div class="offer-emoji">
+                        🍔
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="offer-card offer-orange">
+
+                    <h3>
+                        Free Delivery
+                    </h3>
+
+                    <p>
+                        On selected local shops
+                    </p>
+
+                    <a href="{% url 'shop_list' %}" class="offer-btn">
+                        Explore
+                    </a>
+
+                    <div class="offer-emoji">
+                        🛵
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="offer-card offer-purple">
+
+                    <h3>
+                        Local Favourites
+                    </h3>
+
+                    <p>
+                        Discover shops around you
+                    </p>
+
+                    <a href="{% url 'shop_list' %}" class="offer-btn">
+                        Find Shops
+                    </a>
+
+                    <div class="offer-emoji">
+                        ⭐
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     POPULAR SHOPS
+========================================================= -->
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h2 class="section-title">
+                    Restaurants & Shops Near You
+                </h2>
+
+                <p class="section-subtitle mb-0">
+                    Popular local places people are loving
+                </p>
+
+            </div>
+
+
+            <a
+                href="{% url 'shop_list' %}"
+                class="view-all"
+            >
+                View All
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            {% for shop in shops %}
+
+            <div class="col-sm-6 col-lg-3">
+
+                <div class="shop-card">
+
+                    {% if shop.image %}
+
+                        <img
+                            src="{{ shop.image.url }}"
+                            class="shop-image"
+                            alt="{{ shop.name }}"
+                        >
+
+                    {% else %}
+
+                        <img
+                            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"
+                            class="shop-image"
+                            alt="{{ shop.name }}"
+                        >
+
+                    {% endif %}
+
+
+                    <div class="shop-content">
+
+                        <div class="shop-name">
+                            {{ shop.name }}
+                        </div>
+
+
+                        <div>
+
+                            <span class="rating">
+                                ⭐ {{ shop.rating|default:"4.0" }}
+                            </span>
+
+
+                            {% if shop.review_count %}
+
+                                <small class="text-muted ms-2">
+                                    {{ shop.review_count }} reviews
+                                </small>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="shop-details">
+
+                            <i class="bi bi-geo-alt"></i>
+
+                            {{ shop.city|default:"Nearby" }}
+
+                        </div>
+
+
+                        <div class="shop-details">
+
+                            <i class="bi bi-clock"></i>
+
+                            25-35 min
+
+                        </div>
+
+
+                        <a
+                            href="{% url 'shop_list' %}"
+                            class="shop-btn"
+                        >
+                            View Shop
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {% empty %}
+
+            <div class="col-12">
+
+                <div class="text-center py-5">
+
+                    <div style="font-size:60px;">
+                        🏪
+                    </div>
+
+                    <h4 class="mt-3">
+                        Shops are coming soon
+                    </h4>
+
+                    <p class="text-muted">
+                        Approved local shops will appear here.
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     TRENDING PRODUCTS
+========================================================= -->
+
+<section class="section bg-light">
+
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <span class="text-danger fw-bold">
+                    🔥 TRENDING NOW
+                </span>
+
+                <h2 class="section-title mb-1">
+                    Popular Food & Products
+                </h2>
+
+                <p class="section-subtitle mb-0">
+                    Discover what people are ordering right now
+                </p>
+
+            </div>
+
+
+            <a
+                href="/products/"
+                class="btn btn-outline-danger rounded-pill px-4"
+            >
+                View All
+            </a>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            {% for product in products %}
+
+            <div class="col-12 col-sm-6 col-lg-3">
+
+                <div class="card border-0 shadow-sm h-100 product-card">
+
+
+                    <!-- PRODUCT IMAGE -->
+
+                    <div class="product-image-wrapper">
+
+                        {% if product.image %}
+
+                            <img
+                                src="{{ product.image.url }}"
+                                class="product-image"
+                                alt="{{ product.name }}"
+                            >
+
+                        {% else %}
+
+                            <div
+                                class="d-flex align-items-center justify-content-center bg-light"
+                                style="height:220px;"
+                            >
+                                <span style="font-size:60px;">
+                                    🍽️
+                                </span>
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if product.discount_price %}
+
+                            <span class="offer-badge">
+                                OFFER
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- PRODUCT CONTENT -->
+
+                    <div class="card-body">
+
+                        {% if product.category %}
+
+                            <div class="product-category">
+                                {{ product.category.name }}
+                            </div>
+
+                        {% endif %}
+
+
+                        <h5 class="fw-bold mt-2 mb-1">
+
+                            {{ product.name }}
+
+                        </h5>
+
+
+                        <p class="product-shop mb-2">
+
+                            <i class="bi bi-shop"></i>
+
+                            {{ product.shop.name }}
+
+                        </p>
+
+
+                        <!-- RATING -->
+
+                        <div class="mb-3">
+
+                            <span class="product-rating">
+
+                                ⭐ {{ product.average_rating|floatformat:1 }}
+
+                            </span>
+
+
+                            <small class="text-muted ms-1">
+
+                                {{ product.review_count }} reviews
+
+                            </small>
+
+                        </div>
+
+
+                        <!-- PRICE -->
+
+                        <div class="d-flex align-items-center gap-2 mb-3">
+
+                            <span class="product-price">
+
+                                ₹{{ product.final_price }}
+
+                            </span>
+
+
+                            {% if product.discount_price %}
+
+                                <del class="old-price">
+
+                                    ₹{{ product.price }}
+
+                                </del>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- ADD CART -->
+
+                        <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="btn add-cart-btn w-100 rounded-pill"
+                            >
+                                <i class="bi bi-cart-plus me-1"></i>
+                                Add to Cart
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {% empty %}
+
+            <div class="col-12">
+
+                <div class="text-center py-5">
+
+                    <div style="font-size:65px;">
+                        🍽️
+                    </div>
+
+                    <h4 class="mt-3">
+                        No products available
+                    </h4>
+
+                    <p class="text-muted">
+                        New products will appear here soon.
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     WHY YUMZO
+========================================================= -->
+
+<section class="section why-section">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <h2 class="section-title">
+                Why Choose Yumzo?
+            </h2>
+
+            <p class="section-subtitle">
+                Everything you need for a great local food experience
+            </p>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <div class="why-card">
+
+                    <div class="why-icon">
+
+                        <i class="bi bi-shop"></i>
+
+                    </div>
+
+                    <h5>
+                        Local Shops
+                    </h5>
+
+                    <p>
+                        Discover trusted restaurants and local businesses
+                        around you.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="why-card">
+
+                    <div class="why-icon">
+
+                        <i class="bi bi-lightning-charge"></i>
+
+                    </div>
+
+                    <h5>
+                        Fast Delivery
+                    </h5>
+
+                    <p>
+                        Get your favourite food delivered quickly and
+                        conveniently.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="why-card">
+
+                    <div class="why-icon">
+
+                        <i class="bi bi-heart"></i>
+
+                    </div>
+
+                    <h5>
+                        Support Local
+                    </h5>
+
+                    <p>
+                        Every order helps local businesses grow in
+                        your community.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     APP SECTION
+========================================================= -->
+
+<section class="app-section">
+
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-7">
+
+                <div class="app-content">
+
+                    <h2>
+                        Your favourite food,
+                        right at your fingertips.
+                    </h2>
+
+                    <p>
+                        Browse local shops, discover delicious food,
+                        place orders and track everything from one place.
+                    </p>
+
+
+                    <div class="app-buttons">
+
+                        <a href="#" class="app-btn">
+
+                            <i class="bi bi-google-play"></i>
+
+                            <div>
+
+                                <small>
+                                    GET IT ON
+                                </small>
+
+                                <strong class="d-block">
+                                    Google Play
+                                </strong>
+
+                            </div>
+
+                        </a>
+
+
+                        <a href="#" class="app-btn">
+
+                            <i class="bi bi-apple"></i>
+
+                            <div>
+
+                                <small>
+                                    DOWNLOAD ON THE
+                                </small>
+
+                                <strong class="d-block">
+                                    App Store
+                                </strong>
+
+                            </div>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-5 text-center mt-4 mt-lg-0">
+
+                <div style="font-size:150px;">
+                    📱
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <div class="container">
+
+        <div class="row g-4">
+
+            <!-- BRAND -->
+
+            <div class="col-lg-4">
+
+                <div class="footer-brand">
+
+                    Yum<span>zo</span>
+
+                </div>
+
+                <p class="mt-3">
+
+                    Discover delicious food and trusted local shops
+                    near you.
+
+                </p>
+
+
+                <div class="social-icons mt-4">
+
+                    <a href="#">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="bi bi-twitter-x"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- YUMZO -->
+
+            <div class="col-6 col-lg-2">
+
+                <h4>
+                    Yumzo
+                </h4>
+
+                <p>
+                    <a href="{% url 'home' %}">
+                        Home
+                    </a>
+                </p>
+
+                <p>
+                    <a href="{% url 'shop_list' %}">
+                        Shops
+                    </a>
+                </p>
+
+                <p>
+                    <a href="/products/">
+                        Marketplace
+                    </a>
+                </p>
+
+            </div>
+
+
+            <!-- CUSTOMER -->
+
+            <div class="col-6 col-lg-2">
+
+                <h4>
+                    Customer
+                </h4>
+
+                <p>
+                    <a href="/orders/">
+                        My Orders
+                    </a>
+                </p>
+
+                <p>
+                    <a href="/cart/">
+                        My Cart
+                    </a>
+                </p>
+
+                <p>
+                    <a href="{% url 'profile' %}">
+                        Account
+                    </a>
+                </p>
+
+            </div>
+
+
+            <!-- CONTACT -->
+
+            <div class="col-lg-4">
+
+                <h4>
+                    Contact
+                </h4>
+
+                <p>
+
+                    <i class="bi bi-envelope me-2"></i>
+
+                    support@yumzo.com
+
+                </p>
+
+
+                <p>
+
+                    <i class="bi bi-telephone me-2"></i>
+
+                    +91 00000 00000
+
+                </p>
+
+
+                <p>
+
+                    <i class="bi bi-geo-alt me-2"></i>
+
+                    Maharashtra, India
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            © 2026 Yumzo. All Rights Reserved.
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- Bootstrap JS -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+</body>
+
+</html>

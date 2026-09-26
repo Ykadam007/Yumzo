@@ -1,121 +1,673 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>My Orders - LocalKart</title>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Orders | Yumzo</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f8f8f8;
+            color: #1c1c1c;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .orders-page {
+            max-width: 1000px;
+            margin: auto;
+            padding: 35px 15px 70px;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .orders-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .orders-subtitle {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        /* =========================
+           ORDER CARD
+        ========================= */
+
+        .order-card {
+            background: white;
+            border-radius: 18px;
+            margin-bottom: 18px;
+            padding: 22px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transition: 0.25s ease;
+        }
+
+        .order-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.09);
+        }
+
+        .order-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 17px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-id {
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .order-date {
+            color: #888;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status-badge {
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        /* =========================
+           RESTAURANT
+        ========================= */
+
+        .restaurant-section {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 18px 0;
+        }
+
+        .restaurant-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background: #fff1f2;
+            color: #e23744;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .restaurant-name {
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .restaurant-label {
+            color: #888;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        /* =========================
+           DETAILS
+        ========================= */
+
+        .details-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 18px;
+        }
+
+        .detail-label {
+            color: #888;
+            font-size: 11px;
+            margin-bottom: 4px;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .total-value {
+            color: #e23744;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        /* =========================
+           PAYMENT
+        ========================= */
+
+        .payment-section {
+            padding: 5px 0 18px;
+        }
+
+        .payment-method {
+            font-size: 13px;
+            color: #555;
+        }
+
+        .payment-status {
+            display: inline-block;
+            margin-left: 5px;
+            padding: 5px 9px;
+            border-radius: 15px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .pay-now-btn {
+            display: inline-block;
+            margin-top: 10px;
+            background: #267e3e;
+            color: white;
+            border-radius: 8px;
+            padding: 8px 15px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .pay-now-btn:hover {
+            background: #1d6330;
+            color: white;
+        }
+
+        /* =========================
+           ACTIONS
+        ========================= */
+
+        .order-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .track-btn {
+            flex: 1;
+            background: #e23744;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            padding: 11px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .track-btn:hover {
+            background: #c91f2d;
+            color: white;
+        }
+
+        .secondary-btn {
+            flex: 1;
+            background: white;
+            color: #e23744;
+            border: 1px solid #e23744;
+            border-radius: 9px;
+            padding: 11px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .secondary-btn:hover {
+            background: #fff1f2;
+            color: #e23744;
+        }
+
+        /* =========================
+           EMPTY STATE
+        ========================= */
+
+        .empty-orders {
+            background: white;
+            border-radius: 20px;
+            padding: 70px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .empty-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #fff1f2;
+            color: #e23744;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            font-size: 45px;
+        }
+
+        .empty-orders h3 {
+            margin-top: 20px;
+            font-weight: 800;
+        }
+
+        .empty-orders p {
+            color: #777;
+        }
+
+        .shop-btn {
+            display: inline-block;
+            background: #e23744;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 9px;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        .shop-btn:hover {
+            background: #c91f2d;
+            color: white;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            .orders-page {
+                padding: 25px 12px 50px;
+            }
+
+            .orders-title {
+                font-size: 27px;
+            }
+
+            .order-top {
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .details-row {
+                grid-template-columns: 1fr;
+            }
+
+            .order-actions {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
 </head>
 
-<body class="bg-light">
+
+<body>
+
 {% include 'includes/navbar.html' %}
 
-<div class="container mt-5">
 
-    <h2 class="mb-4">📦 My Orders</h2>
+<div class="orders-page">
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <h1 class="orders-title">
+
+        <i
+            class="bi bi-bag-check-fill me-2"
+            style="color:#e23744;"
+        ></i>
+
+        My Orders
+
+    </h1>
+
+
+    <p class="orders-subtitle">
+
+        Track your Yumzo orders and view your order history.
+
+    </p>
+
 
     {% if orders %}
 
+
         {% for order in orders %}
 
-        <div class="card shadow mb-3">
 
-            <div class="card-body">
+            <!-- =========================
+                 ORDER CARD
+            ========================= -->
 
-                <div class="d-flex justify-content-between">
+            <div class="order-card">
 
-                    <h4>
-                        Order #{{ order.id }}
-                    </h4>
 
-                    <span class="badge bg-primary">
+                <!-- TOP -->
+
+                <div class="order-top">
+
+
+                    <div>
+
+                        <div class="order-id">
+
+                            Order #{{ order.id }}
+
+                        </div>
+
+
+                        <div class="order-date">
+
+                            <i class="bi bi-calendar3 me-1"></i>
+
+                            {{ order.created_at|date:"d M Y, h:i A" }}
+
+                        </div>
+
+                    </div>
+
+
+                    <span class="status-badge
+                        {% if order.status == 'delivered' %}
+                            bg-success text-white
+                        {% elif order.status == 'cancelled' %}
+                            bg-danger text-white
+                        {% elif order.status == 'out_for_delivery' %}
+                            bg-warning text-dark
+                        {% elif order.status == 'ready' %}
+                            bg-info text-dark
+                        {% else %}
+                            bg-light text-dark
+                        {% endif %}
+                    ">
+
                         {{ order.get_status_display }}
+
                     </span>
+
 
                 </div>
 
-                <hr>
 
-                <p>
-                    <strong>Shop:</strong>
-                    {{ order.shop.name }}
-                </p>
+                <!-- RESTAURANT -->
 
-                <p>
-                    <strong>Total:</strong>
-                    ₹{{ order.total_amount }}
-                </p>
+                <div class="restaurant-section">
 
-               <p>
-                    <strong>Payment:</strong>
-                    {{ order.get_payment_method_display }}
-               </p>
+
+                    <div class="restaurant-icon">
+
+                        <i class="bi bi-shop"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="restaurant-name">
+
+                            {{ order.shop.name }}
+
+                        </div>
+
+
+                        <div class="restaurant-label">
+
+                            Restaurant / Local Shop
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- DETAILS -->
+
+                <div class="details-row">
+
+
+                    <div>
+
+                        <div class="detail-label">
+
+                            ORDER TOTAL
+
+                        </div>
+
+                        <div class="total-value">
+
+                            ₹{{ order.total_amount }}
+
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="detail-label">
+
+                            PAYMENT
+
+                        </div>
+
+                        <div class="detail-value">
+
+                            {{ order.get_payment_method_display }}
+
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="detail-label">
+
+                            ORDER STATUS
+
+                        </div>
+
+                        <div class="detail-value">
+
+                            {{ order.get_status_display }}
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- ONLINE PAYMENT -->
 
                 {% if order.payment_method == 'online' %}
-                    <p>
-                        <strong>Payment Status:</strong>
 
-                        <span class="badge
-                            {% if order.payment_status == 'paid' %}
-                                bg-success
-                            {% elif order.payment_status == 'failed' %}
-                                bg-danger
-                            {% else %}
-                                bg-warning text-dark
-                            {% endif %}
-                        ">
-                            {{ order.get_payment_status_display }}
-                        </span>
-                    </p>
 
-                    {% if order.payment_status != 'paid' %}
-                        <a
-                            href="{% url 'payment_page' order.id %}"
-                            class="btn btn-success btn-sm mb-3"
-                        >
-                            💳 Pay Now
-                        </a>
-                    {% endif %}
+                    <div class="payment-section">
+
+
+                        <div class="payment-method">
+
+                            <i class="bi bi-credit-card me-1"></i>
+
+                            Online Payment
+
+
+                            <span class="payment-status
+                                {% if order.payment_status == 'paid' %}
+                                    bg-success text-white
+                                {% elif order.payment_status == 'failed' %}
+                                    bg-danger text-white
+                                {% else %}
+                                    bg-warning text-dark
+                                {% endif %}
+                            ">
+
+                                {{ order.get_payment_status_display }}
+
+                            </span>
+
+                        </div>
+
+
+                        {% if order.payment_status != 'paid' %}
+
+                            <a
+                                href="{% url 'payment_page' order.id %}"
+                                class="pay-now-btn"
+                            >
+
+                                <i class="bi bi-credit-card me-1"></i>
+
+                                Pay Now
+
+                            </a>
+
+                        {% endif %}
+
+
+                    </div>
+
+
                 {% endif %}
 
-                <p>
-                    <strong>Date:</strong>
-                    {{ order.created_at|date:"d M Y, h:i A" }}
-                </p>
 
-                <a
-                    href="{% url 'order_detail' order.id %}"
-                    class="btn btn-primary"
-                >
-                    View Order & Track
-                </a>
+                <!-- ACTIONS -->
+
+                <div class="order-actions">
+
+
+                    <a
+                        href="{% url 'order_detail' order.id %}"
+                        class="track-btn"
+                    >
+
+                        <i class="bi bi-geo-alt me-1"></i>
+
+                        View Order & Track
+
+                    </a>
+
+
+                    <a
+                        href="{% url 'order_detail' order.id %}"
+                        class="secondary-btn"
+                    >
+
+                        <i class="bi bi-receipt me-1"></i>
+
+                        Order Details
+
+                    </a>
+
+
+                </div>
+
 
             </div>
 
-        </div>
 
         {% endfor %}
 
+
     {% else %}
 
-        <div class="alert alert-info">
 
-            You haven't placed any orders yet.
+        <!-- =========================
+             EMPTY
+        ========================= -->
+
+        <div class="empty-orders">
+
+
+            <div class="empty-icon">
+
+                <i class="bi bi-bag-x"></i>
+
+            </div>
+
+
+            <h3>
+
+                No Orders Yet
+
+            </h3>
+
+
+            <p>
+
+                You haven't placed any orders yet.
+
+                <br>
+
+                Discover delicious food and start your first order!
+
+            </p>
+
+
+            <a
+                href="{% url 'marketplace' %}"
+                class="shop-btn"
+            >
+
+                <i class="bi bi-search me-1"></i>
+
+                Explore Food
+
+            </a>
+
 
         </div>
 
-        <a
-            href="{% url 'marketplace' %}"
-            class="btn btn-success"
-        >
-            🛒 Start Shopping
-        </a>
 
     {% endif %}
 
+
 </div>
 
+
 </body>
+
 </html>

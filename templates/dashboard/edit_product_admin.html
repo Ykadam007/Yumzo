@@ -1,152 +1,586 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Edit Product | LocalKart</title>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Edit Product | Yumzo</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #fff1f2,
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    #fff4e8,
+                    transparent 35%
+                ),
+                #f7f7f8;
+            color: #212529;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .yumzo-navbar {
+            background: #ffffff;
+            border-bottom: 1px solid #eeeeee;
+            padding: 15px 0;
+        }
+
+        .brand {
+            text-decoration: none;
+            font-size: 26px;
+            font-weight: 900;
+            color: #e23744;
+        }
+
+        .brand span {
+            color: #ff7a00;
+        }
+
+        .admin-badge {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 5px 9px;
+            border-radius: 8px;
+            background: #fff1f2;
+            color: #e23744;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            vertical-align: middle;
+        }
+
+        .back-btn {
+            border: 1px solid #dddddd;
+            background: #ffffff;
+            color: #555555;
+            border-radius: 9px;
+            padding: 8px 15px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: .2s ease;
+        }
+
+        .back-btn:hover {
+            background: #f5f5f5;
+            color: #e23744;
+        }
+
+        /* =========================
+           PAGE
+        ========================= */
+
+        .page-wrapper {
+            padding: 40px 15px 60px;
+        }
+
+        .product-card {
+            max-width: 850px;
+            margin: auto;
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 18px 50px rgba(0, 0, 0, .07);
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .card-header-custom {
+            background: linear-gradient(
+                135deg,
+                #e23744,
+                #ff7a00
+            );
+            color: #ffffff;
+            padding: 30px;
+        }
+
+        .header-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, .18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            margin-bottom: 16px;
+        }
+
+        .card-header-custom h1 {
+            font-size: 25px;
+            font-weight: 850;
+            margin-bottom: 6px;
+        }
+
+        .card-header-custom p {
+            margin: 0;
+            font-size: 13px;
+            opacity: .9;
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-content {
+            padding: 32px;
+        }
+
+        .form-section {
+            margin-bottom: 28px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 17px;
+            padding-bottom: 11px;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .form-label {
+            font-size: 12px;
+            font-weight: 800;
+            color: #555555;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+            margin-bottom: 7px;
+        }
+
+        .form-control,
+        .form-select {
+            border: 1px solid #dddddd;
+            border-radius: 11px;
+            padding: 11px 13px;
+            font-size: 14px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #e23744;
+            box-shadow: 0 0 0 3px rgba(226, 55, 68, .10);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+        }
+
+        .form-text {
+            font-size: 11px;
+            color: #888888;
+        }
+
+        /* =========================
+           IMAGE
+        ========================= */
+
+        .current-image-box {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 15px;
+            background: #fafafa;
+            border: 1px solid #eeeeee;
+            border-radius: 14px;
+        }
+
+        .current-image {
+            width: 125px;
+            height: 125px;
+            object-fit: cover;
+            border-radius: 13px;
+            border: 1px solid #eeeeee;
+        }
+
+        .image-info {
+            font-size: 13px;
+            color: #777777;
+        }
+
+        .image-info strong {
+            display: block;
+            color: #333333;
+            margin-bottom: 5px;
+        }
+
+        /* =========================
+           AVAILABILITY
+        ========================= */
+
+        .availability-box {
+            background: #f8faf9;
+            border: 1px solid #dceee2;
+            border-radius: 13px;
+            padding: 15px 17px;
+        }
+
+        .availability-box .form-check-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #333333;
+        }
+
+        .form-check-input {
+            width: 19px;
+            height: 19px;
+            margin-top: 2px;
+        }
+
+        .form-check-input:checked {
+            background-color: #e23744;
+            border-color: #e23744;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .action-area {
+            display: flex;
+            gap: 10px;
+            padding-top: 5px;
+        }
+
+        .save-btn {
+            flex: 1;
+            border: none;
+            background: #e23744;
+            color: #ffffff;
+            border-radius: 11px;
+            padding: 12px 20px;
+            font-size: 13px;
+            font-weight: 800;
+            transition: .2s ease;
+        }
+
+        .save-btn:hover {
+            background: #c92f3b;
+            transform: translateY(-1px);
+        }
+
+        .cancel-btn {
+            flex: 1;
+            text-align: center;
+            border: 1px solid #dddddd;
+            background: #ffffff;
+            color: #555555;
+            border-radius: 11px;
+            padding: 12px 20px;
+            font-size: 13px;
+            font-weight: 750;
+            text-decoration: none;
+            transition: .2s ease;
+        }
+
+        .cancel-btn:hover {
+            background: #f5f5f5;
+            color: #333333;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .card-footer-custom {
+            border-top: 1px solid #eeeeee;
+            padding: 16px 30px;
+            text-align: center;
+            color: #999999;
+            font-size: 12px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 576px) {
+
+            .brand {
+                font-size: 22px;
+            }
+
+            .admin-badge {
+                display: none;
+            }
+
+            .page-wrapper {
+                padding: 25px 12px 40px;
+            }
+
+            .form-content {
+                padding: 22px 18px;
+            }
+
+            .card-header-custom {
+                padding: 25px 20px;
+            }
+
+            .current-image-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .action-area {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
 </head>
 
-<body class="bg-light">
 
-<div class="container py-5">
-
-    <div class="row justify-content-center">
-
-        <div class="col-lg-8">
-
-            <div class="card shadow-sm border-0">
-
-                <div class="card-header bg-dark text-white">
-                    <h4 class="mb-0">✏️ Edit Product</h4>
-                </div>
-
-                <div class="card-body p-4">
-
-                    <form method="post" enctype="multipart/form-data">
-
-                        {% csrf_token %}
-
-                        <!-- Product Name -->
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">
-                                Product Name
-                            </label>
-
-                            <input
-                                type="text"
-                                name="name"
-                                class="form-control"
-                                value="{{ product.name }}"
-                                required
-                            >
-                        </div>
+<body>
 
 
-                        <!-- Category -->
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">
-                                Category
-                            </label>
+<!-- =========================
+     NAVBAR
+========================= -->
 
-                            <select
-                                name="category"
-                                class="form-select"
-                                required
-                            >
-                                <option value="">
-                                    Select Category
+<nav class="yumzo-navbar">
+
+    <div
+        class="container d-flex justify-content-between align-items-center"
+    >
+
+        <a
+            href="{% url 'admin_dashboard' %}"
+            class="brand"
+        >
+            🍽️ Yum<span>zo</span>
+
+            <span class="admin-badge">
+                Admin
+            </span>
+        </a>
+
+
+        <a
+            href="{% url 'manage_products' %}"
+            class="back-btn"
+        >
+            ← Manage Products
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<div class="page-wrapper">
+
+    <div class="product-card">
+
+
+        <!-- HEADER -->
+
+        <div class="card-header-custom">
+
+            <div class="header-icon">
+                ✏️
+            </div>
+
+            <h1>
+                Edit Product
+            </h1>
+
+            <p>
+                Update product information, pricing, stock and availability.
+            </p>
+
+        </div>
+
+
+
+        <!-- FORM -->
+
+        <div class="form-content">
+
+            <form
+                method="post"
+                enctype="multipart/form-data"
+            >
+
+                {% csrf_token %}
+
+
+
+                <!-- =========================
+                     BASIC INFORMATION
+                ========================= -->
+
+                <div class="form-section">
+
+                    <div class="section-heading">
+                        🍔 Basic Information
+                    </div>
+
+
+                    <!-- PRODUCT NAME -->
+
+                    <div class="mb-4">
+
+                        <label
+                            class="form-label"
+                            for="name"
+                        >
+                            Product Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            class="form-control"
+                            value="{{ product.name }}"
+                            placeholder="Enter product name"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="mb-4">
+
+                        <label
+                            class="form-label"
+                            for="category"
+                        >
+                            Category
+                        </label>
+
+                        <select
+                            name="category"
+                            id="category"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="">
+                                Select Category
+                            </option>
+
+
+                            {% for category in categories %}
+
+                                <option
+                                    value="{{ category.id }}"
+                                    {% if product.category_id == category.id %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ category.name }}
                                 </option>
 
-                                {% for category in categories %}
-                                    <option
-                                        value="{{ category.id }}"
-                                        {% if product.category_id == category.id %}
-                                            selected
-                                        {% endif %}
-                                    >
-                                        {{ category.name }}
-                                    </option>
-                                {% endfor %}
+                            {% endfor %}
 
-                            </select>
-                        </div>
+                        </select>
+
+                    </div>
 
 
-                        <!-- Description -->
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">
-                                Description
-                            </label>
 
-                            <textarea
-                                name="description"
-                                class="form-control"
-                                rows="4"
-                            >{{ product.description }}</textarea>
-                        </div>
+                    <!-- DESCRIPTION -->
 
+                    <div>
 
-                        <div class="row">
+                        <label
+                            class="form-label"
+                            for="description"
+                        >
+                            Description
+                        </label>
 
-                            <!-- Price -->
-                            <div class="col-md-6 mb-3">
+                        <textarea
+                            name="description"
+                            id="description"
+                            class="form-control"
+                            rows="4"
+                            placeholder="Describe the product..."
+                        >{{ product.description }}</textarea>
 
-                                <label class="form-label fw-semibold">
-                                    Price
-                                </label>
+                    </div>
 
-                                <input
-                                    type="number"
-                                    name="price"
-                                    class="form-control"
-                                    value="{{ product.price }}"
-                                    step="0.01"
-                                    min="0"
-                                    required
-                                >
-
-                            </div>
+                </div>
 
 
-                            <!-- Discount Price -->
-                            <div class="col-md-6 mb-3">
 
-                                <label class="form-label fw-semibold">
-                                    Discount Price
-                                </label>
+                <!-- =========================
+                     PRICING & STOCK
+                ========================= -->
 
-                                <input
-                                    type="number"
-                                    name="discount_price"
-                                    class="form-control"
-                                    value="{{ product.discount_price|default_if_none:'' }}"
-                                    step="0.01"
-                                    min="0"
-                                >
+                <div class="form-section">
 
-                            </div>
-
-                        </div>
+                    <div class="section-heading">
+                        💰 Pricing & Stock
+                    </div>
 
 
-                        <!-- Stock -->
-                        <div class="mb-3">
+                    <div class="row">
 
-                            <label class="form-label fw-semibold">
-                                Stock
+
+                        <!-- PRICE -->
+
+                        <div class="col-md-6 mb-4">
+
+                            <label
+                                class="form-label"
+                                for="price"
+                            >
+                                Price
                             </label>
 
                             <input
                                 type="number"
-                                name="stock"
+                                name="price"
+                                id="price"
                                 class="form-control"
-                                value="{{ product.stock }}"
+                                value="{{ product.price }}"
+                                step="0.01"
                                 min="0"
                                 required
                             >
@@ -154,52 +588,158 @@
                         </div>
 
 
-                        <!-- Current Image -->
-                        {% if product.image %}
+                        <!-- DISCOUNT PRICE -->
 
-                            <div class="mb-3">
+                        <div class="col-md-6 mb-4">
 
-                                <label class="form-label fw-semibold">
-                                    Current Image
-                                </label>
-
-                                <div>
-                                    <img
-                                        src="{{ product.image.url }}"
-                                        alt="{{ product.name }}"
-                                        class="img-thumbnail"
-                                        style="max-width: 180px; max-height: 180px;"
-                                    >
-                                </div>
-
-                            </div>
-
-                        {% endif %}
-
-
-                        <!-- New Image -->
-                        <div class="mb-3">
-
-                            <label class="form-label fw-semibold">
-                                Change Product Image
+                            <label
+                                class="form-label"
+                                for="discount_price"
+                            >
+                                Discount Price
                             </label>
 
                             <input
-                                type="file"
-                                name="image"
+                                type="number"
+                                name="discount_price"
+                                id="discount_price"
                                 class="form-control"
-                                accept="image/*"
+                                value="{{ product.discount_price|default_if_none:'' }}"
+                                step="0.01"
+                                min="0"
+                                placeholder="Optional"
                             >
-
-                            <small class="text-muted">
-                                Leave empty to keep the current image.
-                            </small>
 
                         </div>
 
 
-                        <!-- Availability -->
-                        <div class="form-check mb-4">
+                    </div>
+
+
+                    <!-- STOCK -->
+
+                    <div>
+
+                        <label
+                            class="form-label"
+                            for="stock"
+                        >
+                            Stock
+                        </label>
+
+                        <input
+                            type="number"
+                            name="stock"
+                            id="stock"
+                            class="form-control"
+                            value="{{ product.stock }}"
+                            min="0"
+                            required
+                        >
+
+                        <div class="form-text mt-2">
+                            Enter the number of units currently available.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =========================
+                     PRODUCT IMAGE
+                ========================= -->
+
+                <div class="form-section">
+
+                    <div class="section-heading">
+                        🖼️ Product Image
+                    </div>
+
+
+                    <!-- CURRENT IMAGE -->
+
+                    {% if product.image %}
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Current Image
+                            </label>
+
+
+                            <div class="current-image-box">
+
+                                <img
+                                    src="{{ product.image.url }}"
+                                    alt="{{ product.name }}"
+                                    class="current-image"
+                                >
+
+
+                                <div class="image-info">
+
+                                    <strong>
+                                        Current product image
+                                    </strong>
+
+                                    Upload a new image below if you want
+                                    to replace this one.
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    <!-- NEW IMAGE -->
+
+                    <div>
+
+                        <label
+                            class="form-label"
+                            for="image"
+                        >
+                            Change Product Image
+                        </label>
+
+                        <input
+                            type="file"
+                            name="image"
+                            id="image"
+                            class="form-control"
+                            accept="image/*"
+                        >
+
+                        <div class="form-text mt-2">
+                            Leave this empty to keep the current image.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =========================
+                     AVAILABILITY
+                ========================= -->
+
+                <div class="form-section">
+
+                    <div class="section-heading">
+                        🟢 Availability
+                    </div>
+
+
+                    <div class="availability-box">
+
+                        <div class="form-check">
 
                             <input
                                 type="checkbox"
@@ -220,37 +760,64 @@
 
                         </div>
 
-
-                        <!-- Buttons -->
-                        <div class="d-flex gap-2">
-
-                            <button
-                                type="submit"
-                                class="btn btn-success"
-                            >
-                                💾 Save Changes
-                            </button>
-
-                            <a
-                                href="{% url 'manage_products' %}"
-                                class="btn btn-secondary"
-                            >
-                                Cancel
-                            </a>
-
-                        </div>
-
-                    </form>
+                    </div>
 
                 </div>
 
-            </div>
+
+
+                <!-- =========================
+                     ACTIONS
+                ========================= -->
+
+                <div class="action-area">
+
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+                        💾 Save Changes
+                    </button>
+
+
+                    <a
+                        href="{% url 'manage_products' %}"
+                        class="cancel-btn"
+                    >
+                        Cancel
+                    </a>
+
+
+                </div>
+
+
+            </form>
 
         </div>
+
+
+
+        <!-- FOOTER -->
+
+        <div class="card-footer-custom">
+
+            © 2026 <strong>Yumzo</strong> ·
+            Fresh food, delivered with love.
+
+        </div>
+
 
     </div>
 
 </div>
 
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
 </body>
+
 </html>
+```

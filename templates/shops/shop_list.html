@@ -1,103 +1,382 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Local Shops - LocalKart</title>
+    <title>Restaurants - Yumzo</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <style>
+        body {
+            background: #f8f8f8;
+            color: #1f1f1f;
+            font-family: Arial, sans-serif;
+        }
+
+        .page-wrapper {
+            padding: 40px 0 60px;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #fff5f5, #fff);
+            border-radius: 24px;
+            padding: 35px;
+            margin-bottom: 35px;
+            border: 1px solid #f1f1f1;
+        }
+
+        .hero-title {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .hero-title span {
+            color: #e23744;
+        }
+
+        .hero-subtitle {
+            color: #777;
+            font-size: 16px;
+            margin-bottom: 0;
+        }
+
+        .marketplace-btn {
+            background: #e23744;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
+
+        .marketplace-btn:hover {
+            background: #c91f2d;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .shop-card {
+            background: white;
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 100%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+            transition: 0.25s ease;
+        }
+
+        .shop-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.11);
+        }
+
+        .shop-image {
+            height: 190px;
+            background: linear-gradient(135deg, #e23744, #ff7a45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .shop-image i {
+            color: white;
+            font-size: 65px;
+            opacity: 0.95;
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .status-open {
+            background: #198754;
+            color: white;
+        }
+
+        .status-closed {
+            background: #dc3545;
+            color: white;
+        }
+
+        .shop-body {
+            padding: 22px;
+        }
+
+        .shop-name {
+            font-size: 21px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .shop-location {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 14px;
+        }
+
+        .shop-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            min-height: 45px;
+        }
+
+        .rating-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 16px 0;
+        }
+
+        .rating-badge {
+            background: #267e3e;
+            color: white;
+            padding: 5px 9px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .rating-text {
+            color: #777;
+            font-size: 13px;
+        }
+
+        .divider {
+            border-top: 1px solid #eeeeee;
+            margin: 15px 0;
+        }
+
+        .view-btn {
+            width: 100%;
+            background: white;
+            color: #e23744;
+            border: 1px solid #e23744;
+            padding: 11px;
+            border-radius: 11px;
+            font-weight: 700;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            transition: 0.2s ease;
+        }
+
+        .view-btn:hover {
+            background: #e23744;
+            color: white;
+        }
+
+        .empty-box {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .empty-icon {
+            font-size: 55px;
+            color: #e23744;
+            margin-bottom: 15px;
+        }
+
+        .empty-box h4 {
+            font-weight: 800;
+        }
+
+        .empty-box p {
+            color: #777;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 25px;
+            }
+
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .marketplace-btn {
+                display: inline-block;
+                margin-top: 20px;
+            }
+        }
+    </style>
 </head>
 
-<body class="bg-light">
+<body>
+
 {% include 'includes/navbar.html' %}
 
-<div class="container mt-5">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h2>🏪 Local Shops</h2>
-            <p class="text-muted">
-                Discover trusted shops near you
-            </p>
+<div class="container page-wrapper">
+
+    <!-- Header -->
+    <div class="hero-section">
+
+        <div class="row align-items-center">
+
+            <div class="col-md-8">
+
+                <h1 class="hero-title">
+                    Discover <span>Restaurants</span>
+                </h1>
+
+                <p class="hero-subtitle">
+                    Explore trusted restaurants and discover delicious food near you.
+                </p>
+
+            </div>
+
+            <div class="col-md-4 text-md-end">
+
+                <a
+                    href="{% url 'marketplace' %}"
+                    class="marketplace-btn"
+                >
+                    <i class="bi bi-grid-fill me-2"></i>
+                    Explore Food
+                </a>
+
+            </div>
+
         </div>
 
-        <a href="{% url 'marketplace' %}" class="btn btn-primary">
-            🛒 Marketplace
-        </a>
     </div>
 
-    <div class="row">
+
+    <!-- Restaurant Grid -->
+    <div class="row g-4">
 
         {% for shop in shops %}
 
-        <div class="col-md-4 mb-4">
+        <div class="col-lg-4 col-md-6">
 
-            <div class="card shadow-sm h-100">
+            <div class="shop-card">
 
-                <div class="card-body">
+                <!-- Restaurant Image -->
+                <div class="shop-image">
 
-                    <h4 class="card-title">
+                    <i class="bi bi-shop-window"></i>
+
+                    {% if shop.is_open %}
+
+                        <span class="status-badge status-open">
+                            <i class="bi bi-circle-fill me-1"></i>
+                            Open
+                        </span>
+
+                    {% else %}
+
+                        <span class="status-badge status-closed">
+                            <i class="bi bi-circle-fill me-1"></i>
+                            Closed
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Restaurant Content -->
+                <div class="shop-body">
+
+                    <h3 class="shop-name">
                         {{ shop.name }}
-                    </h4>
+                    </h3>
 
-                    <p class="text-muted">
-                        📍 {{ shop.city }} - {{ shop.pincode }}
-                    </p>
+
+                    <div class="shop-location">
+
+                        <i class="bi bi-geo-alt-fill text-danger me-1"></i>
+
+                        {{ shop.city }}
+
+                        {% if shop.pincode %}
+                            - {{ shop.pincode }}
+                        {% endif %}
+
+                    </div>
 
 
                     {% if shop.description %}
-                        <p>
-                            {{ shop.description }}
+
+                        <p class="shop-description">
+                            {{ shop.description|truncatechars:100 }}
                         </p>
+
+                    {% else %}
+
+                        <p class="shop-description">
+                            Delicious food and great service, available on Yumzo.
+                        </p>
+
                     {% endif %}
 
-                    <div class="mb-2">
+
+                    <!-- Rating -->
+                    <div class="rating-row">
 
                         {% if shop.review_count > 0 %}
 
-                            <span class="fw-bold">
-                                ⭐ {{ shop.average_review_rating|floatformat:1 }}
+                            <span class="rating-badge">
+                                <i class="bi bi-star-fill me-1"></i>
+                                {{ shop.average_review_rating|floatformat:1 }}
                             </span>
 
-                            <span class="text-muted">
-                                / 5
+                            <span class="rating-text">
+                                {{ shop.review_count }}
+                                review{{ shop.review_count|pluralize }}
                             </span>
-
-                            <small class="text-muted">
-                                ({{ shop.review_count }} reviews)
-                            </small>
 
                         {% else %}
 
-                            <span class="text-muted">
-                                ⭐ No reviews yet
+                            <span class="rating-badge">
+                                <i class="bi bi-star me-1"></i>
+                                New
+                            </span>
+
+                            <span class="rating-text">
+                                No reviews yet
                             </span>
 
                         {% endif %}
 
                     </div>
 
-                    <p class="mb-3">
-                        {% if shop.is_open %}
-                            <span class="badge bg-success">
-                                Open
-                            </span>
-                        {% else %}
-                            <span class="badge bg-danger">
-                                Closed
-                            </span>
-                        {% endif %}
-                    </p>
 
+                    <div class="divider"></div>
+
+
+                    <!-- View Products -->
                     <a
                         href="{% url 'shop_products' shop.id %}"
-                        class="btn btn-outline-primary w-100"
+                        class="view-btn"
                     >
-                        View Products
+                        <i class="bi bi-arrow-right-circle me-2"></i>
+                        View Menu
                     </a>
 
                 </div>
@@ -106,12 +385,33 @@
 
         </div>
 
+
         {% empty %}
 
+        <!-- Empty State -->
         <div class="col-12">
 
-            <div class="alert alert-info">
-                No approved shops are available yet.
+            <div class="empty-box">
+
+                <div class="empty-icon">
+                    <i class="bi bi-shop"></i>
+                </div>
+
+                <h4>
+                    No Restaurants Available
+                </h4>
+
+                <p>
+                    There are no approved restaurants available on Yumzo yet.
+                </p>
+
+                <a
+                    href="{% url 'marketplace' %}"
+                    class="marketplace-btn"
+                >
+                    Explore Marketplace
+                </a>
+
             </div>
 
         </div>
@@ -122,5 +422,11 @@
 
 </div>
 
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
 </body>
 </html>
+```

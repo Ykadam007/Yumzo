@@ -1,114 +1,373 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Rate Product - LocalKart</title>
+    <title>Add Review - Yumzo</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
 
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <style>
+        body {
+            background: #f8f8f8;
+            font-family: Arial, sans-serif;
+            color: #222;
+        }
+
+        .navbar {
+            background: #ffffff;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: 800;
+            color: #e23744 !important;
+            text-decoration: none;
+        }
+
+        .review-wrapper {
+            min-height: calc(100vh - 72px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 15px;
+        }
+
+        .review-card {
+            width: 100%;
+            max-width: 650px;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .review-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: #fff1f2;
+            color: #e23744;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 32px;
+        }
+
+        .review-title {
+            text-align: center;
+            font-size: 30px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .review-subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        .rating-box {
+            background: #fafafa;
+            border-radius: 18px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .rating-label {
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .stars {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            direction: rtl;
+        }
+
+        .stars input {
+            display: none;
+        }
+
+        .stars label {
+            font-size: 42px;
+            color: #d6d6d6;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .stars label:hover,
+        .stars label:hover ~ label,
+        .stars input:checked ~ label {
+            color: #ffb400;
+            transform: scale(1.05);
+        }
+
+        .form-label {
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            border: 1px solid #dddddd;
+            border-radius: 12px;
+            padding: 13px 15px;
+        }
+
+        .form-control:focus {
+            border-color: #e23744;
+            box-shadow: 0 0 0 3px rgba(226, 55, 68, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            border: none;
+            background: #e23744;
+            color: #ffffff;
+            padding: 14px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            transition: 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background: #c91f2d;
+            transform: translateY(-1px);
+        }
+
+        .back-btn {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #555;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            color: #e23744;
+        }
+
+        .error-box {
+            background: #fff0f0;
+            border: 1px solid #ffcaca;
+            color: #c62828;
+            padding: 12px 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .help-text {
+            font-size: 13px;
+            color: #888;
+            margin-top: 6px;
+        }
+
+        @media (max-width: 576px) {
+            .review-card {
+                padding: 25px 20px;
+            }
+
+            .review-title {
+                font-size: 25px;
+            }
+
+            .stars label {
+                font-size: 34px;
+            }
+        }
+    </style>
 </head>
 
-<body class="bg-light">
+<body>
 
-<div class="container py-5">
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
 
-    <div class="row justify-content-center">
+        <a href="{% url 'home' %}" class="brand">
+            <i class="bi bi-egg-fried me-1"></i>
+            Yumzo
+        </a>
 
-        <div class="col-md-7">
-
-            <div class="card shadow-sm">
-
-                <div class="card-body p-4">
-
-                    <div class="text-center mb-4">
-
-                        <div style="font-size: 55px;">
-                            ⭐
-                        </div>
-
-                        <h2 class="fw-bold">
-                            Rate & Review
-                        </h2>
-
-                        <p class="text-muted">
-                            How was your experience with
-                            <strong>{{ product.name }}</strong>?
-                        </p>
-
-                    </div>
+    </div>
+</nav>
 
 
-                    <form method="POST">
+<div class="review-wrapper">
 
-                        {% csrf_token %}
+    <div class="review-card">
 
-                        <!-- Rating -->
+        <div class="review-icon">
+            <i class="bi bi-star-fill"></i>
+        </div>
 
-                        <div class="mb-4">
+        <h1 class="review-title">
+            Share Your Experience
+        </h1>
 
-                            <label class="form-label fw-bold">
-                                Your Rating
-                            </label>
-
-                            {{ form.rating }}
-
-                        </div>
-
-
-                        <!-- Comment -->
-
-                        <div class="mb-4">
-
-                            <label class="form-label fw-bold">
-                                Your Review
-                            </label>
-
-                            {{ form.comment }}
-
-                        </div>
+        <p class="review-subtitle">
+            How was your food? Your feedback helps other Yumzo customers.
+        </p>
 
 
-                        <div class="d-flex gap-2">
+        {% if form.non_field_errors %}
+            <div class="error-box">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
 
-                            <a
-                                href="{% url 'order_detail' order.id %}"
-                                class="btn btn-outline-secondary w-50"
-                            >
-                                Cancel
-                            </a>
 
-                            <button
-                                type="submit"
-                                class="btn btn-warning w-50"
-                            >
-                                ⭐ Submit Review
-                            </button>
+        <form method="POST">
 
-                        </div>
+            {% csrf_token %}
 
-                    </form>
+
+            <!-- Rating -->
+            <div class="rating-box">
+
+                <div class="rating-label">
+                    Rate your experience
+                </div>
+
+                <div class="stars">
+
+                    <input
+                        type="radio"
+                        name="rating"
+                        value="5"
+                        id="star5"
+                        {% if form.rating.value == "5" %}checked{% endif %}
+                    >
+                    <label for="star5">
+                        <i class="bi bi-star-fill"></i>
+                    </label>
+
+
+                    <input
+                        type="radio"
+                        name="rating"
+                        value="4"
+                        id="star4"
+                        {% if form.rating.value == "4" %}checked{% endif %}
+                    >
+                    <label for="star4">
+                        <i class="bi bi-star-fill"></i>
+                    </label>
+
+
+                    <input
+                        type="radio"
+                        name="rating"
+                        value="3"
+                        id="star3"
+                        {% if form.rating.value == "3" %}checked{% endif %}
+                    >
+                    <label for="star3">
+                        <i class="bi bi-star-fill"></i>
+                    </label>
+
+
+                    <input
+                        type="radio"
+                        name="rating"
+                        value="2"
+                        id="star2"
+                        {% if form.rating.value == "2" %}checked{% endif %}
+                    >
+                    <label for="star2">
+                        <i class="bi bi-star-fill"></i>
+                    </label>
+
+
+                    <input
+                        type="radio"
+                        name="rating"
+                        value="1"
+                        id="star1"
+                        {% if form.rating.value == "1" %}checked{% endif %}
+                    >
+                    <label for="star1">
+                        <i class="bi bi-star-fill"></i>
+                    </label>
 
                 </div>
 
+                {% if form.rating.errors %}
+                    <div class="text-danger small mt-2">
+                        {{ form.rating.errors }}
+                    </div>
+                {% endif %}
+
             </div>
 
-        </div>
+
+            <!-- Comment -->
+            <div class="mb-4">
+
+                <label class="form-label">
+                    Your Review
+                </label>
+
+                <textarea
+                    name="comment"
+                    class="form-control"
+                    placeholder="Tell us about the food, packaging, delivery, taste..."
+                >{{ form.comment.value|default_if_none:'' }}</textarea>
+
+                <div class="help-text">
+                    Share your honest experience with the food and service.
+                </div>
+
+                {% if form.comment.errors %}
+                    <div class="text-danger small mt-2">
+                        {{ form.comment.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+
+            <!-- Submit -->
+            <button type="submit" class="submit-btn">
+                <i class="bi bi-send-fill me-2"></i>
+                Submit Review
+            </button>
+
+        </form>
+
+
+        <a href="javascript:history.back()" class="back-btn">
+            <i class="bi bi-arrow-left me-1"></i>
+            Go Back
+        </a>
 
     </div>
 
 </div>
 
-</body>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
 </html>

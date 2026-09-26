@@ -1,7 +1,9 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -9,115 +11,442 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Payment Status - LocalKart</title>
+    <title>Payment Status | Yumzo</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(
+                    circle at top right,
+                    rgba(226, 55, 68, 0.08),
+                    transparent 30%
+                ),
+                #f7f7f8;
+            color: #222222;
+        }
+
+        /* =========================
+           PAGE
+        ========================= */
+
+        .status-page {
+            min-height: calc(100vh - 70px);
+            padding: 45px 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .status-wrapper {
+            width: 100%;
+            max-width: 520px;
+            margin: auto;
+        }
+
+        /* =========================
+           CARD
+        ========================= */
+
+        .status-card {
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+        }
+
+        .status-body {
+            padding: 42px 32px 34px;
+            text-align: center;
+        }
+
+        /* =========================
+           SUCCESS / FAILED ICON
+        ========================= */
+
+        .status-icon {
+            width: 92px;
+            height: 92px;
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 22px;
+            font-size: 43px;
+        }
+
+        .success-icon {
+            background: #eaf8ef;
+        }
+
+        .failed-icon {
+            background: #fff1f2;
+        }
+
+        /* =========================
+           TITLE
+        ========================= */
+
+        .status-title {
+            font-size: 27px;
+            font-weight: 900;
+            margin-bottom: 9px;
+        }
+
+        .success-title {
+            color: #198754;
+        }
+
+        .failed-title {
+            color: #dc3545;
+        }
+
+        .status-description {
+            max-width: 390px;
+            margin: 0 auto;
+            color: #888888;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           ORDER INFO
+        ========================= */
+
+        .order-box {
+            margin-top: 28px;
+            padding: 18px;
+            background: #fafafa;
+            border: 1px solid #eeeeee;
+            border-radius: 15px;
+        }
+
+        .order-label {
+            color: #999999;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .order-number {
+            color: #222222;
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        .payment-status {
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .payment-status-success {
+            background: #eaf8ef;
+            color: #198754;
+        }
+
+        .payment-status-failed {
+            background: #fff1f2;
+            color: #dc3545;
+        }
+
+        /* =========================
+           ACTIONS
+        ========================= */
+
+        .primary-action {
+            display: block;
+            width: 100%;
+            border: none;
+            border-radius: 13px;
+            padding: 13px 18px;
+            margin-top: 25px;
+            font-size: 14px;
+            font-weight: 850;
+            text-decoration: none;
+            transition: .2s ease;
+        }
+
+        .success-action {
+            background: #198754;
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(25, 135, 84, .18);
+        }
+
+        .success-action:hover {
+            background: #157347;
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .retry-action {
+            background: #e23744;
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(226, 55, 68, .18);
+        }
+
+        .retry-action:hover {
+            background: #c92f3b;
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .secondary-action {
+            display: block;
+            width: 100%;
+            border: 1px solid #dddddd;
+            border-radius: 13px;
+            padding: 12px 18px;
+            margin-top: 10px;
+            background: #ffffff;
+            color: #555555;
+            font-size: 13px;
+            font-weight: 750;
+            text-decoration: none;
+            transition: .2s ease;
+        }
+
+        .secondary-action:hover {
+            background: #f7f7f7;
+            color: #222222;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .secure-note {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eeeeee;
+            color: #999999;
+            font-size: 10px;
+            line-height: 1.6;
+        }
+
+        .secure-note strong {
+            color: #666666;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 576px) {
+
+            .status-page {
+                padding: 25px 12px;
+                align-items: flex-start;
+            }
+
+            .status-body {
+                padding: 34px 20px 28px;
+            }
+
+            .status-title {
+                font-size: 23px;
+            }
+
+            .status-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 37px;
+                border-radius: 23px;
+            }
+
+        }
+
+    </style>
+
 </head>
 
-<body class="bg-light">
+
+<body>
+
 
 {% include 'includes/navbar.html' %}
 
-<div class="container py-5">
 
-    <div class="row justify-content-center">
 
-        <div class="col-lg-6">
+<!-- =====================================================
+     PAYMENT STATUS
+===================================================== -->
 
-            <div class="card shadow-sm">
+<div class="status-page">
 
-                <div class="card-body text-center p-5">
+    <div class="status-wrapper">
 
-                    {% if payment_success %}
 
-                        <div class="display-1 mb-3">
-                            ✅
+        <div class="status-card">
+
+
+            <div class="status-body">
+
+
+                {% if payment_success %}
+
+
+                    <!-- =========================================
+                         SUCCESS
+                    ========================================== -->
+
+                    <div class="status-icon success-icon">
+                        ✅
+                    </div>
+
+
+                    <h1 class="status-title success-title">
+                        Payment Successful
+                    </h1>
+
+
+                    <p class="status-description">
+                        Your payment has been successfully verified.
+                        Your Yumzo order is now confirmed.
+                    </p>
+
+
+
+                    <!-- ORDER INFORMATION -->
+
+                    <div class="order-box">
+
+                        <div class="order-label">
+                            Order Number
                         </div>
 
-                        <h2 class="fw-bold text-success">
-                            Payment Successful
-                        </h2>
-
-                        <p class="text-muted">
-                            Your payment has been successfully verified.
-                        </p>
-
-                        <div class="alert alert-warning mt-4">
-
-                            <strong>
-                                Order #{{ order.id }}
-                            </strong>
-
-                            <br>
-
-                            Payment Status:
-                            {{ order.get_payment_status_display }}
-
+                        <div class="order-number">
+                            #{{ order.id }}
                         </div>
 
-                        <a
-                            href="{% url 'order_detail' order.id %}"
-                            class="btn btn-success w-100"
-                        >
-                            📦 View Order
-                        </a>
 
-                    {% else %}
-
-                        <div class="display-1 mb-3">
-                            ❌
+                        <div class="payment-status payment-status-success">
+                            ✓ {{ order.get_payment_status_display }}
                         </div>
 
-                        <h2 class="fw-bold text-warning">
-                            Payment Not Completed
-                        </h2>
+                    </div>
 
-                        <p class="text-muted">
-                            Your online payment was not completed.
-                            You can try again.
-                        </p>
 
-                        <div class="alert alert-warning mt-4">
 
-                            <strong>
-                                Order #{{ order.id }}
-                            </strong>
-
-                            <br>
-
-                            Payment Status:
-                            Failed
-
-                        </div>
-
-                        <a
-                            href="{% url 'payment_page' order.id %}"
-                            class="btn btn-warning w-100"
-                        >
-                            🔄 Try Payment Again
-                        </a>
-
-                    {% endif %}
+                    <!-- VIEW ORDER -->
 
                     <a
-                        href="{% url 'my_orders' %}"
-                        class="btn btn-outline-secondary w-100 mt-2"
+                        href="{% url 'order_detail' order.id %}"
+                        class="primary-action success-action"
                     >
-                        📦 My Orders
+                        📦 View Order
                     </a>
 
+
+                {% else %}
+
+
+                    <!-- =========================================
+                         FAILED / NOT COMPLETED
+                    ========================================== -->
+
+                    <div class="status-icon failed-icon">
+                        ❌
+                    </div>
+
+
+                    <h1 class="status-title failed-title">
+                        Payment Not Completed
+                    </h1>
+
+
+                    <p class="status-description">
+                        Your online payment was not completed.
+                        You can try the payment again to confirm your order.
+                    </p>
+
+
+
+                    <!-- ORDER INFORMATION -->
+
+                    <div class="order-box">
+
+                        <div class="order-label">
+                            Order Number
+                        </div>
+
+                        <div class="order-number">
+                            #{{ order.id }}
+                        </div>
+
+
+                        <div class="payment-status payment-status-failed">
+                            ✕ Failed
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- RETRY PAYMENT -->
+
+                    <a
+                        href="{% url 'payment_page' order.id %}"
+                        class="primary-action retry-action"
+                    >
+                        🔄 Try Payment Again
+                    </a>
+
+
+                {% endif %}
+
+
+
+                <!-- MY ORDERS -->
+
+                <a
+                    href="{% url 'my_orders' %}"
+                    class="secondary-action"
+                >
+                    📦 My Orders
+                </a>
+
+
+
+                <!-- SECURITY -->
+
+                <div class="secure-note">
+
+                    🔒 Your payment information is handled securely.
+                    <br>
+
+                    <strong>Yumzo</strong> — Delicious food, delivered.
+
                 </div>
+
 
             </div>
 
         </div>
 
+
     </div>
 
 </div>
 
+
 </body>
 </html>
+```

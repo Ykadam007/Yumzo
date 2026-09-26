@@ -1,291 +1,871 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Shop Dashboard - LocalKart</title>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Shop Dashboard - Yumzo</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <style>
+
+        body {
+            background: #f8f8f8;
+            color: #222;
+            font-family: Arial, sans-serif;
+        }
+
+        .page-wrapper {
+            padding: 35px 0 60px;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .dashboard-header {
+            background: white;
+            border-radius: 20px;
+            padding: 22px 25px;
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .brand-icon {
+            width: 52px;
+            height: 52px;
+
+            background: #fff1f2;
+            color: #e23744;
+
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 24px;
+        }
+
+        .dashboard-title {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 3px;
+        }
+
+        .dashboard-subtitle {
+            color: #777;
+            margin-bottom: 0;
+        }
+
+        .logout-btn {
+            border: 1px solid #dc3545;
+            color: #dc3545;
+            background: white;
+
+            border-radius: 10px;
+            padding: 10px 17px;
+
+            font-weight: 700;
+            text-decoration: none;
+
+            transition: 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+
+        /* =========================
+           CREATE SHOP
+        ========================= */
+
+        .create-card {
+            background: white;
+            border-radius: 22px;
+
+            padding: 55px 25px;
+
+            text-align: center;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.06);
+        }
+
+        .create-icon {
+            width: 85px;
+            height: 85px;
+
+            margin: auto;
+
+            background: #fff1f2;
+            color: #e23744;
+
+            border-radius: 22px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 40px;
+        }
+
+        .create-title {
+            font-size: 26px;
+            font-weight: 800;
+            margin-top: 20px;
+        }
+
+        .create-text {
+            color: #777;
+            max-width: 500px;
+            margin: 10px auto 25px;
+        }
+
+        .primary-btn {
+            background: #e23744;
+            color: white;
+
+            border: none;
+
+            border-radius: 11px;
+
+            padding: 12px 22px;
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+            display: inline-flex;
+            align-items: center;
+
+            transition: 0.2s ease;
+        }
+
+        .primary-btn:hover {
+            background: #c91f2d;
+            color: white;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status-card {
+            border: none;
+            border-radius: 18px;
+
+            padding: 22px 25px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .status-pending {
+            background: #fff8e6;
+            border-left: 5px solid #f0ad00;
+        }
+
+        .status-rejected {
+            background: #fff0f0;
+            border-left: 5px solid #dc3545;
+        }
+
+        .status-approved {
+            background: #effaf3;
+            border-left: 5px solid #198754;
+        }
+
+        .status-title {
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .status-text {
+            color: #666;
+            margin-bottom: 0;
+        }
+
+
+        /* =========================
+           ACTION CARDS
+        ========================= */
+
+        .section-title {
+            font-size: 23px;
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+
+        .action-card {
+            background: white;
+
+            border: none;
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            height: 100%;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.05);
+
+            transition: 0.25s ease;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 12px 28px rgba(0,0,0,0.10);
+        }
+
+        .action-icon {
+            width: 58px;
+            height: 58px;
+
+            background: #fff1f2;
+            color: #e23744;
+
+            border-radius: 15px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 25px;
+
+            margin-bottom: 17px;
+        }
+
+        .action-title {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 7px;
+        }
+
+        .action-text {
+            color: #777;
+            font-size: 14px;
+            line-height: 1.5;
+            min-height: 42px;
+        }
+
+        .action-btn {
+            width: 100%;
+
+            border-radius: 10px;
+
+            padding: 10px;
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+            display: inline-block;
+
+            text-align: center;
+
+            transition: 0.2s ease;
+        }
+
+        .action-btn-primary {
+            background: #e23744;
+            color: white;
+        }
+
+        .action-btn-primary:hover {
+            background: #c91f2d;
+            color: white;
+        }
+
+        .action-btn-success {
+            background: #198754;
+            color: white;
+        }
+
+        .action-btn-success:hover {
+            background: #146c43;
+            color: white;
+        }
+
+        .action-btn-outline {
+            border: 1px solid #e23744;
+            color: #e23744;
+            background: white;
+        }
+
+        .action-btn-outline:hover {
+            background: #e23744;
+            color: white;
+        }
+
+
+        /* =========================
+           SHOP INFORMATION
+        ========================= */
+
+        .info-card {
+            background: white;
+
+            border: none;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            margin-top: 25px;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .info-header {
+            padding: 20px 25px;
+
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .info-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 0;
+        }
+
+        .info-body {
+            padding: 25px;
+        }
+
+        .info-item {
+            padding: 15px;
+
+            background: #fafafa;
+
+            border-radius: 12px;
+
+            height: 100%;
+        }
+
+        .info-label {
+            font-size: 12px;
+
+            color: #888;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-weight: 700;
+            color: #333;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 768px) {
+
+            .page-wrapper {
+                padding: 20px 12px 50px;
+            }
+
+            .dashboard-header {
+                padding: 18px;
+            }
+
+            .dashboard-title {
+                font-size: 22px;
+            }
+
+            .logout-btn {
+                margin-top: 15px;
+            }
+
+        }
+
+    </style>
+
 </head>
 
-<body class="bg-light">
 
-<div class="container py-5">
+<body>
 
-    <!-- Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <div>
-            <h2 class="fw-bold">🏪 Shop Dashboard</h2>
+<div class="container page-wrapper">
 
-            {% if shop %}
-                <p class="text-muted mb-0">
-                    Welcome, {{ shop.name }}
-                </p>
-            {% else %}
-                <p class="text-muted mb-0">
-                    Welcome, {{ user.username }}
-                </p>
-            {% endif %}
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <div class="dashboard-header">
+
+        <div class="row align-items-center">
+
+            <div class="col-md-8">
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <div class="brand-icon">
+
+                        <i class="bi bi-shop-window"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h1 class="dashboard-title">
+
+                            Shop Dashboard
+
+                        </h1>
+
+
+                        {% if shop %}
+
+                        <p class="dashboard-subtitle">
+
+                            Welcome back,
+                            <strong>{{ shop.name }}</strong>
+
+                        </p>
+
+                        {% else %}
+
+                        <p class="dashboard-subtitle">
+
+                            Welcome,
+                            <strong>{{ user.username }}</strong>
+
+                        </p>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4 text-md-end">
+
+                <a
+                    href="{% url 'logout' %}"
+                    class="logout-btn"
+                >
+
+                    <i class="bi bi-box-arrow-right me-1"></i>
+
+                    Logout
+
+                </a>
+
+            </div>
+
         </div>
 
-        <a href="{% url 'logout' %}" class="btn btn-outline-danger">
-            Logout
+    </div>
+
+
+    <!-- =========================
+         NO SHOP
+    ========================= -->
+
+    {% if not shop %}
+
+
+    <div class="create-card">
+
+        <div class="create-icon">
+
+            <i class="bi bi-shop"></i>
+
+        </div>
+
+
+        <h2 class="create-title">
+
+            Create Your Restaurant
+
+        </h2>
+
+
+        <p class="create-text">
+
+            Register your restaurant on Yumzo and start
+            showcasing your food to customers.
+
+        </p>
+
+
+        <a
+            href="{% url 'create_shop' %}"
+            class="primary-btn"
+        >
+
+            <i class="bi bi-plus-lg me-2"></i>
+
+            Create Restaurant
+
         </a>
 
     </div>
 
 
-    {% if not shop %}
-
-        <!-- No Shop -->
-        <div class="card shadow-sm">
-            <div class="card-body text-center py-5">
-
-                <div style="font-size: 60px;">🏪</div>
-
-                <h3 class="fw-bold mt-3">
-                    Create Your Shop
-                </h3>
-
-                <p class="text-muted">
-                    Create your shop profile to start selling on LocalKart.
-                </p>
-
-                <a
-                    href="{% url 'create_shop' %}"
-                    class="btn btn-primary px-4"
-                >
-                    ➕ Create Shop
-                </a>
-
-            </div>
-        </div>
-
     {% else %}
 
-        <!-- Shop Status -->
-        {% if shop.approval_status == 'pending' %}
 
-            <div class="alert alert-warning shadow-sm">
+    <!-- =========================
+         PENDING
+    ========================= -->
 
-                <h5 class="fw-bold">
-                    🟡 Shop Approval Pending
+    {% if shop.approval_status == 'pending' %}
+
+
+    <div class="status-card status-pending">
+
+        <div class="d-flex align-items-start gap-3">
+
+            <div style="font-size: 28px;">
+                <i class="bi bi-hourglass-split text-warning"></i>
+            </div>
+
+            <div>
+
+                <h5 class="status-title">
+
+                    Shop Approval Pending
+
                 </h5>
 
-                <p class="mb-0">
-                    Your shop has been submitted successfully.
-                    Please wait for admin approval before adding products.
+                <p class="status-text">
+
+                    Your restaurant has been submitted successfully.
+                    Please wait for admin approval before adding
+                    products.
+
                 </p>
 
             </div>
 
-        {% elif shop.approval_status == 'rejected' %}
+        </div>
 
-            <div class="alert alert-danger shadow-sm">
+    </div>
 
-                <h5 class="fw-bold">
-                    🔴 Shop Rejected
+
+    {% elif shop.approval_status == 'rejected' %}
+
+
+    <!-- =========================
+         REJECTED
+    ========================= -->
+
+    <div class="status-card status-rejected">
+
+        <div class="d-flex align-items-start gap-3">
+
+            <div style="font-size: 28px;">
+
+                <i class="bi bi-x-circle-fill text-danger"></i>
+
+            </div>
+
+            <div>
+
+                <h5 class="status-title">
+
+                    Shop Registration Rejected
+
                 </h5>
 
-                <p>
-                    Your shop registration was rejected by the administrator.
+                <p class="status-text mb-2">
+
+                    Your restaurant registration was rejected
+                    by the administrator.
+
                 </p>
 
+
                 {% if shop.rejection_reason %}
-                    <strong>Reason:</strong>
+
+                <div>
+
+                    <strong>
+                        Reason:
+                    </strong>
+
                     {{ shop.rejection_reason }}
+
+                </div>
+
                 {% endif %}
 
             </div>
 
-        {% elif shop.approval_status == 'approved' %}
+        </div>
 
-            <!-- Approved -->
-            <div class="alert alert-success shadow-sm">
+    </div>
 
-                <h5 class="fw-bold">
-                    🟢 Shop Approved
+
+    {% elif shop.approval_status == 'approved' %}
+
+
+    <!-- =========================
+         APPROVED
+    ========================= -->
+
+    <div class="status-card status-approved">
+
+        <div class="d-flex align-items-start gap-3">
+
+            <div style="font-size: 28px;">
+
+                <i class="bi bi-check-circle-fill text-success"></i>
+
+            </div>
+
+            <div>
+
+                <h5 class="status-title">
+
+                    Restaurant Approved
+
                 </h5>
 
-                <p class="mb-0">
-                    Your shop is approved and ready for business.
+                <p class="status-text">
+
+                    Your restaurant is approved and ready
+                    for business on Yumzo.
+
                 </p>
 
             </div>
 
+        </div>
 
-            <!-- Quick Actions -->
-            <div class="row g-4 mb-4">
+    </div>
 
-                <div class="col-md-4">
 
-                    <div class="card shadow-sm h-100">
+    <!-- =========================
+         QUICK ACTIONS
+    ========================= -->
 
-                        <div class="card-body text-center">
+    <h2 class="section-title">
 
-                            <div style="font-size: 40px;">
-                                📦
-                            </div>
+        Manage Your Restaurant
 
-                            <h5 class="fw-bold mt-3">
-                                Products
-                            </h5>
+    </h2>
 
-                            <p class="text-muted">
-                                Add and manage your products.
-                            </p>
 
-                            <a
-                                href="{% url 'product_list' %}"
-                                class="btn btn-primary"
-                            >
-                                Manage Products
-                            </a>
+    <div class="row g-4 mb-4">
 
-                        </div>
 
-                    </div>
+        <!-- Products -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="action-card">
+
+                <div class="action-icon">
+
+                    <i class="bi bi-box-seam"></i>
 
                 </div>
 
 
-                <div class="col-md-4">
+                <h3 class="action-title">
 
-                    <div class="card shadow-sm h-100">
+                    Products
 
-                        <div class="card-body text-center">
-
-                            <div style="font-size: 40px;">
-                                🛒
-                            </div>
-
-                            <h5 class="fw-bold mt-3">
-                                Orders
-                            </h5>
-
-                            <p class="text-muted">
-                                View and manage customer orders.
-                            </p>
-
-                            <a
-                                href="{% url 'shop_orders' %}"
-                                class="btn btn-success"
-                            >
-                                View Orders
-                            </a>
-
-                        </div>
-
-                    </div>
-
-                </div>
+                </h3>
 
 
-                <div class="col-md-4">
+                <p class="action-text">
 
-                    <div class="card shadow-sm h-100">
+                    Add new food items and manage
+                    your restaurant menu.
 
-                        <div class="card-body text-center">
+                </p>
 
-                            <div style="font-size: 40px;">
-                                🏪
-                            </div>
 
-                            <h5 class="fw-bold mt-3">
-                                Shop Profile
-                            </h5>
+                <a
+                    href="{% url 'product_list' %}"
+                    class="action-btn action-btn-primary"
+                >
 
-                            <p class="text-muted">
-                                View and manage your shop details.
-                            </p>
+                    <i class="bi bi-grid me-1"></i>
 
-                            <a
-                                href="{% url 'shop_profile' %}"
-                                class="btn btn-outline-primary"
-                            >
-                                Shop Profile
-                            </a>
+                    Manage Products
 
-                        </div>
-
-                    </div>
-
-                </div>
+                </a>
 
             </div>
 
+        </div>
 
-            <!-- Shop Information -->
-            <div class="card shadow-sm">
 
-                <div class="card-header bg-white">
+        <!-- Orders -->
 
-                    <h5 class="mb-0 fw-bold">
-                        🏪 Shop Information
-                    </h5>
+        <div class="col-lg-4 col-md-6">
+
+            <div class="action-card">
+
+                <div class="action-icon">
+
+                    <i class="bi bi-receipt"></i>
 
                 </div>
 
-                <div class="card-body">
 
-                    <div class="row">
+                <h3 class="action-title">
 
-                        <div class="col-md-6 mb-3">
+                    Orders
 
-                            <strong>Shop Name</strong>
+                </h3>
 
-                            <p class="text-muted mb-0">
-                                {{ shop.name }}
-                            </p>
+
+                <p class="action-text">
+
+                    View customer orders and manage
+                    order processing.
+
+                </p>
+
+
+                <a
+                    href="{% url 'shop_orders' %}"
+                    class="action-btn action-btn-success"
+                >
+
+                    <i class="bi bi-cart-check me-1"></i>
+
+                    View Orders
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- Profile -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="action-card">
+
+                <div class="action-icon">
+
+                    <i class="bi bi-shop-window"></i>
+
+                </div>
+
+
+                <h3 class="action-title">
+
+                    Shop Profile
+
+                </h3>
+
+
+                <p class="action-text">
+
+                    View your restaurant information,
+                    contact details and status.
+
+                </p>
+
+
+                <a
+                    href="{% url 'shop_profile' %}"
+                    class="action-btn action-btn-outline"
+                >
+
+                    <i class="bi bi-person-badge me-1"></i>
+
+                    Shop Profile
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         SHOP INFORMATION
+    ========================= -->
+
+    <div class="info-card">
+
+        <div class="info-header">
+
+            <h3 class="info-title">
+
+                <i class="bi bi-info-circle-fill text-danger me-2"></i>
+
+                Shop Information
+
+            </h3>
+
+        </div>
+
+
+        <div class="info-body">
+
+            <div class="row g-3">
+
+
+                <!-- Shop Name -->
+
+                <div class="col-md-6">
+
+                    <div class="info-item">
+
+                        <div class="info-label">
+
+                            Shop Name
 
                         </div>
 
+                        <div class="info-value">
 
-                        <div class="col-md-6 mb-3">
-
-                            <strong>Phone</strong>
-
-                            <p class="text-muted mb-0">
-                                {{ shop.phone }}
-                            </p>
-
-                        </div>
-
-
-                        <div class="col-md-6 mb-3">
-
-                            <strong>City</strong>
-
-                            <p class="text-muted mb-0">
-                                {{ shop.city }}
-                            </p>
-
-                        </div>
-
-
-                        <div class="col-md-6 mb-3">
-
-                            <strong>Pincode</strong>
-
-                            <p class="text-muted mb-0">
-                                {{ shop.pincode }}
-                            </p>
-
-                        </div>
-
-
-                        <div class="col-12">
-
-                            <strong>Address</strong>
-
-                            <p class="text-muted mb-0">
-                                {{ shop.address }}
-                            </p>
+                            {{ shop.name }}
 
                         </div>
 
@@ -293,13 +873,120 @@
 
                 </div>
 
+
+                <!-- Phone -->
+
+                <div class="col-md-6">
+
+                    <div class="info-item">
+
+                        <div class="info-label">
+
+                            Phone
+
+                        </div>
+
+                        <div class="info-value">
+
+                            {{ shop.phone }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- City -->
+
+                <div class="col-md-6">
+
+                    <div class="info-item">
+
+                        <div class="info-label">
+
+                            City
+
+                        </div>
+
+                        <div class="info-value">
+
+                            {{ shop.city }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Pincode -->
+
+                <div class="col-md-6">
+
+                    <div class="info-item">
+
+                        <div class="info-label">
+
+                            Pincode
+
+                        </div>
+
+                        <div class="info-value">
+
+                            {{ shop.pincode }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Address -->
+
+                <div class="col-12">
+
+                    <div class="info-item">
+
+                        <div class="info-label">
+
+                            Address
+
+                        </div>
+
+                        <div class="info-value">
+
+                            {{ shop.address }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
             </div>
 
-        {% endif %}
+        </div>
+
+    </div>
+
 
     {% endif %}
 
+
+    {% endif %}
+
+
 </div>
 
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
 </body>
+
 </html>
+```

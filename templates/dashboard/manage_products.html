@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +11,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Manage Products - LocalKart</title>
+    <title>Manage Products | Yumzo Admin</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -19,48 +20,530 @@
 
     <style>
 
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            background: #f5f7fb;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f7f8;
+            color: #212529;
         }
 
-        .page-header {
-            margin-bottom: 30px;
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 250px;
+            background: #ffffff;
+            border-right: 1px solid #eeeeee;
+            padding: 25px 18px;
+            z-index: 1000;
+            overflow-y: auto;
         }
 
-        .card {
+        .brand {
+            display: block;
+            text-decoration: none;
+            font-size: 27px;
+            font-weight: 900;
+            color: #e23744;
+            padding-left: 10px;
+            margin-bottom: 35px;
+        }
+
+        .brand span {
+            color: #ff7a00;
+        }
+
+        .admin-label {
+            padding: 0 12px;
+            margin-bottom: 12px;
+            font-size: 11px;
+            color: #999999;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .side-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 14px;
+            margin-bottom: 5px;
+            border-radius: 12px;
+            color: #555555;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: .2s ease;
+        }
+
+        .side-link:hover {
+            background: #fff1f2;
+            color: #e23744;
+        }
+
+        .side-link.active {
+            background: #e23744;
+            color: #ffffff;
+        }
+
+        .side-icon {
+            width: 25px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .sidebar-bottom {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .logout-link {
+            color: #dc3545;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main-content {
+            margin-left: 250px;
+            min-height: 100vh;
+            padding: 30px 35px;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .topbar {
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 18px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 850;
+            margin-bottom: 5px;
+        }
+
+        .page-subtitle {
+            color: #777777;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .dashboard-btn {
+            border: 1px solid #dddddd;
+            background: #ffffff;
+            color: #555555;
+            border-radius: 10px;
+            padding: 9px 15px;
+            font-size: 13px;
+            font-weight: 750;
+            text-decoration: none;
+        }
+
+        .dashboard-btn:hover {
+            background: #f5f5f5;
+            color: #333333;
+        }
+
+        /* =========================
+           FILTER CARD
+        ========================= */
+
+        .filter-card {
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 25px;
+        }
+
+        .filter-title {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+
+        .filter-label {
+            display: block;
+            font-size: 11px;
+            color: #555555;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+            margin-bottom: 7px;
+        }
+
+        .form-control,
+        .form-select {
+            border: 1px solid #dddddd;
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 13px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #e23744;
+            box-shadow: 0 0 0 3px rgba(226, 55, 68, .10);
+        }
+
+        .search-btn {
+            width: 100%;
             border: none;
-            border-radius: 14px;
+            background: #e23744;
+            color: #ffffff;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 750;
         }
 
-        .table th {
+        .search-btn:hover {
+            background: #c92f3b;
+        }
+
+        .reset-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            border: 1px solid #dddddd;
+            color: #555555;
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 9px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .reset-btn:hover {
+            background: #f5f5f5;
+            color: #333333;
+        }
+
+        /* =========================
+           PRODUCTS CARD
+        ========================= */
+
+        .products-card {
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .products-header {
+            padding: 20px 22px;
+            border-bottom: 1px solid #eeeeee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .products-title {
+            font-size: 17px;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .product-count {
+            background: #fff1f2;
+            color: #e23744;
+            border-radius: 20px;
+            padding: 7px 11px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table {
+            margin: 0;
+        }
+
+        .table thead th {
+            background: #fafafa;
+            border-bottom: 1px solid #eeeeee;
+            color: #777777;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .45px;
+            padding: 14px 13px;
             white-space: nowrap;
         }
 
-        .table td {
+        .table tbody td {
+            padding: 15px 13px;
             vertical-align: middle;
+            border-color: #f0f0f0;
+            font-size: 13px;
         }
+
+        .table tbody tr {
+            transition: .15s ease;
+        }
+
+        .table tbody tr:hover {
+            background: #fffafa;
+        }
+
+        /* =========================
+           PRODUCT
+        ========================= */
 
         .product-image {
             width: 65px;
             height: 65px;
             object-fit: cover;
-            border-radius: 10px;
+            border-radius: 12px;
+            background: #f1f1f1;
+            border: 1px solid #eeeeee;
+            margin-bottom: 8px;
+        }
+
+        .product-placeholder {
+            width: 65px;
+            height: 65px;
+            border-radius: 12px;
+            background: #fff1f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+            margin-bottom: 8px;
         }
 
         .product-name {
-            font-weight: 600;
+            display: block;
+            font-size: 13px;
+            font-weight: 800;
+            color: #333333;
+            max-width: 190px;
+        }
+
+        .shop-name {
+            font-weight: 750;
+            color: #333333;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 7px 9px;
+            border-radius: 8px;
+            background: #f1f1f1;
+            color: #555555;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .no-category {
+            color: #999999;
+            font-size: 12px;
+        }
+
+        /* =========================
+           PRICE
+        ========================= */
+
+        .discount-price {
+            font-size: 14px;
+            font-weight: 850;
+            color: #198754;
+        }
+
+        .original-price {
+            color: #999999;
+            font-size: 11px;
+        }
+
+        .regular-price {
+            font-size: 14px;
+            font-weight: 850;
+            color: #333333;
+        }
+
+        /* =========================
+           STOCK
+        ========================= */
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 7px 9px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .stock-good {
+            background: #eaf8ef;
+            color: #26753c;
+        }
+
+        .stock-low {
+            background: #fff5df;
+            color: #986500;
+        }
+
+        .stock-empty {
+            background: #fff0f1;
+            color: #b4232d;
+        }
+
+        .available {
+            background: #eaf8ef;
+            color: #26753c;
+        }
+
+        .unavailable {
+            background: #fff0f1;
+            color: #b4232d;
+        }
+
+        /* =========================
+           ACTIONS
+        ========================= */
+
+        .action-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            min-width: 115px;
         }
 
         .action-btn {
-            min-width: 95px;
+            width: 115px;
+            border-radius: 8px;
+            padding: 7px 9px;
+            font-size: 11px;
+            font-weight: 750;
         }
 
+        /* =========================
+           PAGINATION
+        ========================= */
+
+        .pagination-area {
+            padding: 18px;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .page-link {
+            border: 1px solid #eeeeee;
+            color: #555555;
+            font-size: 12px;
+            font-weight: 700;
+            margin: 0 2px;
+            border-radius: 8px !important;
+        }
+
+        .page-item.active .page-link {
+            background: #e23744;
+            border-color: #e23744;
+            color: #ffffff;
+        }
+
+        .page-link:hover {
+            color: #e23744;
+            background: #fff1f2;
+        }
+
+        /* =========================
+           EMPTY
+        ========================= */
+
         .empty-state {
-            padding: 60px 20px;
+            padding: 70px 20px;
+            text-align: center;
         }
 
         .empty-icon {
-            font-size: 55px;
+            width: 80px;
+            height: 80px;
+            border-radius: 22px;
+            background: #fff1f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            font-size: 35px;
+        }
+
+        .empty-title {
+            font-size: 19px;
+            font-weight: 800;
+            margin-top: 18px;
+        }
+
+        .empty-text {
+            color: #888888;
+            font-size: 13px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 991px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #eeeeee;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .sidebar-bottom {
+                margin-top: 10px;
+            }
+
+        }
+
+        @media (max-width: 576px) {
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .filter-card {
+                padding: 18px;
+            }
+
         }
 
     </style>
@@ -71,21 +554,132 @@
 <body>
 
 
-<div class="container py-5">
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+    <a
+        href="{% url 'admin_dashboard' %}"
+        class="brand"
+    >
+        🍽️ Yum<span>zo</span>
+    </a>
 
 
-    <!-- ================= HEADER ================= -->
+    <div class="admin-label">
+        Administration
+    </div>
 
-    <div class="d-flex justify-content-between align-items-center page-header">
+
+    <a
+        href="{% url 'admin_dashboard' %}"
+        class="side-link"
+    >
+        <span class="side-icon">📊</span>
+        Dashboard
+    </a>
+
+
+    <a
+        href="{% url 'manage_users' %}"
+        class="side-link"
+    >
+        <span class="side-icon">👥</span>
+        Manage Users
+    </a>
+
+
+    <a
+        href="{% url 'manage_shops' %}"
+        class="side-link"
+    >
+        <span class="side-icon">🏪</span>
+        Manage Restaurants
+    </a>
+
+
+    <a
+        href="{% url 'manage_products' %}"
+        class="side-link active"
+    >
+        <span class="side-icon">🍔</span>
+        Manage Products
+    </a>
+
+
+    <a
+        href="{% url 'manage_categories' %}"
+        class="side-link"
+    >
+        <span class="side-icon">📂</span>
+        Categories
+    </a>
+
+
+    <a
+        href="{% url 'manage_orders' %}"
+        class="side-link"
+    >
+        <span class="side-icon">📦</span>
+        Orders
+    </a>
+
+
+    <a
+        href="{% url 'manage_reviews' %}"
+        class="side-link"
+    >
+        <span class="side-icon">⭐</span>
+        Reviews
+    </a>
+
+
+    <div class="sidebar-bottom">
+
+        <a
+            href="/admin/"
+            class="side-link"
+        >
+            <span class="side-icon">⚙️</span>
+            Django Admin
+        </a>
+
+
+        <a
+            href="{% url 'logout' %}"
+            class="side-link logout-link"
+        >
+            <span class="side-icon">🚪</span>
+            Logout
+        </a>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main-content">
+
+
+    <!-- HEADER -->
+
+    <div class="topbar">
 
         <div>
 
-            <h2 class="fw-bold mb-1">
-                📦 Manage Products
-            </h2>
+            <h1 class="page-title">
+                🍔 Manage Products
+            </h1>
 
-            <p class="text-muted mb-0">
-                Manage products across all LocalKart shops
+            <p class="page-subtitle">
+                Manage products across all Yumzo restaurants.
             </p>
 
         </div>
@@ -93,7 +687,7 @@
 
         <a
             href="{% url 'admin_dashboard' %}"
-            class="btn btn-secondary"
+            class="dashboard-btn"
         >
             ← Admin Dashboard
         </a>
@@ -102,351 +696,363 @@
 
 
 
-    <!-- ================= SEARCH & FILTER ================= -->
+    <!-- =================================================
+         SEARCH & FILTER
+    ================================================= -->
 
-    <div class="card shadow-sm mb-4">
+    <div class="filter-card">
 
-        <div class="card-body p-4">
-
-            <form method="GET">
-
-                <div class="row g-3 align-items-end">
-
-
-                    <!-- Search -->
-
-                    <div class="col-md-5">
-
-                        <label class="form-label fw-bold">
-                            Search Products
-                        </label>
-
-                        <input
-                            type="text"
-                            name="search"
-                            value="{{ search }}"
-                            class="form-control"
-                            placeholder="🔍 Search product or shop..."
-                        >
-
-                    </div>
+        <div class="filter-title">
+            🔎 Search & Filter Products
+        </div>
 
 
-                    <!-- Category -->
+        <form method="GET">
 
-                    <div class="col-md-3">
-
-                        <label class="form-label fw-bold">
-                            Filter by Category
-                        </label>
-
-                        <select
-                            name="category"
-                            class="form-select"
-                        >
-
-                            <option value="">
-                                All Categories
-                            </option>
+            <div class="row g-3 align-items-end">
 
 
-                            {% for category in categories %}
+                <!-- SEARCH -->
 
-                                <option
-                                    value="{{ category.id }}"
-                                    {% if selected_category == category.id|stringformat:"s" %}
-                                        selected
-                                    {% endif %}
-                                >
-                                    {{ category.name }}
-                                </option>
+                <div class="col-md-5">
 
-                            {% endfor %}
+                    <label class="filter-label">
+                        Search Products
+                    </label>
 
-                        </select>
-
-                    </div>
-
-
-                    <!-- Search -->
-
-                    <div class="col-md-2">
-
-                        <button
-                            type="submit"
-                            class="btn btn-primary w-100"
-                        >
-                            🔍 Search
-                        </button>
-
-                    </div>
-
-
-                    <!-- Reset -->
-
-                    <div class="col-md-2">
-
-                        <a
-                            href="{% url 'manage_products' %}"
-                            class="btn btn-outline-secondary w-100"
-                        >
-                            Reset
-                        </a>
-
-                    </div>
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ search }}"
+                        class="form-control"
+                        placeholder="🔍 Search product or restaurant..."
+                    >
 
                 </div>
 
-            </form>
 
-        </div>
+                <!-- CATEGORY -->
+
+                <div class="col-md-3">
+
+                    <label class="filter-label">
+                        Filter by Category
+                    </label>
+
+                    <select
+                        name="category"
+                        class="form-select"
+                    >
+
+                        <option value="">
+                            All Categories
+                        </option>
+
+
+                        {% for category in categories %}
+
+                            <option
+                                value="{{ category.id }}"
+                                {% if selected_category == category.id|stringformat:"s" %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ category.name }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- SEARCH -->
+
+                <div class="col-md-2">
+
+                    <button
+                        type="submit"
+                        class="search-btn"
+                    >
+                        🔍 Search
+                    </button>
+
+                </div>
+
+
+                <!-- RESET -->
+
+                <div class="col-md-2">
+
+                    <a
+                        href="{% url 'manage_products' %}"
+                        class="reset-btn"
+                    >
+                        ↻ Reset
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </form>
 
     </div>
 
 
 
-    <!-- ================= PRODUCTS CARD ================= -->
+    <!-- =================================================
+         PRODUCT LIST
+    ================================================= -->
 
-    <div class="card shadow-sm">
+    <div class="products-card">
 
-        <div class="card-header bg-white py-3">
 
-            <h5 class="mb-0 fw-bold">
+        <div class="products-header">
+
+            <h5 class="products-title">
                 🛍️ Product List
             </h5>
+
+
+            {% if products %}
+
+                <span class="product-count">
+                    {{ products.paginator.count }} Products
+                </span>
+
+            {% endif %}
 
         </div>
 
 
-        <div class="card-body p-0">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle mb-0">
 
 
-            <!-- ================= PRODUCT TABLE ================= -->
+                <thead>
 
-            <div class="table-responsive">
+                    <tr>
 
-                <table class="table table-hover align-middle mb-0">
+                        <th class="px-3">
+                            Product
+                        </th>
 
-                    <thead class="table-dark">
+                        <th>
+                            Restaurant
+                        </th>
 
-                        <tr>
+                        <th>
+                            Category
+                        </th>
 
-                            <th class="px-3">
-                                Product
-                            </th>
+                        <th>
+                            Price
+                        </th>
 
-                            <th>
-                                Shop
-                            </th>
+                        <th>
+                            Stock
+                        </th>
 
-                            <th>
-                                Category
-                            </th>
+                        <th>
+                            Availability
+                        </th>
 
-                            <th>
-                                Price
-                            </th>
+                        <th>
+                            Actions
+                        </th>
 
-                            <th>
-                                Stock
-                            </th>
+                    </tr>
 
-                            <th>
-                                Availability
-                            </th>
-
-                            <th>
-                                Actions
-                            </th>
-
-                        </tr>
-
-                    </thead>
+                </thead>
 
 
-                    <tbody>
+                <tbody>
 
 
-                    {% for product in products %}
+                {% for product in products %}
 
-                        <tr>
-
-
-                            <!-- ================= PRODUCT ================= -->
-
-                            <td class="px-3">
-
-                                {% if product.image %}
-
-                                    <img
-                                        src="{{ product.image.url }}"
-                                        alt="{{ product.name }}"
-                                        class="product-image mb-2"
-                                    >
-
-                                    <br>
-
-                                {% endif %}
+                    <tr>
 
 
-                                <span class="product-name">
-                                    {{ product.name }}
+                        <!-- PRODUCT -->
+
+                        <td class="px-3">
+
+                            {% if product.image %}
+
+                                <img
+                                    src="{{ product.image.url }}"
+                                    alt="{{ product.name }}"
+                                    class="product-image"
+                                >
+
+                            {% else %}
+
+                                <div class="product-placeholder">
+                                    🍔
+                                </div>
+
+                            {% endif %}
+
+
+                            <span class="product-name">
+                                {{ product.name }}
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- SHOP -->
+
+                        <td>
+
+                            <span class="shop-name">
+                                {{ product.shop.name }}
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- CATEGORY -->
+
+                        <td>
+
+                            {% if product.category %}
+
+                                <span class="category-badge">
+                                    {{ product.category.name }}
                                 </span>
 
-                            </td>
+                            {% else %}
+
+                                <span class="no-category">
+                                    No Category
+                                </span>
+
+                            {% endif %}
+
+                        </td>
 
 
 
-                            <!-- ================= SHOP ================= -->
+                        <!-- PRICE -->
 
-                            <td>
+                        <td>
 
-                                <strong>
-                                    {{ product.shop.name }}
-                                </strong>
+                            {% if product.discount_price %}
 
-                            </td>
+                                <div class="discount-price">
+                                    ₹{{ product.discount_price }}
+                                </div>
 
-
-
-                            <!-- ================= CATEGORY ================= -->
-
-                            <td>
-
-                                {% if product.category %}
-
-                                    <span class="badge bg-secondary">
-                                        {{ product.category.name }}
-                                    </span>
-
-                                {% else %}
-
-                                    <span class="text-muted">
-                                        No Category
-                                    </span>
-
-                                {% endif %}
-
-                            </td>
-
-
-
-                            <!-- ================= PRICE ================= -->
-
-                            <td>
-
-                                {% if product.discount_price %}
-
-                                    <strong class="text-success">
-                                        ₹{{ product.discount_price }}
-                                    </strong>
-
-                                    <br>
-
-                                    <small class="text-muted">
-
-                                        <del>
-                                            ₹{{ product.price }}
-                                        </del>
-
-                                    </small>
-
-                                {% else %}
-
-                                    <strong>
+                                <div class="original-price">
+                                    <del>
                                         ₹{{ product.price }}
-                                    </strong>
+                                    </del>
+                                </div>
 
-                                {% endif %}
+                            {% else %}
 
-                            </td>
+                                <div class="regular-price">
+                                    ₹{{ product.price }}
+                                </div>
 
+                            {% endif %}
 
-
-                            <!-- ================= STOCK ================= -->
-
-                            <td>
-
-                                {% if product.stock > 0 %}
-
-                                    {% if product.stock <= 5 %}
-
-                                        <span class="badge bg-warning text-dark">
-                                            ⚠️ {{ product.stock }} Low
-                                        </span>
-
-                                    {% else %}
-
-                                        <span class="badge bg-success">
-                                            {{ product.stock }}
-                                        </span>
-
-                                    {% endif %}
-
-                                {% else %}
-
-                                    <span class="badge bg-danger">
-                                        Out of Stock
-                                    </span>
-
-                                {% endif %}
-
-                            </td>
+                        </td>
 
 
 
-                            <!-- ================= AVAILABILITY ================= -->
+                        <!-- STOCK -->
 
-                            <td>
+                        <td>
 
-                                {% if product.is_available and product.stock > 0 %}
+                            {% if product.stock > 0 %}
 
-                                    <span class="badge bg-success">
-                                        🟢 Available
-                                    </span>
+                                {% if product.stock <= 5 %}
 
-                                {% elif product.stock <= 0 %}
-
-                                    <span class="badge bg-danger">
-                                        🔴 Out of Stock
+                                    <span class="status-badge stock-low">
+                                        ⚠️ {{ product.stock }} Low
                                     </span>
 
                                 {% else %}
 
-                                    <span class="badge bg-danger">
-                                        🔴 Unavailable
+                                    <span class="status-badge stock-good">
+                                        {{ product.stock }}
                                     </span>
 
                                 {% endif %}
 
-                            </td>
+                            {% else %}
+
+                                <span class="status-badge stock-empty">
+                                    Out of Stock
+                                </span>
+
+                            {% endif %}
+
+                        </td>
 
 
 
-                            <!-- ================= ACTIONS ================= -->
+                        <!-- AVAILABILITY -->
 
-                            <td>
+                        <td>
+
+                            {% if product.is_available and product.stock > 0 %}
+
+                                <span class="status-badge available">
+                                    🟢 Available
+                                </span>
+
+                            {% elif product.stock <= 0 %}
+
+                                <span class="status-badge stock-empty">
+                                    🔴 Out of Stock
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge unavailable">
+                                    🔴 Unavailable
+                                </span>
+
+                            {% endif %}
+
+                        </td>
 
 
-                                <!-- Edit -->
+
+                        <!-- ACTIONS -->
+
+                        <td>
+
+                            <div class="action-group">
+
+
+                                <!-- EDIT -->
 
                                 <a
                                     href="{% url 'edit_product_admin' product.id %}"
-                                    class="btn btn-warning btn-sm action-btn mb-1"
+                                    class="btn btn-warning action-btn"
                                 >
                                     ✏️ Edit
                                 </a>
 
 
-                                <br>
 
-
-                                <!-- Activate / Deactivate -->
+                                <!-- ACTIVATE / DEACTIVATE -->
 
                                 <form
                                     method="post"
                                     action="{% url 'toggle_product' product.id %}"
-                                    class="d-inline"
                                     onsubmit="return confirm(
                                         '{% if product.is_available %}Are you sure you want to deactivate this product?{% else %}Are you sure you want to activate this product?{% endif %}'
                                     );"
@@ -459,7 +1065,7 @@
 
                                         <button
                                             type="submit"
-                                            class="btn btn-danger btn-sm action-btn mb-1"
+                                            class="btn btn-danger action-btn"
                                         >
                                             🔴 Deactivate
                                         </button>
@@ -468,7 +1074,7 @@
 
                                         <button
                                             type="submit"
-                                            class="btn btn-success btn-sm action-btn mb-1"
+                                            class="btn btn-success action-btn"
                                         >
                                             🟢 Activate
                                         </button>
@@ -478,15 +1084,12 @@
                                 </form>
 
 
-                                <br>
 
-
-                                <!-- Delete -->
+                                <!-- DELETE -->
 
                                 <form
                                     method="post"
                                     action="{% url 'delete_product_admin' product.id %}"
-                                    class="d-inline"
                                     onsubmit="return confirm(
                                         'Are you sure you want to permanently delete this product?'
                                     );"
@@ -496,167 +1099,173 @@
 
                                     <button
                                         type="submit"
-                                        class="btn btn-outline-danger btn-sm action-btn"
+                                        class="btn btn-outline-danger action-btn"
                                     >
                                         🗑️ Delete
                                     </button>
 
                                 </form>
 
-                            </td>
 
-                        </tr>
+                            </div>
 
-
-                    {% empty %}
+                        </td>
 
 
-                        <!-- ================= EMPTY STATE ================= -->
+                    </tr>
 
-                        <tr>
 
-                            <td
-                                colspan="7"
-                                class="text-center"
-                            >
+                {% empty %}
 
-                                <div class="empty-state">
 
-                                    <div class="empty-icon">
-                                        📦
-                                    </div>
+                    <!-- EMPTY STATE -->
 
-                                    <h5 class="mt-3">
-                                        No Products Found
-                                    </h5>
+                    <tr>
 
-                                    <p class="text-muted mb-0">
-                                        No products match your search or category filter.
-                                    </p>
+                        <td
+                            colspan="7"
+                            class="text-center"
+                        >
 
+                            <div class="empty-state">
+
+                                <div class="empty-icon">
+                                    🍔
                                 </div>
 
-                            </td>
 
-                        </tr>
-
-
-                    {% endfor %}
+                                <div class="empty-title">
+                                    No Products Found
+                                </div>
 
 
-                    </tbody>
+                                <p class="empty-text">
+                                    No products match your search or category filter.
+                                </p>
 
-                </table>
+                            </div>
 
-            </div>
+                        </td>
 
-
-
-            <!-- ================= PAGINATION ================= -->
-
-            {% if products.has_other_pages %}
-
-                <div class="p-3">
-
-                    <nav aria-label="Product pagination">
-
-                        <ul class="pagination justify-content-center mb-0">
+                    </tr>
 
 
-                            <!-- Previous -->
-
-                            {% if products.has_previous %}
-
-                                <li class="page-item">
-
-                                    <a
-                                        class="page-link"
-                                        href="?page={{ products.previous_page_number }}{% if search %}&search={{ search|urlencode }}{% endif %}{% if selected_category %}&category={{ selected_category|urlencode }}{% endif %}"
-                                    >
-                                        ← Previous
-                                    </a>
-
-                                </li>
-
-                            {% endif %}
+                {% endfor %}
 
 
-
-                            <!-- Page Numbers -->
-
-                            {% for num in products.paginator.page_range %}
-
-                                {% if products.number == num %}
-
-                                    <li class="page-item active">
-
-                                        <span class="page-link">
-                                            {{ num }}
-                                        </span>
-
-                                    </li>
-
-                                {% else %}
-
-                                    <li class="page-item">
-
-                                        <a
-                                            class="page-link"
-                                            href="?page={{ num }}{% if search %}&search={{ search|urlencode }}{% endif %}{% if selected_category %}&category={{ selected_category|urlencode }}{% endif %}"
-                                        >
-                                            {{ num }}
-                                        </a>
-
-                                    </li>
-
-                                {% endif %}
-
-                            {% endfor %}
+                </tbody>
 
 
-
-                            <!-- Next -->
-
-                            {% if products.has_next %}
-
-                                <li class="page-item">
-
-                                    <a
-                                        class="page-link"
-                                        href="?page={{ products.next_page_number }}{% if search %}&search={{ search|urlencode }}{% endif %}{% if selected_category %}&category={{ selected_category|urlencode }}{% endif %}"
-                                    >
-                                        Next →
-                                    </a>
-
-                                </li>
-
-                            {% endif %}
-
-
-                        </ul>
-
-                    </nav>
-
-                </div>
-
-            {% endif %}
-
+            </table>
 
         </div>
 
+
+
+        <!-- =================================================
+             PAGINATION
+        ================================================= -->
+
+        {% if products.has_other_pages %}
+
+            <div class="pagination-area">
+
+                <nav aria-label="Product pagination">
+
+                    <ul class="pagination justify-content-center mb-0">
+
+
+                        <!-- PREVIOUS -->
+
+                        {% if products.has_previous %}
+
+                            <li class="page-item">
+
+                                <a
+                                    class="page-link"
+                                    href="?page={{ products.previous_page_number }}{% if search %}&search={{ search|urlencode }}{% endif %}{% if selected_category %}&category={{ selected_category|urlencode }}{% endif %}"
+                                >
+                                    ← Previous
+                                </a>
+
+                            </li>
+
+                        {% endif %}
+
+
+
+                        <!-- PAGE NUMBERS -->
+
+                        {% for num in products.paginator.page_range %}
+
+                            {% if products.number == num %}
+
+                                <li class="page-item active">
+
+                                    <span class="page-link">
+                                        {{ num }}
+                                    </span>
+
+                                </li>
+
+                            {% else %}
+
+                                <li class="page-item">
+
+                                    <a
+                                        class="page-link"
+                                        href="?page={{ num }}{% if search %}&search={{ search|urlencode }}{% endif %}{% if selected_category %}&category={{ selected_category|urlencode }}{% endif %}"
+                                    >
+                                        {{ num }}
+                                    </a>
+
+                                </li>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+
+
+                        <!-- NEXT -->
+
+                        {% if products.has_next %}
+
+                            <li class="page-item">
+
+                                <a
+                                    class="page-link"
+                                    href="?page={{ products.next_page_number }}{% if search %}&search={{ search|urlencode }}{% endif %}{% if selected_category %}&category={{ selected_category|urlencode }}{% endif %}"
+                                >
+                                    Next →
+                                </a>
+
+                            </li>
+
+                        {% endif %}
+
+
+                    </ul>
+
+                </nav>
+
+            </div>
+
+        {% endif %}
+
+
     </div>
 
-</div>
 
+</main>
 
-
-<!-- ================= BOOTSTRAP JS ================= -->
 
 <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-></script>
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
 
 
 </body>
 
 </html>
+```
